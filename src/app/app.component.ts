@@ -10,14 +10,14 @@ import { CustomValidators } from './shared/forms/custom-validators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  
   title = 'NutritionalFitnessWeb';
 
   form = new FormGroup({});
   username: FormItem = { controlName: 'username', label: 'Username', icon: 'person' };
   password: FormItem = { controlName: 'password', label: 'Password', icon: 'visibility_off' };
   dateOfBirth: FormItem = { controlName: 'dateOfBirth', label: 'Date of Birth', validationType: ValidationType.date };
-  
+
+ 
   ngOnInit(): void {
     this.form.addControl(this.username.controlName, new FormControl('', Validators.required));
     this.form.addControl(this.password.controlName, new FormControl('', Validators.required));

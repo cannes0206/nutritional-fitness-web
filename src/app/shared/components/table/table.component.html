@@ -1,0 +1,22 @@
+<table mat-table [dataSource]="dataSource" class="w-100 border" matSort>
+  <ng-container *ngFor="let ic of initColumn" [matColumnDef]="ic.name">
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header>
+        {{ ic.displayName }}
+      </th>
+      <td mat-cell *matCellDef="let element, let row">
+        <label [class.cell-title]="ic.description">{{ element[ic.name] }}</label>
+        <div *ngIf="ic.description" class="description-container">
+            <label class="description">{{ row.description }}</label>
+        </div>
+      </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumnNames"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnNames;" [class.selectable-row]="hasSelectableRows" (click)="selectedRow.emit(row)"></tr>
+</table>
+<mat-paginator
+  *ngIf="hasPagination && dataSource.data.length > 0"
+  [pageSizeOptions]="[5, 10, 25]"
+  [pageSize]="pageSize"
+  [showFirstLastButtons]="false">
+</mat-paginator>
+<div class="bg-white text-black text-center p-2" *ngIf="dataSource.data.length === 0">No records found</div>
