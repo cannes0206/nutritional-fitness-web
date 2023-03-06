@@ -1,0 +1,18 @@
+<div [formGroup]="formGroup" class="form-select" >
+  <mat-form-field class="form-field-input" appearance="outline">
+      <mat-label>{{formItem.label}}</mat-label>
+      <mat-select
+          [formControlName]="formItem.controlName"
+          [multiple]="isMultipleSelection"
+          [id]="formItem.controlName"
+          (selectionChange)="onSelectChange()"
+          (focus)="defaultValue = ''">
+          <mat-option *ngIf="formItem.placeHolder" [value]="defaultValue">{{formItem.placeHolder}}</mat-option>
+          <mat-option *ngFor="let option of formItem.option" [value]="option.value">{{option.displayName}}
+          </mat-option>
+      </mat-select>
+      <mat-error>
+        <app-form-validation [formItem]="formItem" [formGroup]="formGroup"></app-form-validation>
+      </mat-error>
+  </mat-form-field>
+</div>

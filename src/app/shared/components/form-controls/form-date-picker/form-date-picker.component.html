@@ -1,0 +1,25 @@
+<div [formGroup]="formGroup" class="form-datepicker">
+  <mat-form-field class="mat-date-picker" appearance="outline" autocomplete="false">
+      <mat-label>{{formItem.label}}</mat-label>
+      <input matInput
+          [id]="formItem.controlName"
+          type="text"
+          [formControlName]="formItem.controlName"
+          (input)="onValueInputChanges(formItem)"
+          [textMask]="{mask: formItem.textMask || defaultTextMask, guide: false}">
+      <!-- This is a work around since mat-datepicker doesn't accept form control with text masking -->
+      <div class="date-picker-input" hidden>
+          <input matInput
+              [id]="formItem.controlName"
+              [matDatepicker]="picker"
+              [formControl]="selectedDate"
+              (dateChange)="onValueDatePickerChanges($event, formItem)">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker [disabled]="formGroup.controls[formItem.controlName].disabled"></mat-datepicker>
+      </div>
+      <mat-icon class="calendar-icon" (click)="open()">calendar_today</mat-icon>
+      <mat-error>
+        <app-form-validation [formItem]="formItem" [formGroup]="formGroup"></app-form-validation>
+      </mat-error>
+  </mat-form-field>
+</div>

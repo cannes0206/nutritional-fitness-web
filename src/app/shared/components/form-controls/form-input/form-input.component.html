@@ -1,0 +1,18 @@
+<div [formGroup]="formGroup" class="form-input">
+  <mat-form-field appearance="outline" [floatLabel]="floatLabel">
+    <mat-label>{{formItem.label}}</mat-label>
+    <input matInput
+      [type]="controlType" 
+      [minlength]="formItem.minLength || null"
+      [formControlName]="formItem.controlName"
+      [id]="formItem.controlName"
+      [placeholder]="formItem.placeHolder!"
+      [textMask]="{ mask: formItem.textMask || false }">
+    <mat-icon *ngIf="formItem.icon" matSuffix (click)="iconClick.emit()">{{formItem.icon}}</mat-icon>
+    <mat-icon *ngIf="formItem.hasClearButton && formGroup.get(formItem.controlName)?.value" class="close-icon"
+      matSuffix (click)="clearValue()">close</mat-icon>
+    <mat-error>
+      <app-form-validation [formItem]="formItem" [formGroup]="formGroup"></app-form-validation>
+    </mat-error>
+  </mat-form-field>
+</div>

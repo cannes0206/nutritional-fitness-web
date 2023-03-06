@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/scss/functions';
+
+@import '../src/assets/stylesheets/custom-boostrap-variables';
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+@import '../src/assets/stylesheets/custom-theme.scss';
+
+.btn-primary {
+  color: #fff;
+}
+
+.btn-outline-primary {
+  color: var(--primary);
+  border-color: var(--primary)
+}

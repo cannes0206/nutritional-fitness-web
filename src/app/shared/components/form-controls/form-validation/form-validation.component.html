@@ -1,0 +1,18 @@
+<ng-container *ngIf="formGroup.get(formItem.controlName) as control">
+  <ng-container *ngIf="control.invalid && control.hasError('required') && !control.hasError('pattern'); else patternValidationErrors">
+    <ng-container *ngIf="control.hasError('required') && !control.hasError('pattern') && !control.value">
+      {{errorMessages.required}}
+    </ng-container>
+    <ng-container *ngIf="control.hasError('required') && !control.hasError('pattern') && control.value">
+      {{errorMessages.invalidInput}}
+    </ng-container>
+  </ng-container>
+
+  <ng-template #patternValidationErrors>
+    <ng-container [ngSwitch]="formItem.validationType">
+      <ng-container *ngSwitchCase="validationTypes.date">{{errorMessages.dateInvalid}}</ng-container>
+      <ng-container *ngSwitchCase="validationTypes.email">{{errorMessages.emailInvalid}}</ng-container>
+      <ng-container *ngSwitchCase="validationTypes.passwordsMismatch">{{errorMessages.passwordsMismatch}}</ng-container>
+    </ng-container>
+  </ng-template>
+</ng-container>

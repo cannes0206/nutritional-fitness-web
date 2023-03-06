@@ -1,0 +1,22 @@
+
+
+::ng-deep .form-datepicker .mat-form-field {
+  width: 100%;
+
+  .mat-form-field-infix {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+
+    .calendar-icon {
+      cursor: pointer;
+      height: 0 !important;
+      position: relative;
+      top: -8px;
+    }
+
+    .mat-form-field-required-marker {
+      color: var(--danger);
+    }
+  }
+}

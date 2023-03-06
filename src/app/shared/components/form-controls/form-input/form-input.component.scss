@@ -1,0 +1,8 @@
+::ng-deep .form-input .mat-form-field {
+  width: 100%;
+
+  .mat-form-field-required-marker {
+    color: var(--danger);
+  }
+}
+   
