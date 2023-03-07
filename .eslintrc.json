@@ -1,0 +1,71 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json",
+          "e2e/tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "eslint:recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:prettier/recommended"
+      ],
+      "rules": {
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "prefix": "app",
+            "style": "kebab-case",
+            "type": "element"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "prefix": "app",
+            "style": "camelCase",
+            "type": "attribute"
+          }
+        ],
+        "@angular-eslint/no-output-on-prefix": "warn",
+        "no-var": "warn",
+        "arrow-body-style": "warn",
+        "no-trailing-spaces": "warn",
+        "prefer-const": "warn",
+        "prefer-spread": "warn",
+        "spaced-comment": "warn",
+        "no-useless-return": "warn",
+        "no-useless-escape": "warn",
+        "eqeqeq": "warn",
+        "no-console": ["error", { "allow": ["warn", "log", "error"] }],
+        "no-empty": "warn",
+        "no-use-before-define": "warn",
+        "prefer-template": "warn"
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {}
+    }
+  ]
+}

@@ -17,14 +17,7 @@ import { AppValidationModule } from './forms/app-validation.modules';
 import { NoValuePipe } from './pipes';
 
 @NgModule({
-  declarations: [
-    FormInputComponent,
-    FormSelectComponent,
-    FormValidationComponent,
-    FormDatePickerComponent,
-    TableComponent,
-    NoValuePipe
-  ],
+  declarations: [FormInputComponent, FormSelectComponent, FormValidationComponent, FormDatePickerComponent, TableComponent, NoValuePipe],
   imports: [
     CommonModule,
     AppValidationModule,

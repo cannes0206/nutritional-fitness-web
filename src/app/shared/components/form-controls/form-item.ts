@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-unused-vars */
 export enum ValidationType {
   required = 1,
   date = 2,
