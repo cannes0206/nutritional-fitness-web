@@ -22,6 +22,9 @@ import {
 import { TableComponent } from './components/table/table.component';
 import { AppValidationModule } from './forms/app-validation.modules';
 import { NoValuePipe } from './pipes';
+import { PhotoUploaderComponent } from './components/photo-uploader/photo-uploader.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,9 @@ import { NoValuePipe } from './pipes';
     FormDatePickerComponent,
     TableComponent,
     NoValuePipe,
-    FormTextAreaComponent
+    FormTextAreaComponent,
+    PhotoUploaderComponent,
+    SafeUrlPipe
   ],
   imports: [
     CommonModule,
@@ -47,7 +52,8 @@ import { NoValuePipe } from './pipes';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    TextFieldModule
+    TextFieldModule,
+    FileUploadModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -66,7 +72,9 @@ import { NoValuePipe } from './pipes';
     MatPaginatorModule,
     MatSortModule,
     TextFieldModule,
-    FormTextAreaComponent
+    FormTextAreaComponent,
+    PhotoUploaderComponent,
+    SafeUrlPipe
   ]
 })
 export class SharedModule {}

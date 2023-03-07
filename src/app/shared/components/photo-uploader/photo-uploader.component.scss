@@ -1,0 +1,30 @@
+.photo-uploader {
+  height: 300px;
+
+  &:hover .overlay-hover {
+    opacity: 1;
+  }
+
+  .overlay-hover {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  img {
+    height: 300px;
+    width: 100%;
+  }
+
+  .upload-icon {
+    color: var(--bs-gray-500);
+    transform: scale(2);
+  }
+}

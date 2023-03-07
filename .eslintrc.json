@@ -54,7 +54,8 @@
         "no-console": ["error", { "allow": ["warn", "log", "error"] }],
         "no-empty": "warn",
         "no-use-before-define": "warn",
-        "prefer-template": "warn"
+        "prefer-template": "warn",
+        "no-unused-vars": ["warn", { "args": "none"}]
       }
     },
     {

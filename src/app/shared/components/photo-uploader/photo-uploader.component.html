@@ -1,0 +1,22 @@
+<div ng2FileDrop
+  class="photo-uploader rounded border border-2 position-relative d-flex justify-content-center align-items-center hover-overlay ripple"
+  [class.p-5]="!imageUrl"
+  [uploader]="uploader">
+<mat-icon *ngIf="!imageUrl"
+  class="upload-icon cursor-pointer stretched-link"
+  (click)="fileInput.click()">
+  insert_photo
+</mat-icon>
+<img *ngIf="imageUrl" class="rounded" [src]="imageUrl | safeUrl" (click)="fileInput.click()">
+<ng-container *ngIf="imageUrl">
+  <div class="mask text-light d-flex justify-content-center align-items-center overlay-hover">
+    <mat-icon *ngIf="imageUrl"
+      class="upload-icon cursor-pointer stretched-link"
+      (click)="fileInput.click()">
+      insert_photo
+    </mat-icon>
+  </div>
+</ng-container>
+<input #fileInput type="file" id="upload-file" accept="image/jpg, image/jpeg" class="d-none"
+  (onFileSelected)="photoSelected()" ng2FileSelect [uploader]="uploader">
+</div>
