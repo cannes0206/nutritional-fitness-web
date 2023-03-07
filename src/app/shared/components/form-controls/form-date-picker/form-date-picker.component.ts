@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { Moment } from 'moment';
@@ -10,38 +10,34 @@ import { FormItem } from '../form-item';
   templateUrl: './form-date-picker.component.html',
   styleUrls: ['./form-date-picker.component.scss']
 })
-export class FormDatePickerComponent implements OnInit {
+export class FormDatePickerComponent {
   private defaultDateFormat = 'MM/DD/YYYY';
 
   @Input() formItem!: FormItem;
-  @Input() formGroup!: FormGroup;
-  @Output() onValueChanges:  EventEmitter<any> = new EventEmitter();
+  @Input() formGroup: FormGroup = new FormGroup({});
+  @Output() valueChanges: EventEmitter<any> = new EventEmitter();
 
-  public defaultTextMask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
-  public defaultLength = '10';
-  public selectedDate = new FormControl();
+  defaultTextMask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
+  selectedDate = new FormControl();
 
-  public get formControl(): FormControl {
+  get formControl(): FormControl {
     return this.formGroup.get(this.formItem.controlName) as FormControl;
   }
 
   @ViewChild('picker', { static: true })
   datepicker!: MatDatepicker<Moment>;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
-  onValueDatePickerChanges(event: MatDatepickerInputEvent<Date>, formItem: FormItem): void {
+  onValueDatePickerChanges(event: MatDatepickerInputEvent<Date>): void {
     const formattedDate = moment(event.value).format(this.formItem.dateFormat || this.defaultDateFormat);
 
-    this.formGroup.get(formItem.controlName)?.setValue(formattedDate);
-    this.onValueChanges.emit(this.formGroup.get(formItem.controlName)?.value);
+    this.formControl.setValue(formattedDate);
+    this.valueChanges.emit(this.formControl.value);
   }
 
-  onValueInputChanges(formItem: FormItem): void {
-    this.onValueChanges.emit(this.formGroup.get(formItem.controlName)?.value);
+  onValueInputChanges(): void {
+    this.valueChanges.emit(this.formControl.value);
   }
 
   open(): void {

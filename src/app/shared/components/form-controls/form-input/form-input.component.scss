@@ -4,5 +4,14 @@
   .mat-form-field-required-marker {
     color: var(--danger);
   }
+
+  .close-icon {
+    color: var(--bs-gray-600);
+
+    &.close-icon:hover {
+      color: var(--primary);
+      cursor: pointer;
+    }
+  }
 }
    

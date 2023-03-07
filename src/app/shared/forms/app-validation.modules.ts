@@ -4,7 +4,7 @@ import { CustomValidators } from './custom-validators';
 
 @NgModule({})
 export class AppValidationModule {
-    constructor() {
-      Validators.required = CustomValidators.requiredWithTrim;
-    }
+  constructor() {
+    Validators.required = CustomValidators.requiredWithTrim;
+  }
 }

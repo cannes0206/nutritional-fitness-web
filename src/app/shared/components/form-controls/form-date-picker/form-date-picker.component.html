@@ -5,7 +5,7 @@
           [id]="formItem.controlName"
           type="text"
           [formControlName]="formItem.controlName"
-          (input)="onValueInputChanges(formItem)"
+          (input)="onValueInputChanges()"
           [textMask]="{mask: formItem.textMask || defaultTextMask, guide: false}">
       <!-- This is a work around since mat-datepicker doesn't accept form control with text masking -->
       <div class="date-picker-input" hidden>
@@ -13,7 +13,7 @@
               [id]="formItem.controlName"
               [matDatepicker]="picker"
               [formControl]="selectedDate"
-              (dateChange)="onValueDatePickerChanges($event, formItem)">
+              (dateChange)="onValueDatePickerChanges($event)">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker [disabled]="formGroup.controls[formItem.controlName].disabled"></mat-datepicker>
       </div>

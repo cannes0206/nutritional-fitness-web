@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ErrorMessage } from 'src/app/shared/constants';
 import { FormItem, ValidationType } from '../form-item';
 
@@ -8,20 +8,12 @@ import { FormItem, ValidationType } from '../form-item';
   templateUrl: './form-validation.component.html',
   styleUrls: ['./form-validation.component.scss']
 })
-export class FormValidationComponent implements OnInit {
-  private defaultDateFormat = 'MM/DD/YYYY';
-
+export class FormValidationComponent {
   @Input() formItem!: FormItem;
-
   @Input() formGroup: FormGroup = new FormGroup({});
 
   errorMessages = ErrorMessage;
   validationTypes = ValidationType;
 
-  
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  constructor() {}
 }

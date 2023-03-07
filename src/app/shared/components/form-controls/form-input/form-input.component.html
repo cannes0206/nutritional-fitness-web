@@ -8,8 +8,9 @@
       [id]="formItem.controlName"
       [placeholder]="formItem.placeHolder!"
       [textMask]="{ mask: formItem.textMask || false }">
+    <mat-icon *ngIf="formItem.isSearchField && !formGroup.get(formItem.controlName)?.value" matSuffix (click)="iconClick.emit()">search</mat-icon>
     <mat-icon *ngIf="formItem.icon" matSuffix (click)="iconClick.emit()">{{formItem.icon}}</mat-icon>
-    <mat-icon *ngIf="formItem.hasClearButton && formGroup.get(formItem.controlName)?.value" class="close-icon"
+    <mat-icon *ngIf="(formItem.hasClearIcon || formItem.isSearchField)&& formGroup.get(formItem.controlName)?.value" class="close-icon"
       matSuffix (click)="clearValue()">close</mat-icon>
     <mat-error>
       <app-form-validation [formItem]="formItem" [formGroup]="formGroup"></app-form-validation>

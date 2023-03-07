@@ -58,4 +58,4 @@ import { NoValuePipe } from './pipes';
     MatSortModule
   ]
 })
-export class SharedModule { }
+export class SharedModule {}
