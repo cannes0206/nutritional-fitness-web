@@ -15,6 +15,7 @@ export class FormItem {
   public placeHolder?: string;
   public textMask?: any;
   public minLength?: number;
+  public maxLength?: number;
   public icon?: string;
   public dateFormat?: string;
   public hasClearIcon?: boolean;
@@ -28,6 +29,7 @@ export class FormItem {
     placeHolder?: string,
     textMask?: string,
     minLength?: number,
+    maxLength?: number,
     icon?: string,
     dateFormat?: string,
     hasClearIcon?: boolean,
@@ -40,6 +42,7 @@ export class FormItem {
     this.placeHolder = placeHolder;
     this.textMask = textMask;
     this.minLength = minLength;
+    this.maxLength = maxLength;
     this.icon = icon;
     this.dateFormat = dateFormat;
     this.hasClearIcon = hasClearIcon;

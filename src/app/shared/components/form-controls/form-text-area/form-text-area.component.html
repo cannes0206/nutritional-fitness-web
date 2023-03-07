@@ -1,0 +1,19 @@
+<div class="form-group form-text-area" [formGroup]="formGroup">
+  <label class="d-block" [class.required-label]="formGroup.get(formItem.controlName)?.hasValidator(requiredValidator)">
+    {{formItem.label}}
+  </label>
+  <mat-form-field appearance="outline">
+    <textarea matInput
+    [attr.maxlength]="formItem.maxLength"
+    [formControlName]="formItem.controlName" 
+    cdkTextareaAutosize
+    cdkAutosizeMinRows="5"
+    cdkAutosizeMaxRows="10"
+    #autosize="cdkTextareaAutosize">
+    </textarea>
+    <mat-error>
+      <app-form-validation [formItem]="formItem" [formGroup]="formGroup"></app-form-validation>
+    </mat-error>
+  </mat-form-field> 
+</div>
+

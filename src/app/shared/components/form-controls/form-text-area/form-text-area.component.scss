@@ -1,0 +1,10 @@
+::ng-deep .form-text-area {
+  .mat-form-field-infix {
+    padding: 0;
+  }
+
+  .required-label:after {
+    content: ' *';
+    color: var(--bs-danger);
+}
+}

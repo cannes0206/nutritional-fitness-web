@@ -2,14 +2,14 @@
   width: 100%;
 
   .mat-form-field-required-marker {
-    color: var(--danger);
+    color: var(--bs-danger);
   }
 
   .close-icon {
     color: var(--bs-gray-600);
 
     &.close-icon:hover {
-      color: var(--primary);
+      color: var(--bs-blue);
       cursor: pointer;
     }
   }

@@ -1,3 +1,4 @@
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -11,13 +12,27 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { TextMaskModule } from 'angular2-text-mask';
-import { FormDatePickerComponent, FormInputComponent, FormSelectComponent, FormValidationComponent } from './components/form-controls';
+import {
+  FormDatePickerComponent,
+  FormInputComponent,
+  FormSelectComponent,
+  FormTextAreaComponent,
+  FormValidationComponent
+} from './components/form-controls';
 import { TableComponent } from './components/table/table.component';
 import { AppValidationModule } from './forms/app-validation.modules';
 import { NoValuePipe } from './pipes';
 
 @NgModule({
-  declarations: [FormInputComponent, FormSelectComponent, FormValidationComponent, FormDatePickerComponent, TableComponent, NoValuePipe],
+  declarations: [
+    FormInputComponent,
+    FormSelectComponent,
+    FormValidationComponent,
+    FormDatePickerComponent,
+    TableComponent,
+    NoValuePipe,
+    FormTextAreaComponent
+  ],
   imports: [
     CommonModule,
     AppValidationModule,
@@ -31,7 +46,8 @@ import { NoValuePipe } from './pipes';
     MatNativeDateModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    TextFieldModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -48,7 +64,9 @@ import { NoValuePipe } from './pipes';
     MatNativeDateModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    TextFieldModule,
+    FormTextAreaComponent
   ]
 })
 export class SharedModule {}
