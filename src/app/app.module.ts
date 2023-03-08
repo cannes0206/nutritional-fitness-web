@@ -8,13 +8,14 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AppConfig } from './core/models/app-config';
+import { AppRoutingModule } from './app-routing.module';
 
 function initConfig(configService: ConfigService) {
   return () => configService.load();
 }
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, SharedModule, CoreModule, HttpClientModule],
+  imports: [BrowserModule, BrowserAnimationsModule, SharedModule, CoreModule, HttpClientModule, AppRoutingModule],
   bootstrap: [AppComponent],
   providers: [
     {

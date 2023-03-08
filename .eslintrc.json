@@ -43,6 +43,7 @@
         ],
         "prettier/prettier": "warn",
         "@angular-eslint/no-output-on-prefix": "warn",
+        "@angular-eslint/no-empty-lifecycle-method": "warn",
         "no-var": "warn",
         "arrow-body-style": "warn",
         "no-trailing-spaces": "warn",
