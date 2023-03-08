@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
+import { AppRoutes } from './core/enums/routes.enum';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: '',
-        component: AppComponent
+        path: AppRoutes.Users,
+        loadChildren: () => import('./features/users/users.module').then((m) => m.UsersModule)
       }
     ]
   }
