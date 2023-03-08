@@ -1,14 +1,33 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppComponent } from './app.component';
+import { ConfigService } from './core/services/config.service';
 import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AppConfig } from './core/models/app-config';
 
+function initConfig(configService: ConfigService) {
+  return () => configService.load();
+}
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, SharedModule],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [BrowserModule, BrowserAnimationsModule, SharedModule, CoreModule, HttpClientModule],
+  bootstrap: [AppComponent],
+  providers: [
+    {
+      provide: AppConfig,
+      deps: [HttpClient],
+      useExisting: ConfigService
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initConfig,
+      deps: [ConfigService],
+      multi: true
+    }
+  ]
 })
 export class AppModule {}

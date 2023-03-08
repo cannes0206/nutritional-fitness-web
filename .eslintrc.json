@@ -41,6 +41,7 @@
             "type": "attribute"
           }
         ],
+        "prettier/prettier": "warn",
         "@angular-eslint/no-output-on-prefix": "warn",
         "no-var": "warn",
         "arrow-body-style": "warn",
