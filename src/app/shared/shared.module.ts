@@ -12,6 +12,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { TextMaskModule } from 'angular2-text-mask';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCarouselModule } from 'ng-mat-carousel';
+import { MatBadgeModule } from '@angular/material/badge';
+
 import {
   FormDatePickerComponent,
   FormInputComponent,
@@ -53,7 +57,11 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     MatPaginatorModule,
     MatSortModule,
     TextFieldModule,
-    FileUploadModule
+    FileUploadModule,
+    MatButtonModule,
+    MatCarouselModule.forRoot(),
+    MatBadgeModule
+    
   ],
   exports: [
     ReactiveFormsModule,
@@ -74,7 +82,10 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     TextFieldModule,
     FormTextAreaComponent,
     PhotoUploaderComponent,
-    SafeUrlPipe
+    SafeUrlPipe,
+    MatButtonModule,
+    MatCarouselModule,
+    MatBadgeModule
   ]
 })
 export class SharedModule {}

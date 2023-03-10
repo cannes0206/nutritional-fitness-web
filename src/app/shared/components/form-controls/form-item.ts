@@ -10,6 +10,7 @@ export enum ValidationType {
 export class FormItem {
   public controlName: string;
   public label: string;
+  public required?: boolean;
   public validationType?: ValidationType;
   public option?: Array<FormOption>;
   public placeHolder?: string;

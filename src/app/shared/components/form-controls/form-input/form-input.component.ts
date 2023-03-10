@@ -12,6 +12,7 @@ export class FormInputComponent {
   @Input() formItem!: FormItem;
   @Input() formGroup: FormGroup = new FormGroup({});
   @Input() controlType: 'text' | 'password' = 'text';
+  @Input() type: string | undefined;
   @Input() floatLabel: FloatLabelType = 'always';
   @Output() valueChanges: EventEmitter<any> = new EventEmitter();
   @Output() iconClick: EventEmitter<void> = new EventEmitter();
@@ -20,9 +21,10 @@ export class FormInputComponent {
     return this.formGroup.get(this.formItem.controlName) as FormControl;
   }
 
-  constructor() {}
+  constructor() { }
 
   clearValue(): void {
     this.formControl.patchValue('');
   }
+
 }
