@@ -1,0 +1,89 @@
+.planner-week-view-container {
+  .no-of-servings {
+    ::ng-deep .mat-form-field-appearance-outline {
+      .mat-form-field-infix {
+        padding: 0.5em 0 .75em 0 !important;
+      }
+    }
+  }
+
+ .day-of-week {
+    &:hover {
+      h5, h1 {
+        color: var(--bs-white) !important;
+      }
+
+      background-color: var(--bs-warning);
+      border-radius: 5px;
+    }
+ }
+
+ .day-of-week-view {
+    .day-card {
+      min-height: 150px;
+    }
+
+    .recipe-list {
+      min-height: 140px;
+    }
+
+    .progress {
+      height: 5px;
+
+      &.text-success {
+        ::ng-deep {
+          .mat-progress-bar-fill::after {
+            background-color: var(--bs-success);
+          }
+
+          .mat-progress-bar-buffer {
+            background-color: rgba($color: var(--bs-success-rgb), $alpha: .25);
+          }
+        }
+      }
+
+      &.text-warning {
+        ::ng-deep {
+          .mat-progress-bar-fill::after {
+            background-color: var(--bs-warning);
+          }
+
+          .mat-progress-bar-buffer {
+            background-color: rgba($color: var(--bs-warning-rgb), $alpha: .25);
+          }
+        }
+      }
+
+      &.text-danger {
+        ::ng-deep {
+          .mat-progress-bar-fill::after {
+            background-color: var(--bs-danger);
+          }
+
+          .mat-progress-bar-buffer {
+            background-color: rgba($color: var(--bs-danger-rgb), $alpha: .25);
+          }
+        }
+      }
+
+      &.text-muted {
+        ::ng-deep {
+          .mat-progress-bar-fill::after {
+            background-color: var(--bs-gray-400);
+          }
+
+          .mat-progress-bar-buffer {
+            background-color: var(--bs-gray-400);
+          }
+        }
+      }
+    }
+
+    ::ng-deep {
+      .mat-progress-bar-element {
+        border-top-left-radius: 5px !important;
+        border-top-right-radius: 5px !important;
+      }
+    }
+ }
+}

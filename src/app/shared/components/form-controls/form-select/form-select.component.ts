@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormItem } from '../form-item';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { FormItem, FormOption } from '../form-item';
 
 @Component({
   selector: 'app-form-select',
@@ -12,15 +12,25 @@ export class FormSelectComponent {
   @Input() formGroup: FormGroup = new FormGroup({});
   @Input() isMultipleSelection: boolean = false;
   @Input() defaultValue: string | null = null;
+  @Output() valueChanges: EventEmitter<FormOption[]> = new EventEmitter();
+  @Output() opened: EventEmitter<void> = new EventEmitter();
+
+  get formControl(): FormControl {
+    return this.formGroup.get(this.formItem.controlName) as FormControl;
+  }
 
   constructor() {}
 
-  public onSelectChange(): void {
+  onSelectChange(): void {
     // Deselect placeholder
-    const value = this.formGroup.get(this.formItem.controlName)?.value;
+    const value = this.formControl.value;
     if (this.isMultipleSelection && value) {
       const selectedOptions = value.filter((v: string) => v);
-      this.formGroup.get(this.formItem.controlName)?.setValue(selectedOptions, { emitEvent: false });
+      this.formControl.setValue(selectedOptions, { emitEvent: false });
     }
+  }
+
+  onSelectClose(): void {
+    this.valueChanges.emit(this.formControl.value);
   }
 }

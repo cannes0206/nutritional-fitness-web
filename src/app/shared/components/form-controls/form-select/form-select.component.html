@@ -1,11 +1,14 @@
-<div [formGroup]="formGroup" class="form-select" >
-  <mat-form-field class="form-field-input" appearance="outline">
+<div [formGroup]="formGroup">
+  <mat-form-field class="form-field-input w-100" appearance="outline">
       <mat-label>{{formItem.label}}</mat-label>
       <mat-select
+          [disableOptionCentering]="true"
           [formControlName]="formItem.controlName"
           [multiple]="isMultipleSelection"
           [id]="formItem.controlName"
           (selectionChange)="onSelectChange()"
+          (openedChange)="opened.emit()"
+          (closed)="onSelectClose()"
           (focus)="defaultValue = ''">
           <mat-option *ngIf="formItem.placeHolder" [value]="defaultValue">{{formItem.placeHolder}}</mat-option>
           <mat-option *ngFor="let option of formItem.option" [value]="option.value">{{option.displayName}}

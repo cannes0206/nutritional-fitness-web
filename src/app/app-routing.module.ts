@@ -14,6 +14,10 @@ const routes: Routes = [
       {
         path: AppRoutes.Users,
         loadChildren: () => import('./features/users/users.module').then((m) => m.UsersModule)
+      },
+      {
+        path: AppRoutes.Meals,
+        loadChildren: () => import('./features/meals/meals.module').then((m) => m.MealsModule)
       }
     ]
   }

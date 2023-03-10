@@ -5,6 +5,9 @@
 
 @import '~bootstrap/scss/bootstrap.scss';
 
+.main-container {
+  max-width: 1200px;
+}
 
 .btn-primary {
   color: #fff;
@@ -20,11 +23,17 @@
 }
 
 .material-icons {
+  cursor: pointer;
+
   &:hover {
-    color: var(--bs-primary)
+    opacity: 0.8;
+
+    &.text-muted {
+      color: var(--bs-primary) !important;
+    }
   }
 }
 
 .mat-form-field-appearance-outline .mat-form-field-outline-thick {
   color: var(--bs-primary) !important;
-} 
+}
