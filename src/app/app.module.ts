@@ -9,12 +9,13 @@ import { CoreModule } from './core/core.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AppConfig } from './core/models/app-config';
 import { AppRoutingModule } from './app-routing.module';
+import { SideNavComponent } from './shell/side-nav/side-nav.component';
 
 function initConfig(configService: ConfigService) {
   return () => configService.load();
 }
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SideNavComponent],
   imports: [BrowserModule, BrowserAnimationsModule, SharedModule, CoreModule, HttpClientModule, AppRoutingModule],
   bootstrap: [AppComponent],
   providers: [

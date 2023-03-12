@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginRequest } from '../../core/models/auth.model';
+import { AuthService } from '../../core/services/auth.service';
 import { FormItem } from '../../shared/components/form-controls';
 import { LoginFormItems } from './login-models';
 
@@ -15,7 +18,8 @@ export class LoginComponent implements OnInit {
   public password: FormItem = LoginFormItems.password;
   public isShowPassword: boolean = false;
 
-  constructor() { }
+  constructor(private authService: AuthService) {
+  }
 
   ngOnInit(): void {
     this.setLoginFormGroup();
@@ -25,7 +29,6 @@ export class LoginComponent implements OnInit {
     let request = this.buildLoginRequest();
     let CryptoJS = require("crypto-js");
     request.password = CryptoJS.MD5(request.password).toString();
-    console.log(request)
   }
 
   private buildLoginRequest(): LoginRequest {

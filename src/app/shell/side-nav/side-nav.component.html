@@ -1,0 +1,25 @@
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened>
+    <div class="d-flex justify-content-between align-items-center py-3">
+      <img class="side-nav-logo" src="../../../../assets/images/nf-header-logo.svg" width="210">
+    </div>
+    <ng-container *ngFor="let menuItem of upperNavigation.navigation">
+      <button mat-button class="menu-button" [routerLink]="menuItem.href" [routerLinkActive]="'active'">
+        <mat-icon>{{menuItem.icon}}</mat-icon>
+        <span>{{menuItem.text}}</span>
+      </button>
+    </ng-container>
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let menuItem of lowerNavigation.navigation" >
+      <button mat-button class="menu-button" [routerLink]="menuItem.href"  [routerLinkActive]="'active'">
+        <mat-icon>{{menuItem.icon}}</mat-icon>
+        <span>{{menuItem.text}}</span>
+      </button>
+    </ng-container>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <main class="flex-fill">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

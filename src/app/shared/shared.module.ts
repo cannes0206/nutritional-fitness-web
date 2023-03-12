@@ -19,6 +19,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TextMaskModule } from 'angular2-text-mask';
 import { MatCarouselModule } from 'ng-mat-carousel';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -73,7 +76,10 @@ import { FilterPipe, NoValuePipe, SafeUrlPipe } from './pipes';
     MatProgressBarModule,
     MatTooltipModule,
     MatDialogModule,
-    NgMultiSelectDropDownModule.forRoot()
+    MatToolbarModule,
+    MatSidenavModule,
+    MatDividerModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   exports: [
     ReactiveFormsModule,
@@ -103,7 +109,10 @@ import { FilterPipe, NoValuePipe, SafeUrlPipe } from './pipes';
     MatProgressBarModule,
     FilterPipe,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatDividerModule,
   ]
 })
 export class SharedModule {}
