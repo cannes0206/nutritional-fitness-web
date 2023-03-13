@@ -10,7 +10,7 @@ const routes: Routes = [
   //},
   { path: '', redirectTo: '/overview', pathMatch: 'full' }, // Temporary Landing page upon loading site
   {
-    path: AppRoutes.overview,// Temporary Landing page upon loading site
+    path: AppRoutes.Overview,
     loadChildren: () => import('./features/overview/overview.module').then((m) => m.OverviewModule)
   },
   {
@@ -23,7 +23,11 @@ const routes: Routes = [
       {
         path: AppRoutes.Meals,
         loadChildren: () => import('./features/meals/meals.module').then((m) => m.MealsModule)
-      }
+      },
+      {
+        path: AppRoutes.Overview,
+        loadChildren: () => import('./features/overview/overview.module').then((m) => m.OverviewModule)
+      },
     ]
   }
 ];

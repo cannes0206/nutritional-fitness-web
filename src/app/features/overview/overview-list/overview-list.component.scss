@@ -1,0 +1,42 @@
+.overview-list-container {
+  word-break: break-word;
+
+  .search-member-container {
+    max-width: 350px;
+  }
+
+  ::ng-deep {
+    thead {
+      th {
+        &.mat-column-name {
+          width: 20%;
+        }
+
+
+        &.mat-column-cycle,
+        &.mat-column-phase,
+        &.mat-column-startDate {
+          width: 15%;
+        }
+
+        &.mat-column-startWeight,
+        &.mat-column-currentWeight,
+        &.mat-column-progress {
+          width: 10%;
+        }
+
+        &.cdk-column-action {
+          width: 5%;
+        }
+      }
+    }
+
+    tbody {
+      td {
+        &.cdk-column-action {
+          text-align: right;
+        }
+      }
+    }
+  }
+}
