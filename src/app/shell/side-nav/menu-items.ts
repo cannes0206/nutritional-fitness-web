@@ -52,7 +52,7 @@ export const LowerNavigation: MenuItem[] = [
   {
     id: 'annoucements',
     text: 'Annoucements',
-    icon: 'help',
+    icon: 'campaign',
     href: '/annoucements',
     permissions: ['admin']
   },
