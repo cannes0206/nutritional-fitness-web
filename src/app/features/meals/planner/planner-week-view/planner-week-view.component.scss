@@ -1,4 +1,25 @@
 .planner-week-view-container {
+  .week-control-date-picker {
+    ::ng-deep .mat-form-field-infix {
+      display: flex;
+      width: 192px;
+
+      .mat-input-element {
+        font-size: 20px;
+        font-family: 'Inter';
+      }
+    }
+
+    .mat-datepicker-toggle {
+      button: {
+        margin-top: -5px;
+      }
+    }
+
+    ::ng-deep .mat-form-field-appearance-standard .mat-form-field-underline {
+      display: none;
+    }
+  }
   .no-of-servings {
     ::ng-deep .mat-form-field-appearance-outline {
       .mat-form-field-infix {

@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/scss/functions';
 
-@import '../src/assets/stylesheets/custom-boostrap-variables';
+@import '../src/assets/stylesheets/_custom-boostrap-variables';
 
 @import '~bootstrap/scss/bootstrap.scss';
 
@@ -11,11 +11,6 @@
 
 .btn-primary {
   color: #fff;
-}
-
-.btn-outline-primary {
-  color: var(--bs-primary);
-  border-color: var(--bs-primary)
 }
 
 .cursor-pointer {

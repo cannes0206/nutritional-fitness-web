@@ -13,31 +13,36 @@
             placeholder="No. of Servings">
         </mat-form-field>
       </div>
-      <button mat-stroked-button class="btn btn-outline-warning ms-2" type="button" (click)="clear()">CLEAR</button>
+      <button class="btn btn-outline-danger ms-2" type="button" (click)="clear()">CLEAR</button>
     </div>
     <div class="total-zen-score">
       <h1 class="fw-bold">Zen Score: {{totalWeekZenScore | percent: '1.1-1' }}</h1>
     </div>
-    <div class="week-controls d-flex flex-row align-items-center">
-      <!-- <mat-form-field appearance="fill">
-        <input matInput [matDatepicker]="dp" [formControl]="weekControl">
-        <mat-hint>MMMM YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
-        <mat-datepicker #dp></mat-datepicker>
-      </mat-form-field> -->
-      <div class="border border-primary py-1 px-2 rounded d-flex align-items-baseline">
-          <mat-icon class="fw-bolder fs-2 cursor-pointer text-primary me-2" (click)="updateWeekRange('previous')">keyboard_arrow_left</mat-icon>
-          <mat-icon class="fw-bolder fs-2 cursor-pointer text-primary mx-2" (click)="updateWeekRange('next')">keyboard_arrow_right</mat-icon>
+    <div class="week-controls d-flex flex-row flex-wrap align-items-center">
+      <div class="week-control-date-picker">
+        <mat-form-field appearance="standard">
+          <input class="pe-none" [readonly]="true" matInput [matDatepicker]="datepicker" [formControl]="weekControl">
+          <mat-datepicker-toggle matIconSuffix [for]="datepicker">
+            <mat-icon matDatepickerToggleIcon>arrow_drop_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #datepicker startView="year" (monthSelected)="setMonthAndYear($event, datepicker)"></mat-datepicker>
+        </mat-form-field>
       </div>
       <button mat-stroked-button class="btn btn-primary ms-2" type="button" (click)="resetWeek()">TODAY</button>
     </div>
   </div>
 
   <div class="d-flex flex-row justify-content-between align-items-center text-center border rounded mt-2">
-    <div class="w-100 py-2 px-3 cursor-pointer day-of-week" *ngFor="let day of daysOfWeek">
-      <h3 class="text-muted mb-0">{{ day | date:'EEE'}}</h3>
-      <h3 class="fw-bold mb-0 fs-3" [ngClass]="{'text-decoration-underline': currentDay === (day | date: 'd')}">{{ day | date: 'dd' }}</h3>
-    </div>
+    <ng-container *ngFor="let day of daysOfWeek; let first = first; let last = last">
+      <div class="w-100 py-3 px-3 cursor-pointer day-of-week" [ngClass]="{'d-flex flex-row align-items-center justify-content-evenly': first || last}">
+        <mat-icon *ngIf="first" class="fw-bolder fs-2 cursor-pointer text-muted float-start" (click)="updateWeekRange('previous')">keyboard_arrow_left</mat-icon>
+        <div class="d-flex flex-column">
+          <h3 class="text-muted mb-0">{{ day | date:'EEE'}}</h3>
+          <h3 class="fw-bold mb-0 fs-3" [ngClass]="{'text-decoration-underline': currentDay === (day | date: 'd')}">{{ day | date: 'dd' }}</h3>
+        </div>
+        <mat-icon *ngIf="last" class="fw-bolder fs-2 cursor-pointer text-muted float-end" (click)="updateWeekRange('next')">keyboard_arrow_right</mat-icon>
+      </div>
+    </ng-container>
   </div>
 
   <ng-container *ngFor="let meal of mealsForTheWeek">
