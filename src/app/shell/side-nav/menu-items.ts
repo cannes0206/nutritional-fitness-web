@@ -14,7 +14,7 @@ export const UpperNavigation: MenuItem[] = [
   {
     id: 'overview',
     text: 'Overview',
-    icon: 'view_quilt',
+    icon: 'dashboard',
     href: '/overview',
     permissions: ['admin']
   },
