@@ -1,0 +1,14 @@
+<div class="border rounded overview-list-container">
+  <div class="ms-3 mt-3 search-member-container">
+    <app-form-input [formItem]="searchMemberField"
+                    [formGroup]="searchFormGroup">
+    </app-form-input>
+  </div>
+
+  <app-table [initColumn]="header"
+             [tableData]="(memberListdataSource$ | async)"
+             [displayedColumnNames]="membersDisplayedColumnNames"
+             [pageSizeOptions]="[20, 40, 60]"
+             [pageSize]="20">
+  </app-table>
+</div>

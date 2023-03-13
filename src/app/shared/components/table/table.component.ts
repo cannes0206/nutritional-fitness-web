@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { InitColumn } from './table';
+import { ColumnTypeEnum, InitColumn } from './table';
 
 export interface PeriodicElement {
   name: string;
@@ -25,7 +25,10 @@ export class TableComponent {
   @Input() hasPagination: boolean = true;
   @Input() hasSelectableRows: boolean = false;
   @Input() pageSize: number = 5;
+  @Input() pageSizeOptions: number[] = [5, 10, 25]
   @Output() selectedRow: EventEmitter<any> = new EventEmitter();
+
+  columnTypeEnum = ColumnTypeEnum;
 
   @ViewChild(MatSort, { static: true }) matSort = new MatSort();
 
@@ -37,7 +40,7 @@ export class TableComponent {
     }
   }
 
-  @Input() set tableData(data: any[]) {
+  @Input() set tableData(data: any[] | null) {
     this.setTableDataSource(data);
   }
 

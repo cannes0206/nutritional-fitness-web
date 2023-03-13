@@ -2,6 +2,8 @@ export interface InitColumn {
   name: string;
   displayName: string;
   description?: string;
+  columnType?: string;
+  iconName?: string;
 }
 
 export interface InitColumnInline {
@@ -9,4 +11,10 @@ export interface InitColumnInline {
   name: string;
   displayName: string;
   isEditMode?: boolean;
+}
+
+export enum ColumnTypeEnum {
+  Text = 'text',
+  Icons = 'icons',
+  TextWithIcons = 'textWithIcons'
 }

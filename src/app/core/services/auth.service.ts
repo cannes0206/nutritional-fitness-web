@@ -24,7 +24,7 @@ export class AuthService {
 
   login() {
     this.loggedIn.next(true);
-    this.router.navigateByUrl(`${AppRoutes.overview}`);
+    this.router.navigateByUrl(`${AppRoutes.Overview}`);
   }
 
   logout() {
