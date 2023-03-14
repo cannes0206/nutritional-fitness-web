@@ -33,8 +33,20 @@ export class LoginComponent implements OnInit {
     this.setLoginFormGroup();
   }
 
+  get userNameControl(): FormControl {
+    return this.loginForm.get(this.username.controlName) as FormControl;
+  }
+
+  get passwordControl(): FormControl {
+    return this.loginForm.get(this.password.controlName) as FormControl;
+  }
+
   onFocusInput(): void {
     this.showIncorrectCredentialMessage = false;
+    this.userNameControl?.setErrors({ 'incorrectCredential': null });
+    this.userNameControl?.updateValueAndValidity();
+    this.passwordControl?.setErrors({ 'incorrectCredential': null });
+    this.passwordControl?.updateValueAndValidity();
   }
 
   public onSubmit(): void {
@@ -48,8 +60,8 @@ export class LoginComponent implements OnInit {
           catchError((error: HttpErrorResponse) => {
             if (error.status == 401) {
               this.showIncorrectCredentialMessage = true;
-              this.loginForm.get(this.username.controlName)?.setErrors({ 'incorrectCredential': true }, { emitEvent: false });
-              this.loginForm.get(this.password.controlName)?.setErrors({ 'incorrectCredential': true }, { emitEvent: false });
+              this.userNameControl?.setErrors({ 'incorrectCredential': true }, { emitEvent: false });
+              this.passwordControl?.setErrors({ 'incorrectCredential': true }, { emitEvent: false });
             }
             return throwError(() => error);
           })
@@ -61,8 +73,6 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem(this.userId, result.user?.userId.toString()!);
           this.router.navigateByUrl(AppRoutes.Overview);
         });
-    } else {
-      this.loginForm.markAllAsTouched();
     }
   }
 
