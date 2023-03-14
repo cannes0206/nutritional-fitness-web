@@ -4,13 +4,14 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { BehaviorSubject, map, mergeMap, Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { FoodCategory, MealType } from 'src/app/core/enums';
-import { MealDto, MealPlanDto, MealPlannerWeekView, MealTypeServingSize } from 'src/app/core/models/dtos';
-import { GetRecipesByMealRequest, GetWeeklyMealPlanRequest } from 'src/app/core/models/requests';
-import { RecipeService } from 'src/app/core/services';
-import { RecipeDto } from '../../../core/models/dtos/recipe-dto';
-import { CreateMealPlanRequest, UpdateMealPlanRequest } from '../../../core/models/requests/meal-plan-request';
-import { LookupService } from '../../../core/services/lookup.service';
-import { MealService } from '../../../core/services/meal.service';
+import { MealDto, MealPlanDto, MealPlannerWeekView, MealTypeServingSize, RecipeDto } from 'src/app/core/models/dtos';
+import {
+  CreateMealPlanRequest,
+  GetRecipesByMealRequest,
+  GetWeeklyMealPlanRequest,
+  UpdateMealPlanRequest
+} from 'src/app/core/models/requests';
+import { LookupService, MealService, RecipeService } from 'src/app/core/services';
 import { FormOption } from '../../../shared/components/form-controls/form-item';
 import { Helpers } from '../../../shared/utilities/helpers';
 import { MealSelectionModalComponent, MealSelectionModalData } from './meal-selection-modal/meal-selection-modal.component';

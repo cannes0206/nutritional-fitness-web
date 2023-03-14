@@ -1,10 +1,8 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { MealDto, MealPlannerWeekView } from 'src/app/core/models/dtos';
 import { DeleteMealsByDateRequest, GetRecipesByMealRequest, GetWeeklyMealPlanRequest } from 'src/app/core/models/requests';
-import { FoodCategory } from '../../../../core/enums/food-category.enum';
-import { MealType } from '../../../../core/enums/meal-type.enum';
 import { FormOption } from '../../../../shared/components/form-controls/form-item';
 
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -17,6 +15,7 @@ import { WeekDay } from '@angular/common';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { default as _rollupMoment, Moment } from 'moment';
+import { FoodCategory, MealType } from 'src/app/core/enums';
 import {
   DeleteConfirmationModalComponent,
   DeleteMealPlanConfirmationModalData
@@ -79,9 +78,9 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
   private _unsubscribe: Subject<void> = new Subject<void>();
 
   slideState: string = '';
-  selectedDate: string = '';
+  selectedDate?: Date;
   selectedDateClass: string = '';
-  currentDay: string = moment().date().toString();
+  currentDate: Date = new Date();
 
   noOfServingsControl: FormControl = new FormControl('');
   weekControl: FormControl = new FormControl(moment());
@@ -104,7 +103,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
   @Output() deleteMealsByDate: EventEmitter<DeleteMealsByDateRequest> = new EventEmitter();
   @Output() selectedMeal: EventEmitter<{ request: GetRecipesByMealRequest; foodCategory?: FoodCategory }> = new EventEmitter();
 
-  constructor(private dialog: MatDialog, private cdr: ChangeDetectorRef) {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.noOfServingsControl.valueChanges.pipe(debounceTime(250), takeUntil(this._unsubscribe)).subscribe((value: number) => {
@@ -114,7 +113,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
     });
 
     this.weekControl.valueChanges.subscribe((value) => {
-      this.selectedDate = moment(value).toString();
+      this.selectedDate = new Date(value);
 
       if (!this.mealsForTheWeek.some((m) => moment(m.mealDate).isSame(moment(this.selectedDate), 'date'))) {
         this.weeklyMealPlanFilter.emit({
@@ -137,9 +136,11 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
     if (mealsForTheWeek && mealsForTheWeek.currentValue) {
       this.slideContent('');
 
-      if (this.selectedDate && this.mealsForTheWeek.some((m) => moment(m.mealDate).isSame(moment(this.selectedDate), 'date')))
-        this.scrollToContainer(new Date(this.selectedDate));
-      else this.scrollToContainer();
+      setTimeout(() => {
+        if (this.selectedDate && this.mealsForTheWeek.some((m) => moment(m.mealDate).isSame(moment(this.selectedDate), 'date')))
+          this.scrollToContainer(new Date(this.selectedDate));
+        else this.scrollToContainer();
+      });
     }
   }
 
@@ -162,7 +163,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
       else if (arrow === 'keyboard_arrow_right') this.updateWeekRange('next');
     } else {
       if (day) {
-        this.selectedDate = day.toString();
+        this.selectedDate = day;
 
         const className = this.mealsForTheWeek.find((d) => moment(d.mealDate).isSame(moment(day), 'date'))?.totalMealScoreClass!;
         this.selectedDateClass = `bg-${className}`;
@@ -172,7 +173,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
       const element = document.getElementById(container);
 
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => element.scrollIntoView({ behavior: 'smooth', block: 'start' }));
       }
     }
   }
@@ -198,7 +199,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
       endDate: this.daysOfWeek[this.daysOfWeek.length - 1]
     };
 
-    const dialogRef = this.dialog.open(DeleteConfirmationModalComponent, { data, autoFocus: false });
+    const dialogRef = this.dialog.open(DeleteConfirmationModalComponent, { data, autoFocus: false, position: { top: '20px' } });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed) {
@@ -221,7 +222,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
     if (!this.mealsForTheWeek.some((m) => moment(m.mealDate).isSame(moment(), 'date'))) {
       this.weekControl.setValue(moment(), { emitEvent: false });
 
-      this.selectedDate = moment().toString();
+      this.selectedDate = new Date();
 
       this.weeklyMealPlanFilter.emit({
         userId: 'test_user_id',
@@ -248,6 +249,9 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
 
     this.slideContent(direction);
 
+    this.selectedDate = undefined;
+    this.selectedDateClass = '';
+
     const startOfWeek =
       direction === 'prev'
         ? moment(this.daysOfWeek[0], 'YYYY-MM-DD').startOf('week').subtract(1, 'week')
@@ -262,8 +266,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
             .endOf('week')
             .add(1, 'week');
 
-    this.selectedDate = '';
-    this.selectedDateClass = '';
+    this.weekControl.setValue(startOfWeek, { emitEvent: false });
 
     this.weeklyMealPlanFilter.emit({
       userId: 'test_user_id',

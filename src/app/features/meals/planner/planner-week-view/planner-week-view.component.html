@@ -41,10 +41,18 @@
             'rounded text-white': (selectedDate | date: 'd') === (day | date: 'd')
           }"
           (click)="scrollToContainer(day, $event)">
-          <mat-icon *ngIf="first" class="fs-1 cursor-pointer text-muted" (click)="updateWeekRange('prev', $event)">keyboard_arrow_left</mat-icon>
+          <mat-icon *ngIf="first" class="fs-1 cursor-pointer"
+            [class.text-muted]="(selectedDate | date:'shortDate') !== (day | date: 'shortDate')"
+            [class.text-white]="(selectedDate | date:'shortDate') === (day | date: 'shortDate')"
+            (click)="updateWeekRange('prev', $event)">
+            keyboard_arrow_left
+          </mat-icon>
           <div class="d-flex flex-column w-100">
-            <h3 class="mb-0" [class.text-muted]="(selectedDate | date: 'd') !== (day | date: 'd')">{{ day | date:'EEE'}}</h3>
-            <h3 class="fw-bold mb-0 fs-3" [ngClass]="{'text-decoration-underline': currentDay === (day | date: 'd')}">{{ day | date: 'dd' }}</h3>
+            <h3 class="mb-0" [class.text-muted]="(selectedDate | date:'shortDate') !== (day | date: 'shortDate')">{{ day | date:'EEE'}}</h3>
+            <h3 class="fw-bold mb-0 fs-3"
+              [ngClass]="{'text-decoration-underline': (currentDate | date:'shortDate') === (day | date: 'shortDate')}">
+              {{ day | date: 'dd' }}
+            </h3>
           </div>
           <mat-icon *ngIf="last" class="fs-1 cursor-pointer text-muted" (click)="updateWeekRange('next', $event)">keyboard_arrow_right</mat-icon>
         </div>
@@ -52,7 +60,7 @@
 
     <div class="week-view pe-2 mt-2">
       <ng-container *ngFor="let meal of mealsForTheWeek; let first = first">
-        <div class="day-of-week-view rounded border-bottom" [class.mt-2]="!first"  [id]="(meal.day | lowercase) + '-container'">
+        <div class="day-of-week-view rounded border-bottom" [class.mt-2]="!first" [id]="(meal.day | lowercase) + '-container'">
           <span class="progress" [ngClass]="'text-' + meal.totalMealScoreClass">
             <mat-progress-bar mode="determinate" [value]="meal.totalMealScore * 100 | number"></mat-progress-bar>
           </span>
