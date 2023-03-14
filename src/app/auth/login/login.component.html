@@ -88,14 +88,15 @@
         <div class="auth-form">
           <form [formGroup]="loginForm">
             <div class="form-field-input">
-              <app-form-input [formItem]="username" [formGroup]="loginForm">
+              <app-form-input [formItem]="username" (focus)="onFocusInput()" [formGroup]="loginForm">
               </app-form-input>
             </div>
             <div class="form-field-input password-container">
-              <app-form-input [formItem]="password" [controlType]="isShowPassword?'text':'password'" [formGroup]="loginForm" (iconClick)="showPassword()">
+              <app-form-input (focus)="onFocusInput()" [formItem]="password" [controlType]="isShowPassword?'text':'password'" [formGroup]="loginForm" (iconClick)="showPassword()">
               </app-form-input>
-              <span class="forgot-password">Forgot Password?</span>
             </div>
+            <span class="incorrect-credential d-block" *ngIf="showIncorrectCredentialMessage">Please enter correct username or password</span>
+            <span class="forgot-password">Forgot Password?</span>
           </form>
         </div>
         <div class="auth-buttons">

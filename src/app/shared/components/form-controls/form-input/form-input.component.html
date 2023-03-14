@@ -7,6 +7,7 @@
       [formControlName]="formItem.controlName"
       [id]="formItem.controlName"
       [placeholder]="formItem.placeHolder!"
+      (focus)="focus.emit()"
       [textMask]="{ mask: formItem.textMask || false }">
     <mat-icon *ngIf="formItem.isSearchField && !formGroup.get(formItem.controlName)?.value" matSuffix (click)="iconClick.emit()">search</mat-icon>
     <mat-icon *ngIf="formItem.icon" matSuffix (click)="iconClick.emit()">{{formItem.icon}}</mat-icon>

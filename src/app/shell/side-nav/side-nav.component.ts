@@ -1,8 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter, Observable } from 'rxjs';
-import { AuthService } from '../../core/services/auth.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LowerNavigation, Menu, UpperNavigation } from './menu-items';
 @Component({
   selector: 'app-side-nav',
@@ -11,19 +7,12 @@ import { LowerNavigation, Menu, UpperNavigation } from './menu-items';
 })
 export class SideNavComponent implements OnInit {
 
-  isLoggedIn$: Observable<boolean> | undefined; 
-
+  @Input() isLoggedIn!: boolean;
   upperNavigation: Menu = { navigation: UpperNavigation };
   lowerNavigation: Menu = { navigation: LowerNavigation };
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor() {
   }
-  isInLogInPage: boolean = false;
   ngOnInit(): void {
-    this.isLoggedIn$ = this.authService.isLoggedIn;
   }
-
-
-
-
 }

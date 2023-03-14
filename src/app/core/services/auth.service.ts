@@ -1,16 +1,17 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, catchError, Observable, throwError } from "rxjs";
 import { AppRoutes } from "../enums";
 import { AppConfig } from "../models";
+import { LoginRequest, LoginResponse } from "../models/auth.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly token: string = 'token';
-  private readonly infoToken: string = 'infoToken';
+  private readonly userEmail: string = 'userEmail';
+
 
   private loggedIn = new BehaviorSubject<boolean>(false);
 
@@ -19,15 +20,19 @@ export class AuthService {
   }
 
   constructor(
-    private router: Router
+    private http: HttpClient,
+    private appConfig: AppConfig
   ) { }
 
-  login() {
-    this.loggedIn.next(true);
-    this.router.navigateByUrl(`${AppRoutes.Overview}`);
+  login(request: LoginRequest): Observable<any> {
+    const authUrl = this.appConfig.nutritionalFitnessApiBaseAddress + '/users/authenticate';
+    return this.http.post<LoginResponse>(authUrl, request)
+      .pipe(
+        catchError(err => { return throwError(() => err); })
+      );
   }
 
-  logout() {
-    this.loggedIn.next(false);
+  public getUserEmail(): string | null {
+    return (sessionStorage.getItem(this.userEmail)!);
   }
 }

@@ -16,6 +16,7 @@ export class FormInputComponent {
   @Input() floatLabel: FloatLabelType = 'always';
   @Output() valueChanges: EventEmitter<any> = new EventEmitter();
   @Output() iconClick: EventEmitter<void> = new EventEmitter();
+  @Output() focus: EventEmitter<void> = new EventEmitter();
 
   get formControl(): FormControl {
     return this.formGroup.get(this.formItem.controlName) as FormControl;

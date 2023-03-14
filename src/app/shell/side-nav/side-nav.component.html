@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav mode="side" opened>
+  <mat-sidenav mode="side" opened *ngIf="isLoggedIn">
     <div class="d-flex justify-content-between align-items-center py-3">
       <img class="side-nav-logo" src="../../../../assets/images/nf-header-logo.svg" width="210">
     </div>
@@ -10,8 +10,8 @@
       </button>
     </ng-container>
     <mat-divider></mat-divider>
-    <ng-container *ngFor="let menuItem of lowerNavigation.navigation" >
-      <button mat-button class="menu-button" [routerLink]="menuItem.href"  [routerLinkActive]="'active'">
+    <ng-container *ngFor="let menuItem of lowerNavigation.navigation">
+      <button mat-button class="menu-button" [routerLink]="menuItem.href" [routerLinkActive]="'active'">
         <mat-icon>{{menuItem.icon}}</mat-icon>
         <span>{{menuItem.text}}</span>
       </button>

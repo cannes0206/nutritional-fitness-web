@@ -1,0 +1,41 @@
+import { BloodTypeDto, CoachDashboardMemberDto, CountryDto, GenderDto, ProgramDto, StatusDto, UserTypeDto } from ".";
+
+export interface UserDto {
+  userId: number;
+  UserTypeId: number;
+  UserType: UserTypeDto;
+  userName: string;
+  name: string;
+  email: string;
+  age: number;
+  genderId: number;
+  gender: GenderDto;
+  countryId: number;
+  country: CountryDto;
+  bodyTypeId: number;
+  bloodTypeId: number;
+  bloodType: BloodTypeDto;
+  statusId: number;
+  status: StatusDto;
+  programId: number;
+  pragram: ProgramDto;
+  startDate: string;
+  birthDate: string;
+  active: boolean;
+  deleted: boolean;
+  encryptedId: string;
+  coachDashboardMember: CoachDashboardMemberDto;
+  programPhaseName: string;
+  programPhaseId: number;
+  hasQuestionnaire: boolean;
+  hasWeightGoal: boolean;
+  hasFuturePhaseSchedule: boolean;
+  hasAnnouncement: boolean;
+  hasMessage: boolean;
+  startWeight: number;
+  currentWeight: number;
+  weightDifference: string;
+  statusName: string;
+  coachId: number;
+  isUserInCurrentPhase: boolean;
+}

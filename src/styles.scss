@@ -7,47 +7,43 @@
 
 .main-container {
   max-width: 1200px;
-}
 
-.btn-primary {
-  color: #fff;
-}
+  .btn-primary {
+    color: #fff;
+  }
 
-.btn:hover {
-  color: #fff;
-}
+  .btn:hover {
+    color: #fff;
+  }
 
-.cursor-pointer {
-  cursor: pointer;
-}
+  .cursor-pointer {
+    cursor: pointer;
+  }
 
-.material-icons {
-  cursor: pointer;
+  .material-icons {
+    cursor: pointer;
 
-  &:hover {
-    opacity: 0.8;
+    &:hover {
+      opacity: 0.8;
 
-    &.text-muted {
-      color: var(--bs-primary) !important;
+      &.text-muted {
+        color: var(--bs-primary) !important;
+      }
     }
   }
-}
 
-.mat-form-field-appearance-outline .mat-form-field-outline-thick {
-  color: var(--bs-primary) !important;
-}
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
 
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--bs-gray-400);
+    border-radius: 10px;
+  }
 
-::-webkit-scrollbar-thumb {
-  background-color: var(--bs-gray-400);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--bs-gray-500);
-  cursor: pointer !important;
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--bs-gray-500);
+    cursor: pointer !important;
+  }
 }
