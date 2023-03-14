@@ -11,13 +11,7 @@ import { LoginRequest, LoginResponse } from "../models/auth.model";
 })
 export class AuthService {
   private readonly userEmail: string = 'userEmail';
-
-
   private loggedIn = new BehaviorSubject<boolean>(false);
-
-  get isLoggedIn() {
-    return this.loggedIn.asObservable();
-  }
 
   constructor(
     private http: HttpClient,
