@@ -1,12 +1,11 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { AppService } from '../services/app.service';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService, private appService: AppService) {}
+  constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = this.addAuthHeader(request);
@@ -22,7 +21,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
   handleResponseError(error: HttpErrorResponse, request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (error.status === 401) {
-      this.appService.logout();
+      this.authService.logout();
       return throwError(error);
     }
 

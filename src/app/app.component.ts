@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { AppService } from './core/services/app.service';
+import { AuthService } from './core/services';
 import { FormItem, ValidationType } from './shared/components/form-controls';
 import { Regex } from './shared/constants';
 import { CustomValidators } from './shared/forms/custom-validators';
@@ -23,12 +23,12 @@ export class AppComponent implements OnInit {
   dateOfBirth: FormItem = { controlName: 'dateOfBirth', label: 'Date of Birth', validationType: ValidationType.date };
   searchName: FormItem = { controlName: 'searchName', label: 'Search Name', isSearchField: true };
 
-  constructor(public router: Router, private appService: AppService, private route: ActivatedRoute) {
+  constructor(private router: Router, private authService: AuthService) {
   }
 
   ngOnInit(): void {
     if (sessionStorage.getItem('isUserLogIn') == 'true') {
-      this.appService.setUserLoggedIn(true);
+      this.authService.setUserLoggedIn(true);
       this.isLoggedIn = true;
     } else {
       this.router.navigate(['/']);

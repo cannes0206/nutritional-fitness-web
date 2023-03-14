@@ -21,7 +21,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private appConfig: AppConfig
+    private appConfig: AppConfig,
+    private router: Router
   ) { }
 
   login(request: LoginRequest): Observable<any> {
@@ -34,5 +35,19 @@ export class AuthService {
 
   public getUserEmail(): string | null {
     return (sessionStorage.getItem(this.userEmail)!);
+  }
+
+  setUserLoggedIn(userLoggedIn: boolean) {
+    this.loggedIn.next(userLoggedIn);
+  }
+
+  getUserLoggedIn(): Observable<boolean> {
+    return this.loggedIn.asObservable();
+  }
+
+  logout(): void {
+    this.setUserLoggedIn(false);
+    sessionStorage.clear();
+    this.router.navigate(['/']);
   }
 }

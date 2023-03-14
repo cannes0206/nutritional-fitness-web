@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { AppRoutes } from '../../core/enums';
 import { LoginRequest, LoginResponse } from '../../core/models/auth.model';
-import { AppService } from '../../core/services/app.service';
 import { AuthService } from '../../core/services/auth.service';
 import { FormItem } from '../../shared/components/form-controls';
 import { LoginFormItems } from './login-models';
@@ -27,7 +26,7 @@ export class LoginComponent implements OnInit {
   isShowPassword: boolean = false;
   showIncorrectCredentialMessage: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router, private appService: AppService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   ngOnInit(): void {
