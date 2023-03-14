@@ -117,7 +117,6 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
 
       if (!this.mealsForTheWeek.some((m) => moment(m.mealDate).isSame(moment(this.selectedDate), 'date'))) {
         this.weeklyMealPlanFilter.emit({
-          userId: 'test_user_id',
           startDate: moment(value).startOf('week').format('YYYY-MM-DD').toString(),
           endDate: moment(value).endOf('week').format('YYYY-MM-DD').toString()
         });
@@ -185,7 +184,6 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
     this.weekControl.setValue(ctrlValue, { emitEvent: false });
 
     this.weeklyMealPlanFilter.emit({
-      userId: 'test_user_id',
       startDate: moment(this.weekControl.value).startOf('month').startOf('week').format('YYYY-MM-DD').toString(),
       endDate: moment(this.weekControl.value).startOf('month').endOf('week').format('YYYY-MM-DD').toString()
     });
@@ -225,7 +223,6 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
       this.selectedDate = new Date();
 
       this.weeklyMealPlanFilter.emit({
-        userId: 'test_user_id',
         startDate: moment().startOf('week').format('YYYY-MM-DD').toString(),
         endDate: moment().endOf('week').format('YYYY-MM-DD').toString()
       });
@@ -269,7 +266,6 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
     this.weekControl.setValue(startOfWeek, { emitEvent: false });
 
     this.weeklyMealPlanFilter.emit({
-      userId: 'test_user_id',
       startDate: startOfWeek.toString(),
       endDate: endOfWeek.toString()
     });

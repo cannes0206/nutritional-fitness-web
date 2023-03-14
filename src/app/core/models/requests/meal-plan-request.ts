@@ -10,7 +10,6 @@ export interface UpdateMealPlanRequest extends CreateMealPlanRequest {
 }
 
 export interface GetWeeklyMealPlanRequest {
-  userId: string;
   startDate: string;
   endDate: string;
 }

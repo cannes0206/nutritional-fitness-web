@@ -1,20 +1,12 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpErrorResponse,
-  HttpResponse
-} from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { AuthService } from '../services/auth.service';
 import { AppService } from '../services/app.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
-
-  constructor(private authService: AuthService, private appService: AppService) { }
+  constructor(private authService: AuthService, private appService: AppService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = this.addAuthHeader(request);
@@ -24,9 +16,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         if (event instanceof HttpResponse) {
         }
       }),
-      catchError((error: HttpErrorResponse) => {
-        return this.handleResponseError(error, request, next);
-      })
+      catchError((error: HttpErrorResponse) => this.handleResponseError(error, request, next))
     );
   }
 
@@ -39,20 +29,19 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     return throwError(error);
   }
 
-  addAuthHeader(request: HttpRequest<any>) {
+  addAuthHeader(request: HttpRequest<any>): HttpRequest<any> {
     const token = sessionStorage.getItem('token');
-    const isUserLoggedIn = sessionStorage.getItem('isUserLogIn') == 'true';
+    const isUserLoggedIn = sessionStorage.getItem('isUserLogIn') === 'true';
 
     if (token && isUserLoggedIn) {
       request = request.clone({
-        setHeaders: { Authorization: `Bearer ${token}`, RequesterName: this.getUserEmail()! },
+        setHeaders: { Authorization: `Bearer ${token}`, RequesterName: this.getUserEmail()! }
       });
     }
     return request;
   }
 
-  private getUserEmail() {
-    let userEmail = this.authService.getUserEmail();
-    return userEmail;
+  private getUserEmail(): string | null {
+    return this.authService.getUserEmail();
   }
 }

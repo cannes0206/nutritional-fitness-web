@@ -34,7 +34,6 @@ export class PlannerComponent implements OnInit, OnDestroy {
   mealsForTheWeek$: Observable<MealPlannerWeekView[]> = new Observable();
 
   weekFilterOption$: BehaviorSubject<GetWeeklyMealPlanRequest> = new BehaviorSubject<GetWeeklyMealPlanRequest>({
-    userId: 'test_user_id',
     startDate: moment().startOf('week').format('YYYY-MM-DD').toString(),
     endDate: moment().endOf('week').format('YYYY-MM-DD').toString()
   });
