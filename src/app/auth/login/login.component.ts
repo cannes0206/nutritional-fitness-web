@@ -62,6 +62,8 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem(this.userId, result.user?.userId.toString()!);
           this.router.navigateByUrl(AppRoutes.Overview);
         });
+    } else {
+      this.loginForm.markAllAsTouched();
     }
   }
 

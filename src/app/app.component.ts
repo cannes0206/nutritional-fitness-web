@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
       .subscribe((r) => {
         if (r instanceof NavigationEnd) {
 
-          if (this.router.url.includes('/login'))
+          if (this.router.url.includes('/sign-in'))
             this.isLoggedIn = false;
           else if (sessionStorage.getItem('isUserLogIn') == 'true')
             this.isLoggedIn = true;
