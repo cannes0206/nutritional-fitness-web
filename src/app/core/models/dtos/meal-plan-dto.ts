@@ -21,8 +21,9 @@ export interface MealTypeServingSize {
 }
 
 export interface MealPlannerWeekView {
+  day: string;
   totalMealScore: number;
-  totalMealScoreClass: string;
+  totalMealScoreClass: 'primary' | 'warning' | 'danger' | 'secondary';
   mealDate: Date;
   breakfast: MealTypeServingSize;
   lunch: MealTypeServingSize;

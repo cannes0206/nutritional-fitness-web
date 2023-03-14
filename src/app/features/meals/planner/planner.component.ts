@@ -1,3 +1,4 @@
+import { WeekDay } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
@@ -28,7 +29,6 @@ export class PlannerComponent implements OnInit, OnDestroy {
   mealPlanId: number = 0;
   mealPlanServingSize: number = 0;
 
-  // recipes$: Observable<RecipeDto[]> = new Observable();
   mealTypes: FormOption[] = [];
   mealsForTheWeek$: Observable<MealPlannerWeekView[]> = new Observable();
 
@@ -54,7 +54,6 @@ export class PlannerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // try first rxjs operator
     this.lookupService
       .getMealTypes()
       .pipe(
@@ -117,17 +116,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
     );
   }
 
-  openDialog() {
-    // const data: MealSelectionModalData = {
-    // };
-  }
-
   getRecipesByMeal(data: { request: GetRecipesByMealRequest; foodCategory?: FoodCategory }): void {
-    // const request: GetRecipesByMealRequest = {
-    //   ...meal,
-    //   mealPlanId: this.mealPlanId
-    // };
-
     const { request, foodCategory } = data;
 
     this.recipeService
@@ -190,6 +179,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
       this.daysOfWeek.push(mealDate);
 
       mealsForTheWeek.push({
+        day: WeekDay[mealDate.getDay()],
         totalMealScore: totalServiceSizeForDay / 25,
         totalMealScoreClass: this.getTotalMealScoreClass(totalServiceSizeForDay / 25),
         mealDate,
@@ -211,11 +201,11 @@ export class PlannerComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getTotalMealScoreClass(totalMealScore: number): string {
-    if (totalMealScore > 0.99) return 'text-primary';
-    else if (totalMealScore >= 0.5 && totalMealScore <= 0.99) return 'text-warning;';
-    else if (totalMealScore > 0 && totalMealScore < 0.5) return 'text-danger';
-    else return 'text-muted';
+  private getTotalMealScoreClass(totalMealScore: number): 'primary' | 'warning' | 'danger' | 'secondary' {
+    if (totalMealScore > 0.99) return 'primary';
+    else if (totalMealScore >= 0.5 && totalMealScore <= 0.99) return 'warning';
+    else if (totalMealScore > 0 && totalMealScore < 0.5) return 'danger';
+    else return 'secondary';
   }
 
   private mapMealsByMealType(meals: MealDto[], mealType: MealType): MealTypeServingSize {

@@ -8,4 +8,27 @@
     top: -20px;
     right: -15px;
   }
+
+  .date-range, .refresh-icon {
+    color: var(--bs-orange);
+  }
+
+  .btn-outline-warning {
+    border-color: var(--bs-orange);
+    color: var(--bs-orange);
+
+    &:hover {
+      background-color: var(--bs-orange);
+      color: var(--bs-white);
+    }
+  }
+
+  .btn-warning {
+    background-color: var(--bs-orange);
+    border-color: var(--bs-orange);
+
+    &:hover {
+      opacity: 90%;
+    }
+  }
 }
