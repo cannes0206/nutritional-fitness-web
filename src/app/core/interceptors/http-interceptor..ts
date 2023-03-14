@@ -1,18 +1,20 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { AuthService, SpinnerService } from '../services';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private spinnerService: SpinnerService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.spinnerService.show();
     request = this.addAuthHeader(request);
 
     return next.handle(request).pipe(
       tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
+          this.spinnerService.hide();
         }
       }),
       catchError((error: HttpErrorResponse) => this.handleResponseError(error, request, next))
@@ -22,9 +24,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   handleResponseError(error: HttpErrorResponse, request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (error.status === 401) {
       this.authService.logout();
-      return throwError(error);
     }
 
+    this.spinnerService.hide();
     return throwError(error);
   }
 

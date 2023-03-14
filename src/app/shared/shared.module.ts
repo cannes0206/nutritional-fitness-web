@@ -37,6 +37,7 @@ import { PhotoUploaderComponent } from './components/photo-uploader/photo-upload
 import { TableComponent } from './components/table/table.component';
 import { AppValidationModule } from './forms/app-validation.modules';
 import { FilterPipe, NoValuePipe, SafeUrlPipe } from './pipes';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { FilterPipe, NoValuePipe, SafeUrlPipe } from './pipes';
     MatToolbarModule,
     MatSidenavModule,
     MatDividerModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    MatProgressSpinnerModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -112,7 +114,8 @@ import { FilterPipe, NoValuePipe, SafeUrlPipe } from './pipes';
     MatDialogModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressSpinnerModule
   ]
 })
 export class SharedModule {}
