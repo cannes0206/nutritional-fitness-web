@@ -1,0 +1,74 @@
+.carousel-section {
+  margin-top: 273px;
+
+  .carousel-sub-content {
+    color: white;
+    margin: 37px 43px;
+    text-align: left;
+    font-weight: 100;
+  }
+
+  h3 {
+    color: #ffffff;
+    text-align: left;
+    margin: 0 43px;
+    line-height: 35px;
+    font-size: 28px;
+  }
+
+  ::ng-deep {
+    .badge-icon {
+      margin-left: 13px;
+
+      span.icon-desc {
+        padding-left: 18px;
+        line-height: 23px;
+      }
+    }
+
+    .mat-badge-content {
+      top: unset;
+      right: unset;
+      background-color: #EF7648;
+      color: white;
+      font-size: 12px;
+      font-weight: 100;
+    }
+
+    .carousel {
+      background-color: #29212199;
+    }
+
+    .carousel-indicators {
+      left: 35%;
+
+      button.mat-button-disabled {
+        background-color: #8ACA3E !important;
+        border: 2px solid #8ACA3E;
+      }
+
+      button.mat-button-base {
+        background-color: #ffffff;
+      }
+    }
+
+    .carousel-last-item {
+      padding: 0 5px;
+
+      h3 {
+        font-size: 20px;
+        line-height: 48px;
+      }
+
+      span {
+        font-size: 20px;
+        color: #ffffff;
+      }
+
+      .mat-icon {
+        font-size: 47px;
+        color: #ffffff;
+      }
+    }
+  }
+}

@@ -18,14 +18,12 @@ export class AppComponent implements OnInit {
   username: FormItem = { controlName: 'username', label: 'Username', icon: 'person' };
   password: FormItem = { controlName: 'password', label: 'Password', icon: 'visibility_off' };
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     if (sessionStorage.getItem('isUserLogIn') === 'true') {
       this.authService.setUserLoggedIn(true);
       this.isLoggedIn = true;
-    } else {
-      this.router.navigate(['/']);
     }
     this.routerChanges();
     this.form.addControl(this.username.controlName, new FormControl('', Validators.required));

@@ -40,6 +40,7 @@ import { FilterPipe, NoValuePipe, SafeUrlPipe } from './pipes';
 import { AbsPipe } from './pipes/abs.pipe';
 import { AppendMetricsPipe } from './pipes/append-metrics.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AdvertisementCarouselComponent } from './components/advertisement-carousel/advertisement-carousel.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     FilterPipe,
     CustomMultiselectComponent,
     AbsPipe,
-    AppendMetricsPipe
+    AppendMetricsPipe,
+    AdvertisementCarouselComponent
   ],
   imports: [
     CommonModule,
@@ -123,6 +125,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     AbsPipe,
     AppendMetricsPipe,
     MatProgressSpinnerModule,
+    AdvertisementCarouselComponent
   ]
 })
 export class SharedModule {}

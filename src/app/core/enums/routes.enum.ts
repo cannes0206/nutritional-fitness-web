@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 export enum AppRoutes {
   Auth = 'auth',
+  ForgotPassword = 'forgot-password',
   Overview = 'overview',
   Users = 'users',
   LearningModules = 'learningmodules',
