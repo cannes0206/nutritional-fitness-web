@@ -6,13 +6,15 @@ import { OverviewLandingComponent } from './overview-landing/overview-landing.co
 import { OverviewListComponent } from './overview-list/overview-list.component';
 import { OverviewMemberGainComponent } from './overview-member-gain/overview-member-gain.component';
 import { SharedModule } from '../../shared/shared.module';
+import { OverviewMemberTableComponent } from './overview-member-table/overview-member-table.component';
 
 
 @NgModule({
   declarations: [
     OverviewLandingComponent,
     OverviewListComponent,
-    OverviewMemberGainComponent
+    OverviewMemberGainComponent,
+    OverviewMemberTableComponent
   ],
   imports: [
     CommonModule,

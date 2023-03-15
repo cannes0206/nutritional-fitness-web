@@ -1,1 +1,34 @@
-<p>overview-member-gain works!</p>
+
+<div class="row">
+  <div class="col-6">
+    <div class="border rounded bg-white pt-3">
+      <span class="mx-4 fw-bold">Members who have gained more than 2lbs in their current Normalize or Live</span>
+      <div class="ms-4 mt-3 search-member-container">
+        <app-form-input [formItem]="searchNFMemberField"
+                        [formGroup]="searchFormGroup">
+        </app-form-input>
+      </div>
+      <app-overview-member-table [initColumn]="header"
+                                 [tableData]="(normalizeMemberDataSource$ | async)"
+                                 [displayedColumnNames]="membersGainDisplayedColumnNames">
+      </app-overview-member-table>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="border rounded bg-white pt-3">
+      <span class="mx-4 fw-bold">Members who have gained more than 2lbs in their current Release</span>
+      <div class="ms-4 mt-3 search-member-container">
+        <app-form-input [formItem]="searchRMemberField"
+                        [formGroup]="searchFormGroup">
+        </app-form-input>
+      </div>
+      <app-overview-member-table [initColumn]="header"
+                                 [tableData]="(releaseMemberDataSource$ | async)"
+                                 [displayedColumnNames]="membersGainDisplayedColumnNames">
+      </app-overview-member-table>
+
+
+    </div>
+  </div>
+
+</div>

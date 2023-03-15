@@ -1,4 +1,4 @@
-import { ColumnTypeEnum, InitColumn } from "../../../shared/components/table";
+import { ColumnTypeEnum, InitiateColumn } from "../overview-member-table/overview-member-table";
 
 export class OverviewList {
 }
@@ -9,14 +9,14 @@ export interface MembersListDataSourceModel {
   cycle: string;
   phase: string;
   startDate: string;
-  startWeight: string;
-  currentWeight: string;
-  progress: string;
+  startWeight: number;
+  currentWeight: number;
+  progress: number;
   action: string;
   iconName?: string;
 }
 
-export const MemberColumnHeaders: InitColumn[] = [
+export const MemberColumnHeaders: InitiateColumn[] = [
   {
     name: 'name',
     displayName: 'Name',
@@ -40,17 +40,17 @@ export const MemberColumnHeaders: InitColumn[] = [
   {
     name: 'startWeight',
     displayName: 'Start Weight',
-    columnType: ColumnTypeEnum.Text
+    columnType: ColumnTypeEnum.Numbers
   },
   {
     name: 'currentWeight',
     displayName: 'Current Weight',
-    columnType: ColumnTypeEnum.Text
+    columnType: ColumnTypeEnum.Numbers
   },
   {
     name: 'progress',
     displayName: 'Progress',
-    columnType: ColumnTypeEnum.TextWithIcons,
+    columnType: ColumnTypeEnum.NumbersWithIcons,
     iconName: 'iconName'
   },
   {
