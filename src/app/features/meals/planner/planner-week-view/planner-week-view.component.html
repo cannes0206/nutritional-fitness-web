@@ -1,5 +1,3 @@
-
-
 <div class="planner-week-view-container">
   <div class="d-flex flex-wrap justify-content-between align-items-center">
     <div class="meal-plan-controls d-flex flex-row align-items-baseline">
@@ -59,7 +57,7 @@
     </div>
 
     <div class="week-view pe-2 mt-2">
-      <ng-container *ngFor="let meal of mealsForTheWeek; let first = first">
+      <ng-container *ngFor="let meal of weeklyMealPlan; let first = first">
         <div class="day-of-week-view rounded border-bottom" [class.mt-2]="!first" [id]="(meal.day | lowercase) + '-container'">
           <span class="progress" [ngClass]="'text-' + meal.totalMealScoreClass">
             <mat-progress-bar mode="determinate" [value]="meal.totalMealScore * 100 | number"></mat-progress-bar>
@@ -77,34 +75,34 @@
               </div>
             </div>
             <div class="day-card border p-3 w-100 d-flex flex-column flex-wrap cursor-pointer">
-              <div (click)="onSelectMeal(meal, mealTypeEnum.Breakfast)">
+              <div (click)="selecteMealPlan(meal, mealTypeEnum.Breakfast)">
                   <label class="text-muted fs-6">Breakfast</label>
                   <div class="recipe-list">
                     <ng-container *ngTemplateOutlet="recipeList; context: { meals: meal.breakfast.meals, className: 'bg-' + meal.totalMealScoreClass }">
                     </ng-container>
                   </div>
               </div>
-              <img class="cursor-pointer" src="../../../../../assets/images/meal_zen.png" alt="breakfast" width="20" height="20"
-                  [matTooltip]="'Zen - ' + meal.breakfast.zen! + ' Serving'" [matTooltipPosition]="'above'"
-                  (click)="onSelectMeal(meal, mealTypeEnum.Breakfast, foodCategoryEnum.Breakfast)">
+              <ng-container *ngTemplateOutlet="foodCategories; context: { mealPlan: meal, meal: meal.breakfast, mealType: mealTypeEnum.Breakfast }"></ng-container>
             </div>
             <div class="day-card border p-3 w-100">
-              <div class="cursor-pointer" (click)="onSelectMeal(meal, mealTypeEnum.Lunch)">
+              <div class="cursor-pointer" (click)="selecteMealPlan(meal, mealTypeEnum.Lunch)">
                 <span class="text-muted fs-6">Lunch</span>
                 <div class="recipe-list">
                   <ng-container *ngTemplateOutlet="recipeList; context: { meals: meal.lunch.meals, className: 'bg-' + meal.totalMealScoreClass }">
                   </ng-container>
                 </div>
               </div>
-              <ng-container *ngTemplateOutlet="foodCategories; context: { meal: meal.lunch, mealType: mealTypeEnum.Lunch }"></ng-container>
+              <ng-container *ngTemplateOutlet="foodCategories; context: { mealPlan: meal, meal: meal.lunch, mealType: mealTypeEnum.Lunch }"></ng-container>
             </div>
             <div class="day-card border p-3 w-100">
-              <span class="text-muted fs-6">Dinner</span>
-              <div class="recipe-list">
-                <ng-container *ngTemplateOutlet="recipeList; context: { meals: meal.dinner.meals, className: 'bg-' + meal.totalMealScoreClass }">
-                </ng-container>
+              <div class="cursor-pointer" (click)="selecteMealPlan(meal, mealTypeEnum.Dinner)">
+                <span class="text-muted fs-6">Dinner</span>
+                <div class="recipe-list">
+                  <ng-container *ngTemplateOutlet="recipeList; context: { meals: meal.dinner.meals, className: 'bg-' + meal.totalMealScoreClass }">
+                  </ng-container>
+                </div>
               </div>
-              <ng-container *ngTemplateOutlet="foodCategories; context: { meal: meal.dinner, mealType: mealTypeEnum.Dinner }"></ng-container>
+              <ng-container *ngTemplateOutlet="foodCategories; context: { mealPlan: meal, meal: meal.dinner, mealType: mealTypeEnum.Dinner }"></ng-container>
             </div>
           </div>
         </div>
@@ -114,7 +112,7 @@
   </div>
 
 <ng-template #recipeList let-meals="meals" let-className="className">
-  <div class="mt-2 d-flex flex-row flex-wrap flex-1 overflow-auto">
+  <div class="mt-2 d-flex flex-row flex-wrap">
     <span class="py-2 px-4 mb-2 me-2 border rounded-3 text-white {{ className }}"
       *ngFor="let meal of meals; let first = first"
       [class.ms-0]="first">
@@ -123,19 +121,16 @@
   </div>
 </ng-template>
 
-<ng-template #foodCategories let-meal="meal" let-mealType="mealType">
-  <div class="d-flex flex-row align-self-end">
-    <img class="cursor-pointer " src="../../../../../assets/images/meal_protein.png" alt="breakfast" width="20" height="20"
-      [matTooltip]="'Protein - ' + meal.protein + ' Serving'" [matTooltipPosition]="'above'"
-      (click)="onSelectMeal(meal, mealType, foodCategoryEnum.Protein)">
-    <img class="cursor-pointer ms-2 incomplete" src="../../../../../assets/images/meal_carbs.png" alt="breakfast" width="20" height="20"
-      [matTooltip]="'Carbohydrate - ' + meal.carbohydrate! + ' Serving'" [matTooltipPosition]="'above'"
-      (click)="onSelectMeal(meal, mealType, foodCategoryEnum.Carbohydrate)">
-    <img class="cursor-pointer ms-2 warning" src="../../../../../assets/images/meal_veggies.png" alt="breakfast" width="20" height="20"
-      [matTooltip]="'Vegetables - ' + meal.vegetables! + ' Serving'" [matTooltipPosition]="'above'"
-      (click)="onSelectMeal(meal, mealType, foodCategoryEnum.Vegetables)">
-    <img class="cursor-pointer ms-2 complete" src="../../../../../assets/images/meal_leafy_greens.png" alt="breakfast" width="20" height="20"
-      [matTooltip]="'Leafy Greens - ' + meal.leafyGreens + ' Serving '" [matTooltipPosition]="'above'"
-      (click)="onSelectMeal(meal, mealType, foodCategoryEnum.LeafyGreens)">
+<ng-template #foodCategories let-mealPlan="mealPlan" let-meal="meal" let-mealType="mealType">
+  <div class="mt-1">
+    <app-food-category-icons
+      [mealType]="mealType"
+      [protein]="meal.protein"
+      [carbohydrate]="meal.carbohydrate"
+      [vegetables]="meal.vegetables"
+      [leafyGreens]="meal.leafyGreens"
+      [zen]="meal.zen"
+      (selectedFoodCategory)="selecteMealPlan(mealPlan, mealType, $event)">
+    </app-food-category-icons>
   </div>
 </ng-template>

@@ -10,7 +10,7 @@ export interface MealPlanDto {
   meals: MealDto[];
 }
 
-export interface MealTypeServingSize {
+export interface MealPlanNutritionInfo {
   meals: MealDto[];
   totalZenScore: number;
   zen?: number;
@@ -20,12 +20,12 @@ export interface MealTypeServingSize {
   vegetables?: number;
 }
 
-export interface MealPlannerWeekView {
+export interface DailyMealPlanView {
   day: string;
   totalMealScore: number;
   totalMealScoreClass: 'primary' | 'warning' | 'danger' | 'secondary';
   mealDate: Date;
-  breakfast: MealTypeServingSize;
-  lunch: MealTypeServingSize;
-  dinner: MealTypeServingSize;
+  breakfast: MealPlanNutritionInfo;
+  lunch: MealPlanNutritionInfo;
+  dinner: MealPlanNutritionInfo;
 }

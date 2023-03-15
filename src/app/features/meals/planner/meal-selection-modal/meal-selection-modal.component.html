@@ -1,42 +1,56 @@
-<div class="header-content d-flex flex-row">
-  <div class="border rounded-circle bg-primary text-white d-flex p-1 align-self-center me-2">
-    <mat-icon class="align-self-center">redo</mat-icon>
+<div class="meal-selection-modal position-relative">
+  <button class="text-muted close-icon" mat-icon-button aria-label="close dialog" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+  <div class="header-content d-flex flex-row">
+    <div class="redo-icon-circle rounded-circle d-flex p-3 align-self-center me-3">
+      <div class="redo-icon bg-primary rounded-circle text-white pt-1 ps-1 d-flex align-self-center align-items-center">
+        <mat-icon class="align-self-center redo-icon fs-5">redo</mat-icon>
+      </div>
+    </div>
+    <div class="header">
+      <h1 class="fw-bolder mb-0">Meal Planner</h1>
+      <span class="text-muted fs-6">Plan the meals for {{ modalData.mealPlan.mealDate | date:'MMMM dd, y' }}</span>
+    </div>
   </div>
-  <div class="header">
-    <h1 class="fw-bolder mb-0">Meal Planner</h1>
-    <span class="text-muted fs-6">Plan the meals for {{ mealDate | date:'MMMM dd, y' }}</span>
-  </div>
+  <mat-dialog-content class="mat-typography">
+    <div class="mt-3 d-flex flex-row flex-wrap flex-1 overflow-auto">
+      <span class="py-2 px-4 me-3 border border-primary rounded-3 cursor-pointer" (click)="changedMealType(item.value)"
+        *ngFor="let item of modalData.mealTypes; let first = first"
+        [ngClass]="{
+          'ms-0': first,
+          'bg-primary text-white': item.value === selectedMealType,
+          'text-primary': item.value !== selectedMealType
+        }">
+        {{ item.displayName }}
+      </span>
+    </div>
+    <div class="mt-3 d-flex flex-row flex-wrap flex-1 overflow-auto">
+      <span class="py-2 px-4 me-3 border border-primary rounded-3 cursor-pointer" (click)="changedFoodCategory(item.value)"
+        *ngFor="let item of foodCategories; let first = first"
+        [ngClass]="{
+          'ms-0': first,
+          'bg-primary text-white': item.value === selectedFoodCategory,
+          'text-primary': item.value !== selectedFoodCategory
+        }">
+        {{ item.displayName }}
+      </span>
+    </div>
+
+    <div class="mt-2 dish-form-options">
+      <app-form-select
+        [formItem]="dishesFormItem"
+        [formGroup]="dishFormGroup"
+        [isMultipleSelection]="true"
+        (valueChanges)="changedDishes($event)">
+      </app-form-select>
+    </div>
+    <div class="selected-dishes-container">
+        <app-custom-multiselect [selectedItems]="selectedDishes" [placeholder]="'No dishes selected'"></app-custom-multiselect>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button class="btn btn-outline-primary me-2 px-4" type="button" (click)="dialogRef.close()">CANCEL</button>
+    <button mat-stroked-button class="btn btn-primary px-5" type="button" (click)="save()">SAVE</button>
+  </mat-dialog-actions>
 </div>
-<mat-dialog-content class="mat-typography">
-  <div class="mt-3 d-flex flex-row flex-wrap flex-1 overflow-auto">
-    <span class="py-2 px-4 me-4 border border-primary rounded-3 cursor-pointer" (click)="changedMealType(item.value)"
-      *ngFor="let item of mealData.mealTypes; let first = first"
-      [ngClass]="{
-        'ms-0': first,
-        'bg-primary text-white': item.value === selectedMealType,
-        'text-primary': item.value !== selectedMealType
-      }">
-      {{ item.displayName }}
-    </span>
-  </div>
-  <div class="mt-3 d-flex flex-row flex-wrap flex-1 overflow-auto">
-    <span class="py-2 px-4 me-4 border border-primary rounded-3 cursor-pointer" (click)="changedFoodCategory(item.value)"
-      *ngFor="let item of foodCategories; let first = first"
-      [ngClass]="{
-        'ms-0': first,
-        'bg-primary text-white': item.value === selectedFoodCategory,
-        'text-primary': item.value !== selectedFoodCategory
-      }">
-      {{ item.displayName }}
-    </span>
-  </div>
-
-  <div class="mt-2 dish-form-options">
-    <app-form-select [formItem]="dishesFormItem" [formGroup]="dishFormGroup" [isMultipleSelection]="true" (opened)="mapSelections()" (valueChanges)="changedDishes($event)"></app-form-select>
-  </div>
-
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-stroked-button class="btn btn-outline-primary me-2 px-4" type="button" (click)="dialogRef.close()">CANCEL</button>
-  <button mat-stroked-button class="btn btn-primary px-5" type="button" (click)="save()">SAVE</button>
-</mat-dialog-actions>

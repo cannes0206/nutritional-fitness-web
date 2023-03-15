@@ -14,12 +14,6 @@ export interface UpdateMealRequest {
   mealDate: string;
 }
 
-export interface GetRecipesByMealRequest {
-  mealTypeId: number;
-  mealPlanId: number;
-  mealDate: string;
-}
-
 export interface DeleteMealsByDateRequest {
   mealPlanId: number;
   mealDate: string;

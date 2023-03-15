@@ -4,14 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { BehaviorSubject, map, mergeMap, Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { FoodCategory, MealType } from 'src/app/core/enums';
-import { MealDto, MealPlanDto, MealPlannerWeekView, MealTypeServingSize, RecipeDto } from 'src/app/core/models/dtos';
-import {
-  CreateMealPlanRequest,
-  GetRecipesByMealRequest,
-  GetWeeklyMealPlanRequest,
-  UpdateMealPlanRequest
-} from 'src/app/core/models/requests';
-import { LookupService, MealService, RecipeService } from 'src/app/core/services';
+import { DailyMealPlanView, MealDto, MealPlanDto, MealPlanNutritionInfo, RecipeDto } from 'src/app/core/models/dtos';
+import { CreateMealPlanRequest, GetWeeklyMealPlanRequest, UpdateMealPlanRequest } from 'src/app/core/models/requests';
+import { LookupService, MealService, RecipeService, SpinnerService } from 'src/app/core/services';
 import { FormOption } from '../../../shared/components/form-controls/form-item';
 import { Helpers } from '../../../shared/utilities/helpers';
 import { MealSelectionModalComponent, MealSelectionModalData } from './meal-selection-modal/meal-selection-modal.component';
@@ -31,7 +26,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
   mealPlanServingSize: number = 0;
 
   mealTypes: FormOption[] = [];
-  mealsForTheWeek$: Observable<MealPlannerWeekView[]> = new Observable();
+  weeklyMealPlan$: Observable<DailyMealPlanView[]> = new Observable();
 
   weekFilterOption$: BehaviorSubject<GetWeeklyMealPlanRequest> = new BehaviorSubject<GetWeeklyMealPlanRequest>({
     startDate: moment().startOf('week').format('YYYY-MM-DD').toString(),
@@ -46,7 +41,8 @@ export class PlannerComponent implements OnInit, OnDestroy {
     private lookupService: LookupService,
     private mealService: MealService,
     private recipeService: RecipeService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public spinnerService: SpinnerService
   ) {}
   ngOnDestroy(): void {
     this._unsubscribe.next();
@@ -56,26 +52,31 @@ export class PlannerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.lookupService
       .getMealTypes()
-      .pipe(
-        takeUntil(this._unsubscribe),
-        map((mealTypes) => (this.mealTypes = Helpers.setFormOptions(mealTypes, 'mealTypeId', 'mealTypeName')))
-      )
-      .subscribe();
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe((mealTypes) => (this.mealTypes = Helpers.setFormOptions(mealTypes, 'mealTypeId', 'mealTypeName')));
 
     this.lookupService
       .getFoodCategories()
-      .pipe(
-        takeUntil(this._unsubscribe),
-        map((categories) => (this.foodCategories = Helpers.setFormOptions(categories, 'foodCategoryId', 'foodCategoryName')))
-      )
-      .subscribe();
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe((categories) => {
+        const leafyGreens = categories.splice(
+          categories.findIndex((c) => c.foodCategoryId === FoodCategory.LeafyGreens),
+          1
+        )[0];
+        categories.push(leafyGreens);
+
+        const breakfast = categories.find((c) => c.foodCategoryId === FoodCategory.Breakfast)!;
+        breakfast.foodCategoryName = 'Zen';
+
+        this.foodCategories = Helpers.setFormOptions(categories, 'foodCategoryId', 'foodCategoryName');
+      });
 
     this.recipeService
       .getRecipes()
       .pipe(takeUntil(this._unsubscribe))
       .subscribe((recipes) => (this.recipes = recipes));
 
-    this.mealsForTheWeek$ = this.weekFilterOption$.pipe(
+    this.weeklyMealPlan$ = this.weekFilterOption$.pipe(
       switchMap((request) =>
         this.mealService.getWeeklyMealPlan(request).pipe(
           mergeMap((mealPlan) => {
@@ -116,27 +117,19 @@ export class PlannerComponent implements OnInit, OnDestroy {
     );
   }
 
-  getRecipesByMeal(data: { request: GetRecipesByMealRequest; foodCategory?: FoodCategory }): void {
-    const { request, foodCategory } = data;
+  getRecipesByMeal(data: { mealPlan: DailyMealPlanView; mealType: MealType; foodCategory?: FoodCategory }): void {
+    const { mealPlan, mealType, foodCategory } = data;
 
-    this.recipeService
-      .getRecipesByMeal(request)
-      .pipe(takeUntil(this._unsubscribe))
-      .subscribe((recipes) => {
-        this.recipesByMeal = recipes;
+    const modalData: MealSelectionModalData = {
+      mealPlan,
+      mealType,
+      foodCategory: foodCategory ? foodCategory : mealType === MealType.Breakfast ? FoodCategory.Breakfast : FoodCategory.Protein,
+      recipes: this.recipes,
+      mealTypes: this.mealTypes,
+      foodCategories: this.foodCategories
+    };
 
-        const data: MealSelectionModalData = {
-          mealDate: request.mealDate,
-          mealType: request.mealTypeId,
-          foodCategory: foodCategory,
-          recipes: this.recipes,
-          mealTypes: this.mealTypes,
-          foodCategories: this.foodCategories,
-          dishes: this.recipesByMeal
-        };
-
-        this.dialog.open(MealSelectionModalComponent, { data, autoFocus: false, minHeight: 547, maxWidth: 760 });
-      });
+    this.dialog.open(MealSelectionModalComponent, { data: modalData, autoFocus: false, minHeight: 547, minWidth: 760 });
   }
 
   setWeekFilterOptions(request: GetWeeklyMealPlanRequest): void {
@@ -159,9 +152,9 @@ export class PlannerComponent implements OnInit, OnDestroy {
     this.mealService.deleteMealsByMealPlanId(mealPlanId).subscribe(() => this.weekFilterOption$.next(this.weekFilterOption$.value));
   }
 
-  private setDaysOfWeek(mealPlan?: MealPlanDto): MealPlannerWeekView[] {
+  private setDaysOfWeek(mealPlan?: MealPlanDto): DailyMealPlanView[] {
     this.daysOfWeek = [];
-    const mealsForTheWeek: MealPlannerWeekView[] = [];
+    const mealsForTheWeek: DailyMealPlanView[] = [];
 
     const startOfWeek = moment(this.weekFilterOption$.value.startDate).startOf('week');
     const endOfWeek = moment(this.weekFilterOption$.value.endDate).endOf('week');
@@ -208,7 +201,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
     else return 'secondary';
   }
 
-  private mapMealsByMealType(meals: MealDto[], mealType: MealType): MealTypeServingSize {
+  private mapMealsByMealType(meals: MealDto[], mealType: MealType): MealPlanNutritionInfo {
     let total = 0;
 
     if (mealType === MealType.Breakfast) {

@@ -6,8 +6,8 @@
           [formControlName]="formItem.controlName"
           [multiple]="isMultipleSelection"
           [id]="formItem.controlName"
+          [placeholder]="formItem.placeHolder!"
           (selectionChange)="onSelectChange()"
-          (openedChange)="opened.emit()"
           (closed)="onSelectClose()"
           (focus)="defaultValue = ''">
           <mat-option *ngIf="formItem.placeHolder" [value]="defaultValue">{{formItem.placeHolder}}</mat-option>

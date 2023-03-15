@@ -13,6 +13,7 @@ export interface MultiSelectGridItem {
 })
 export class CustomMultiselectComponent implements OnInit {
   @Input() selectedItems: any;
+  @Input() placeholder: string = 'No Data';
   @Output() removeItem: EventEmitter<MultiSelectGridItem> = new EventEmitter();
   dropdownSettings: IDropdownSettings = {};
   constructor() {}

@@ -1,0 +1,26 @@
+<!-- <img class="cursor-pointer overflow" src="../../../../../assets/images/meal_protein.png" alt="breakfast" width="20" height="20"
+[matTooltip]="'Protein - ' + meal.protein + ' Serving'" [matTooltipPosition]="'above'"
+(click)="onSelectMeal(meal, mealType, foodCategoryEnum.Protein)">
+<img class="cursor-pointer ms-2 deficient" src="../../../../../assets/images/meal_carbs.png" alt="breakfast" width="20" height="20"
+[matTooltip]="'Carbohydrate - ' + meal.carbohydrate! + ' Serving'" [matTooltipPosition]="'above'"
+(click)="onSelectMeal(meal, mealType, foodCategoryEnum.Carbohydrate)">
+<img class="cursor-pointer ms-2 zen" src="../../../../../assets/images/meal_veggies.png" alt="breakfast" width="20" height="20"
+[matTooltip]="'Vegetables - ' + meal.vegetables! + ' Serving'" [matTooltipPosition]="'above'"
+(click)="onSelectMeal(meal, mealType, foodCategoryEnum.Vegetables)">
+<img class="cursor-pointer ms-2 no-serving" src="../../../../../assets/images/meal_leafy_greens.png" alt="breakfast" width="20" height="20"
+[matTooltip]="'Leafy Greens - ' + meal.leafyGreens + ' Serving '" [matTooltipPosition]="'above'"
+(click)="onSelectMeal(meal, mealType, foodCategoryEnum.LeafyGreens)"> -->
+
+<div class="food-category-icons d-flex flex-row">
+  <ng-container *ngFor="let category of foodCategories">
+    <img class="cursor-pointer ms-2" [src]="category.imgSrc" [alt]="category.label" width="20" height="20"
+    [matTooltip]="category.label + ' - ' + category.numberOfServings + ' Serving'" [matTooltipPosition]="'above'"
+    [ngClass]="{
+      'no-serving': category.numberOfServings === 0,
+      'deficient': category.numberOfServings > 0 && category.numberOfServings < 1,
+      'zen': category.numberOfServings === 1,
+      'overflow': category.numberOfServings > 1
+    }"
+    (click)="selectedFoodCategory.emit(category.foodCategory)">
+  </ng-container>
+</div>

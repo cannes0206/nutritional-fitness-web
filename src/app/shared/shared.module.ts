@@ -23,8 +23,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TextMaskModule } from 'angular2-text-mask';
 import { MatCarouselModule } from 'ng-mat-carousel';
 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FileUploadModule } from 'ng2-file-upload';
+import { AdvertisementCarouselComponent } from './components/advertisement-carousel/advertisement-carousel.component';
 import { CustomMultiselectComponent } from './components/custom-multiselect/custom-multiselect.component';
 import {
   FormDatePickerComponent,
@@ -39,8 +41,6 @@ import { AppValidationModule } from './forms/app-validation.modules';
 import { FilterPipe, NoValuePipe, SafeUrlPipe } from './pipes';
 import { AbsPipe } from './pipes/abs.pipe';
 import { AppendMetricsPipe } from './pipes/append-metrics.pipe';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AdvertisementCarouselComponent } from './components/advertisement-carousel/advertisement-carousel.component';
 
 @NgModule({
   declarations: [
@@ -125,7 +125,8 @@ import { AdvertisementCarouselComponent } from './components/advertisement-carou
     AbsPipe,
     AppendMetricsPipe,
     MatProgressSpinnerModule,
-    AdvertisementCarouselComponent
+    AdvertisementCarouselComponent,
+    CustomMultiselectComponent
   ]
 })
 export class SharedModule {}

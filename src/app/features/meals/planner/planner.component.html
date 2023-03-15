@@ -11,13 +11,16 @@
           Planner
         </ng-template>
         <div class="py-2" >
-          <app-planner-week-view *ngIf="(mealsForTheWeek$ | async) as mealsForTheWeek"
-            [mealsForTheWeek]="mealsForTheWeek"
+          <div class="loading-indicator" *ngIf="spinnerService.visibility | async">
+            <mat-progress-spinner mode="indeterminate" color="accent" [diameter]="50" strokeWidth="5"></mat-progress-spinner>
+          </div>
+          <app-planner-week-view *ngIf="(weeklyMealPlan$ | async) as weeklyMealPlan"
+            [weeklyMealPlan]="weeklyMealPlan"
             [daysOfWeek]="daysOfWeek"
             [mealPlanId]="mealPlanId"
             [mealPlanServingSize]="mealPlanServingSize"
             [totalWeekZenScore]="totalWeekZenScore"
-            (selectedMeal)="getRecipesByMeal($event)"
+            (selectedMealPlan)="getRecipesByMeal($event)"
             (weeklyMealPlanFilter)="setWeekFilterOptions($event)"
             (updateServingSize)="updateMealPlanServingSize($event)"
             (deleteMealsByMealPlanId)="deleteMealsByMealPlan($event)">

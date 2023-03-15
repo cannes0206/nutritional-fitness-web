@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
-import { MealDto, MealPlannerWeekView } from 'src/app/core/models/dtos';
-import { DeleteMealsByDateRequest, GetRecipesByMealRequest, GetWeeklyMealPlanRequest } from 'src/app/core/models/requests';
+import { DailyMealPlanView, MealDto } from 'src/app/core/models/dtos';
+import { DeleteMealsByDateRequest, GetWeeklyMealPlanRequest } from 'src/app/core/models/requests';
 import { FormOption } from '../../../../shared/components/form-controls/form-item';
 
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -92,7 +92,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
   @Input() mealPlanId: number = 0;
   @Input() totalWeekZenScore: number = 0;
   @Input() mealPlanServingSize: number = 0;
-  @Input() mealsForTheWeek: MealPlannerWeekView[] = [];
+  @Input() weeklyMealPlan: DailyMealPlanView[] = [];
 
   @Input() mealTypes: FormOption[] = [];
   @Input() foodCategories: FormOption[] = [];
@@ -101,7 +101,8 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
   @Output() updateServingSize: EventEmitter<number> = new EventEmitter();
   @Output() deleteMealsByMealPlanId: EventEmitter<number> = new EventEmitter();
   @Output() deleteMealsByDate: EventEmitter<DeleteMealsByDateRequest> = new EventEmitter();
-  @Output() selectedMeal: EventEmitter<{ request: GetRecipesByMealRequest; foodCategory?: FoodCategory }> = new EventEmitter();
+  @Output() selectedMealPlan: EventEmitter<{ mealPlan: DailyMealPlanView; mealType: MealType; foodCategory?: FoodCategory }> =
+    new EventEmitter();
 
   constructor(private dialog: MatDialog) {}
 
@@ -115,7 +116,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
     this.weekControl.valueChanges.subscribe((value) => {
       this.selectedDate = new Date(value);
 
-      if (!this.mealsForTheWeek.some((m) => moment(m.mealDate).isSame(moment(this.selectedDate), 'date'))) {
+      if (!this.weeklyMealPlan.some((m) => moment(m.mealDate).isSame(moment(this.selectedDate), 'date'))) {
         this.weeklyMealPlanFilter.emit({
           startDate: moment(value).startOf('week').format('YYYY-MM-DD').toString(),
           endDate: moment(value).endOf('week').format('YYYY-MM-DD').toString()
@@ -127,16 +128,16 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { mealPlanServingSize, mealsForTheWeek } = changes;
+    const { mealPlanServingSize, weeklyMealPlan } = changes;
 
     if (mealPlanServingSize && mealPlanServingSize.currentValue)
       this.noOfServingsControl.setValue(mealPlanServingSize.currentValue, { emitEvent: false });
 
-    if (mealsForTheWeek && mealsForTheWeek.currentValue) {
+    if (weeklyMealPlan && weeklyMealPlan.currentValue && !weeklyMealPlan.isFirstChange()) {
       this.slideContent('');
 
       setTimeout(() => {
-        if (this.selectedDate && this.mealsForTheWeek.some((m) => moment(m.mealDate).isSame(moment(this.selectedDate), 'date')))
+        if (this.selectedDate && this.weeklyMealPlan.some((m) => moment(m.mealDate).isSame(moment(this.selectedDate), 'date')))
           this.scrollToContainer(new Date(this.selectedDate));
         else this.scrollToContainer();
       });
@@ -164,7 +165,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
       if (day) {
         this.selectedDate = day;
 
-        const className = this.mealsForTheWeek.find((d) => moment(d.mealDate).isSame(moment(day), 'date'))?.totalMealScoreClass!;
+        const className = this.weeklyMealPlan.find((d) => moment(d.mealDate).isSame(moment(day), 'date'))?.totalMealScoreClass!;
         this.selectedDateClass = `bg-${className}`;
       }
 
@@ -206,18 +207,12 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  onSelectMeal(meal: MealPlannerWeekView, mealType: MealType, foodCategory?: FoodCategory): void {
-    const request: GetRecipesByMealRequest = {
-      mealTypeId: mealType,
-      mealPlanId: this.mealPlanId,
-      mealDate: moment(meal.mealDate).format('YYYY-MM-DD')
-    };
-
-    this.selectedMeal.emit({ request, foodCategory });
+  selecteMealPlan(mealPlan: DailyMealPlanView, mealType: MealType, foodCategory?: FoodCategory): void {
+    this.selectedMealPlan.emit({ mealPlan, mealType, foodCategory });
   }
 
   today(): void {
-    if (!this.mealsForTheWeek.some((m) => moment(m.mealDate).isSame(moment(), 'date'))) {
+    if (!this.weeklyMealPlan.some((m) => moment(m.mealDate).isSame(moment(), 'date'))) {
       this.weekControl.setValue(moment(), { emitEvent: false });
 
       this.selectedDate = new Date();
