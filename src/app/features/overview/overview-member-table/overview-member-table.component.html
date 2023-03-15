@@ -15,7 +15,7 @@
         </label>
       </div>
       <div *ngIf="ic.columnType === columnTypeEnum.Icons">
-        <mat-icon matTooltip="{{ic.description}}">{{ element[ic.name] }}</mat-icon>
+        <mat-icon matTooltip="{{ic.description}}" (click)="onClickIcon($event, row)">{{ element[ic.name] }}</mat-icon>
       </div>
       <div *ngIf="ic.columnType === columnTypeEnum.NumbersWithIcons">
         <label [class.cell-title]="ic.description">
@@ -26,7 +26,7 @@
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumnNames"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumnNames;" [class.selectable-row]="hasSelectableRows" (click)="selectedRow.emit(row)"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnNames;" [class.selectable-row]="hasSelectableRows" (click)="onSelectedRow($event, row)"></tr>
 </table>
 <mat-paginator *ngIf="dataSource.data.length > 0 && dataSource.data.length > pageSize"
                [pageSizeOptions]="pageSizeOptions"

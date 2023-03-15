@@ -1,7 +1,15 @@
-.search-member-container {
-  max-width: 350px;
-}
+.member-gain-container {
+  .search-member-container {
+    max-width: 350px;
+  }
 
-.fw-bold {
+  .fw-bold {
     font-weight: 600;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline {
+    .mat-form-field-infix {
+      padding: 0.5em 0 .75em 0 !important;
+    }
+  }
 }

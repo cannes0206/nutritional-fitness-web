@@ -1,7 +1,7 @@
 export interface User {
   userId: number;
-  //userTypeId: number;
-  //userType: UserType;
+  userTypeId: number;
+  userType: UserType;
   //userName: string;
   name: string;
   //email: string;

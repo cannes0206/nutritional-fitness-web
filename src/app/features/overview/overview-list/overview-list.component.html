@@ -5,8 +5,10 @@
     </app-form-input>
   </div>
 
-  <app-overview-member-table [initColumn]="header"
-             [tableData]="(memberListdataSource$ | async)"
-             [displayedColumnNames]="membersDisplayedColumnNames">
+  <app-overview-member-table [initColumn]="header" *ngIf="(memberListdataSource$ | async) as memberList"
+             [tableData]="memberList"
+             [displayedColumnNames]="membersDisplayedColumnNames"
+             (selectedRow)="selectRow($event)"
+             (iconClicked)="iconClicked($event)">
   </app-overview-member-table>
 </div>

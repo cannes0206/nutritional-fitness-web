@@ -1,5 +1,4 @@
-
-<div class="row">
+<div class="row member-gain-container">
   <div class="col-6">
     <div class="border rounded bg-white pt-3">
       <span class="mx-4 fw-bold">Members who have gained more than 2lbs in their current Normalize or Live</span>
@@ -8,8 +7,9 @@
                         [formGroup]="searchFormGroup">
         </app-form-input>
       </div>
-      <app-overview-member-table [initColumn]="header"
-                                 [tableData]="(normalizeMemberDataSource$ | async)"
+      <app-overview-member-table *ngIf="(normalizeMemberDataSource$ | async) as normalizeMember"
+                                 [initColumn]="header" 
+                                 [tableData]="normalizeMember"
                                  [displayedColumnNames]="membersGainDisplayedColumnNames">
       </app-overview-member-table>
     </div>
@@ -22,12 +22,11 @@
                         [formGroup]="searchFormGroup">
         </app-form-input>
       </div>
-      <app-overview-member-table [initColumn]="header"
-                                 [tableData]="(releaseMemberDataSource$ | async)"
+      <app-overview-member-table *ngIf="(releaseMemberDataSource$ | async) as releaseMember"
+                                 [initColumn]="header"
+                                 [tableData]="releaseMember"
                                  [displayedColumnNames]="membersGainDisplayedColumnNames">
       </app-overview-member-table>
-
-
     </div>
   </div>
 
