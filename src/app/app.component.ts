@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject, takeUntil, filter } from 'rxjs';
+import { AppRoutes } from './core/enums';
 import { AuthService } from './core/services';
 import { FormItem } from './shared/components/form-controls';
 
@@ -37,7 +38,7 @@ export class AppComponent implements OnInit {
         takeUntil(this._unsubscribe)
       )
       .subscribe(() => {
-        if (this.router.url.includes('/sign-in')) this.isLoggedIn = false;
+        if (this.router.url.includes('/sign-in') || this.router.url.includes(AppRoutes.ForgotPassword)) this.isLoggedIn = false;
         else if (sessionStorage.getItem('isUserLogIn') === 'true') this.isLoggedIn = true;
       });
   }
