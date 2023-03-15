@@ -10,3 +10,8 @@ export enum AppRoutes {
   Announcements = 'announcements',
   EmailTemplates = 'emailtemplates'
 }
+
+export enum UserTabRouteSegments {
+  Information = ':userId',
+  Questionnaire = 'questionnaire',
+}

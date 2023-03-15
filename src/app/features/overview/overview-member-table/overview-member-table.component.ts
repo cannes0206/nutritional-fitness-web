@@ -16,10 +16,11 @@ export class OverviewMemberTableComponent {
   @Input() itemsPerPageLabel: string = 'Rows per page:';
   @Input() displayedColumnNames: string[] = [];
   @Input() initColumn: InitiateColumn[] = [];
-  @Input() hasSelectableRows: boolean = false;
+  @Input() hasSelectableRows: boolean = true;
   @Input() pageSize: number = 20;
   @Input() pageSizeOptions: number[] = [20, 40, 60]
   @Output() selectedRow: EventEmitter<any> = new EventEmitter();
+  @Output() iconClicked: EventEmitter<any> = new EventEmitter();
 
 
   columnTypeEnum = ColumnTypeEnum;
@@ -34,8 +35,18 @@ export class OverviewMemberTableComponent {
     }
   }
 
-  @Input() set tableData(data: any[] | null) {
+  @Input() set tableData(data: any[]) {
     this.setTableDataSource(data);
+  }
+
+  onClickIcon(event: any, data: any) {
+    event.stopPropagation();
+    this.iconClicked.emit(data);
+  }
+
+  onSelectedRow(event: any, data: any) {
+    event.stopPropagation();
+    this.selectedRow.emit(data);
   }
 
   setTableDataSource(data: any) {

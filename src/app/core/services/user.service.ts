@@ -18,5 +18,8 @@ export class UserService {
   getAllMemberUser(): Observable<User[]> {
     return this.httpClient.get<User[]>(`${this.baseUrl}/GetAllMembers`);
   }
-}
 
+  getAuthenticatedUser(): Observable<User>{
+    return this.httpClient.get<User>(`${this.baseUrl}/AuthenticatedUser`);
+  }
+}

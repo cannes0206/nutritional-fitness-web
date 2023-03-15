@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { combineLatest, distinctUntilChanged, map, Observable, startWith, tap } from 'rxjs';
+import { AppRoutes, UserTabRouteSegments } from '../../../core/enums';
 import { User } from '../../../core/models/user';
-import { UserService } from '../../../core/services/user.service';
 import { FormItem } from '../../../shared/components/form-controls';
 import { InitiateColumn } from '../overview-member-table/overview-member-table';
 import { MemberColumnHeaders, MembersListDataSourceModel } from './overview-list';
@@ -13,9 +14,9 @@ import { MemberColumnHeaders, MembersListDataSourceModel } from './overview-list
   templateUrl: './overview-list.component.html',
   styleUrls: ['./overview-list.component.scss']
 })
-export class OverviewListComponent implements OnInit {
+export class OverviewListComponent implements OnInit, OnChanges {
 
-  constructor(private userService: UserService) { }
+  constructor(private router: Router) { }
 
   membersCount: number = 0;
   initialPageSize: number = 20;
@@ -27,10 +28,24 @@ export class OverviewListComponent implements OnInit {
   searchMemberField: FormItem = { controlName: 'searchMember', label: 'Name', isSearchField: true };
   searchFormGroup: FormGroup = new FormGroup({});
 
-  @Input() userDataSource$: Observable<User[]> = new Observable();
+  @Input() userDataSource: User[] = [];
 
   ngOnInit(): void {
     this.setSearchFormGroup();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['userDataSource']) {
+      this.setSearchFormGroup();
+    }
+  }
+
+  selectRow(user: MembersListDataSourceModel) {
+    this.router.navigateByUrl(`${AppRoutes.Users}/${user.id}`);
+  }
+
+  iconClicked(user: MembersListDataSourceModel) {
+    this.router.navigateByUrl(`${AppRoutes.Users}/${UserTabRouteSegments.Questionnaire}`);
   }
 
   private mapListDataSource(users: User[]): MembersListDataSourceModel[] {
@@ -63,12 +78,11 @@ export class OverviewListComponent implements OnInit {
 
   private setSearchFormGroup() {
     this.searchFormGroup.addControl(this.searchMemberField.controlName, new FormControl(''));
-
-    this.memberListdataSource$ = combineLatest([this.userDataSource$, this.searchFormGroup.get(this.searchMemberField.controlName)!.valueChanges.pipe(startWith(''))])
+    this.memberListdataSource$ = combineLatest([this.searchFormGroup.get(this.searchMemberField.controlName)!.valueChanges.pipe(startWith(''))])
       .pipe(
         distinctUntilChanged(),
-        map(([members, searchText]) => {
-          members = members.filter(o => o.name.toLowerCase().includes(searchText.trimStart().toLowerCase()));
+        map(([searchText]) => {
+          var members = this.userDataSource.filter(o => o.name.toLowerCase().includes(searchText.trimStart().toLowerCase()));
           this.membersCount = members.length;
           return this.mapListDataSource(members);
         })
