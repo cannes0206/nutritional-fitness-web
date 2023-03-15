@@ -1,16 +1,18 @@
-export interface Menu {
-  navigation: MenuItem[];
-};
+type Permission = 'admin' | 'coach' | 'user' | 'canResetPassword';
 
 export interface MenuItem {
   id: string;
   text: string;
   icon: string;
-  href?: string;
-  permissions: string[];
-};
+  href: string;
+  permissions: Permission[];
+}
 
-export const UpperNavigation: MenuItem[] = [
+export interface Menu {
+  navigation: MenuItem[];
+}
+
+export const UpperNavigations: MenuItem[] = [
   {
     id: 'overview',
     text: 'Overview',
@@ -41,7 +43,7 @@ export const UpperNavigation: MenuItem[] = [
   }
 ];
 
-export const LowerNavigation: MenuItem[] = [
+export const LowerNavigations: MenuItem[] = [
   {
     id: 'messages',
     text: 'Messages',
@@ -62,5 +64,5 @@ export const LowerNavigation: MenuItem[] = [
     icon: 'article',
     href: '/emailtemplates',
     permissions: ['admin']
-  },
+  }
 ];

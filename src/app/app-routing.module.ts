@@ -3,14 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutes } from './core/enums/routes.enum';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/auth/sign-in', pathMatch: 'full' },
-  {
-    path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-  },
   {
     path: '',
     children: [
+      {
+        path: '',
+        redirectTo: AppRoutes.Auth,
+        pathMatch: 'full'
+      },
+      {
+        path: AppRoutes.Auth,
+        loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
+      },
       {
         path: AppRoutes.Overview,
         loadChildren: () => import('./features/overview/overview.module').then((m) => m.OverviewModule)
@@ -22,7 +26,7 @@ const routes: Routes = [
       {
         path: AppRoutes.Meals,
         loadChildren: () => import('./features/meals/meals.module').then((m) => m.MealsModule)
-      },
+      }
     ]
   }
 ];
@@ -31,4 +35,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

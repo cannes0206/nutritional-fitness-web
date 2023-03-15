@@ -1,6 +1,11 @@
 /* eslint-disable no-unused-vars */
 export enum AppRoutes {
-  Users = 'users',
+  Auth = 'auth',
   Overview = 'overview',
-  Meals = 'meals'
+  Users = 'users',
+  LearningModules = 'learningmodules',
+  Meals = 'meals',
+  Messages = 'messages',
+  Announcements = 'announcements',
+  EmailTemplates = 'emailtemplates'
 }

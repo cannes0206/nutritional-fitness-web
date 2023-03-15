@@ -1,18 +1,15 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { LowerNavigation, Menu, UpperNavigation } from './menu-items';
+import { Component, Input } from '@angular/core';
+import { LowerNavigations, Menu, UpperNavigations } from './menu-items';
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.scss']
 })
-export class SideNavComponent implements OnInit {
+export class SideNavComponent {
+  @Input() isLoggedIn: boolean = false;
 
-  @Input() isLoggedIn!: boolean;
-  upperNavigation: Menu = { navigation: UpperNavigation };
-  lowerNavigation: Menu = { navigation: LowerNavigation };
+  upperNavigation: Menu = { navigation: UpperNavigations };
+  lowerNavigation: Menu = { navigation: LowerNavigations };
 
-  constructor() {
-  }
-  ngOnInit(): void {
-  }
+  constructor() {}
 }
