@@ -1,33 +1,28 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { InitColumn } from './table';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { ColumnTypeEnum, InitiateColumn } from './overview-member-table';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  selector: 'app-overview-member-table',
+  templateUrl: './overview-member-table.component.html',
+  styleUrls: ['./overview-member-table.component.scss']
 })
-export class TableComponent {
+export class OverviewMemberTableComponent {
+
   dataSource = new MatTableDataSource([]);
 
   @Input() itemsPerPageLabel: string = 'Rows per page:';
   @Input() displayedColumnNames: string[] = [];
-  @Input() initColumn: InitColumn[] = [];
-  @Input() hasPagination: boolean = true;
+  @Input() initColumn: InitiateColumn[] = [];
   @Input() hasSelectableRows: boolean = false;
-  @Input() pageSize: number = 5;
-  @Input() pageSizeOptions: number[] = [5, 10, 25]
+  @Input() pageSize: number = 20;
+  @Input() pageSizeOptions: number[] = [20, 40, 60]
   @Output() selectedRow: EventEmitter<any> = new EventEmitter();
 
+
+  columnTypeEnum = ColumnTypeEnum;
 
   @ViewChild(MatSort, { static: true }) matSort = new MatSort();
 
@@ -54,4 +49,5 @@ export class TableComponent {
     };
     this.dataSource.sort = this.matSort;
   }
+
 }

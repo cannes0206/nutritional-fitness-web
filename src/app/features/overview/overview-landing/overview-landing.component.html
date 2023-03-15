@@ -1,5 +1,5 @@
 <div class="m-auto px-4">
-  <h1>Overview</h1>
+  <h1 class="fw-bolder my-4">Overview</h1>
   <div class="tab-container d-flex flex-sm-row flex-column justify-content-between">
     <ul class="list-unstyled m-0 p-0 overflow-hidden">
       <ng-container *ngFor="let tab of overviewTabs">
@@ -9,10 +9,12 @@
           <a class="cursor-pointer text-decoration-none fs-6 px-3 user-select-none lh-lg"
               [ngClass]="{'text-muted': currentTab !== tab}">
             <span>{{tab}}</span>
-            <span class="badge ms-1"
-                  [ngClass]="currentTab === tab ? 'bg-primary': 'bg-secondary'">
-              {{ tab === overviewTabsEnum.Members ? membersCount : membersGainCount }}
-            </span>
+            <ng-container *ngIf="(filteredUserDataSource$ | async) && (userDataSource$ | async)">
+              <span class="badge ms-1"
+                    [ngClass]="currentTab === tab ? 'bg-primary': 'bg-secondary'">
+                {{ tab === overviewTabsEnum.Members ? membersCount : membersGainCount }}
+              </span>
+            </ng-container>
           </a>
         </li>
       </ng-container>
@@ -22,12 +24,13 @@
 <hr class="mt-0">
 <div class="m-auto px-4">
   <div class="mt-4">
-    <ng-container *ngIf="currentTab === overviewTabsEnum.Members">
-      <app-overview-list (membersCount)="membersCount = $event">
+
+    <ng-container *ngIf="currentTab === overviewTabsEnum.Members && (userDataSource$ | async)">
+      <app-overview-list [userDataSource$]="(userDataSource$)">
       </app-overview-list>
     </ng-container>
-    <ng-container *ngIf="currentTab === overviewTabsEnum.MemberGains">
-      <app-overview-member-gain>
+    <ng-container *ngIf="currentTab === overviewTabsEnum.MemberGains && (filteredUserDataSource$ | async)">
+      <app-overview-member-gain [userDataSource$]="(filteredUserDataSource$)">
       </app-overview-member-gain>
     </ng-container>
   </div>

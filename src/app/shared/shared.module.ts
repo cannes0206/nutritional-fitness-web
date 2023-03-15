@@ -37,6 +37,8 @@ import { PhotoUploaderComponent } from './components/photo-uploader/photo-upload
 import { TableComponent } from './components/table/table.component';
 import { AppValidationModule } from './forms/app-validation.modules';
 import { FilterPipe, NoValuePipe, SafeUrlPipe } from './pipes';
+import { AbsPipe } from './pipes/abs.pipe';
+import { AppendMetricsPipe } from './pipes/append-metrics.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
@@ -51,7 +53,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     PhotoUploaderComponent,
     SafeUrlPipe,
     FilterPipe,
-    CustomMultiselectComponent
+    CustomMultiselectComponent,
+    AbsPipe,
+    AppendMetricsPipe
   ],
   imports: [
     CommonModule,
@@ -115,7 +119,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatToolbarModule,
     MatSidenavModule,
     MatDividerModule,
-    MatProgressSpinnerModule
+    NoValuePipe,
+    AbsPipe,
+    AppendMetricsPipe,
+    MatProgressSpinnerModule,
   ]
 })
 export class SharedModule {}

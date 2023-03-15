@@ -23,7 +23,7 @@ export interface User {
   //encryptedId?: string;
   //coachDashboardMember?: CoachDashboardMember;
   programPhaseName: string;
-  //programPhaseId: number;
+  programPhaseId: number;
   //hasQuestionnaire: boolean;
   //hasWeightGoal: boolean;
   //hasFuturePhaseSchedule: boolean;
