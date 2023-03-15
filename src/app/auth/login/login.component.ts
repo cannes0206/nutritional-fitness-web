@@ -26,12 +26,7 @@ export class LoginComponent implements OnInit {
   isShowPassword: boolean = false;
   showIncorrectCredentialMessage: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {
-  }
-
-  ngOnInit(): void {
-    this.setLoginFormGroup();
-  }
+  forgotPasswordRoute = `auth/${AppRoutes.ForgotPassword}`;
 
   get userNameControl(): FormControl {
     return this.loginForm.get(this.username.controlName) as FormControl;
@@ -39,6 +34,17 @@ export class LoginComponent implements OnInit {
 
   get passwordControl(): FormControl {
     return this.loginForm.get(this.password.controlName) as FormControl;
+  }
+
+  constructor(private authService: AuthService, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    this.setLoginFormGroup();
+  }
+
+  navigateToForgotPasswordPage(): void {
+    this.router.navigateByUrl(this.forgotPasswordRoute);
   }
 
   onFocusInput(): void {
