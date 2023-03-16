@@ -2,14 +2,24 @@ import { WeekDay } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
-import { BehaviorSubject, map, mergeMap, Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { BehaviorSubject, map, mergeMap, Observable, of, Subject, switchMap, takeUntil, zip } from 'rxjs';
 import { FoodCategory, MealType } from 'src/app/core/enums';
 import { DailyMealPlanView, MealDto, MealPlanDto, MealPlanNutritionInfo, RecipeDto } from 'src/app/core/models/dtos';
-import { CreateMealPlanRequest, GetWeeklyMealPlanRequest, UpdateMealPlanRequest } from 'src/app/core/models/requests';
+import {
+  CreateMealPlanRequest,
+  CreateMealRequest,
+  DeleteMealsByDateRequest,
+  GetWeeklyMealPlanRequest,
+  UpdateMealPlanRequest
+} from 'src/app/core/models/requests';
 import { LookupService, MealService, RecipeService, SpinnerService } from 'src/app/core/services';
 import { FormOption } from '../../../shared/components/form-controls/form-item';
 import { Helpers } from '../../../shared/utilities/helpers';
-import { MealSelectionModalComponent, MealSelectionModalData } from './meal-selection-modal/meal-selection-modal.component';
+import {
+  MealDateListOfRecipeIdByMealType,
+  MealSelectionModalComponent,
+  MealSelectionModalData
+} from './meal-selection-modal/meal-selection-modal.component';
 
 @Component({
   selector: 'app-planner',
@@ -129,7 +139,32 @@ export class PlannerComponent implements OnInit, OnDestroy {
       foodCategories: this.foodCategories
     };
 
-    this.dialog.open(MealSelectionModalComponent, { data: modalData, autoFocus: false, minHeight: 547, minWidth: 760 });
+    const dialogRef = this.dialog.open(MealSelectionModalComponent, {
+      data: modalData,
+      autoFocus: false,
+      height: '75vh',
+      width: '50vw'
+    });
+
+    const mealDate = moment(mealPlan.mealDate).format('YYYY-MM-DD');
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result?.selectedRecipes) {
+        const requests: CreateMealRequest[] = Object.keys(MealType)
+          .filter((m) => !+m)
+          .map((m) => m.toLowerCase())
+          .map((type) => ({
+            mealDate: mealDate,
+            mealPlanId: this.mealPlanId,
+            recipeIds: result.selectedRecipes[type as keyof MealDateListOfRecipeIdByMealType],
+            mealTypeId: type === 'breakfast' ? MealType.Breakfast : type === 'lunch' ? MealType.Lunch : MealType.Dinner
+          }));
+
+        zip(...requests.map((request) => of(request).pipe(mergeMap((request) => this.mealService.createMeal(request))))).subscribe(() =>
+          this.weekFilterOption$.next(this.weekFilterOption$.value)
+        );
+      }
+    });
   }
 
   setWeekFilterOptions(request: GetWeeklyMealPlanRequest): void {
@@ -150,6 +185,10 @@ export class PlannerComponent implements OnInit, OnDestroy {
 
   deleteMealsByMealPlan(mealPlanId: number): void {
     this.mealService.deleteMealsByMealPlanId(mealPlanId).subscribe(() => this.weekFilterOption$.next(this.weekFilterOption$.value));
+  }
+
+  deleteMealsByDate(request: DeleteMealsByDateRequest): void {
+    this.mealService.deleteMealsByDate(request).subscribe(() => this.weekFilterOption$.next(this.weekFilterOption$.value));
   }
 
   private setDaysOfWeek(mealPlan?: MealPlanDto): DailyMealPlanView[] {
