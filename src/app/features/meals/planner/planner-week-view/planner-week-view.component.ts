@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
-import { DailyMealPlanView, MealDto } from 'src/app/core/models/dtos';
+import { DailyMealPlanView } from 'src/app/core/models/dtos';
 import { DeleteMealsByDateRequest, GetWeeklyMealPlanRequest } from 'src/app/core/models/requests';
 import { FormOption } from '../../../../shared/components/form-controls/form-item';
 
@@ -229,10 +229,10 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  deleteMealByDate(meal: MealDto): void {
+  deleteMealByDate(meal: DailyMealPlanView): void {
     this.deleteMealsByDate.emit({
       mealPlanId: this.mealPlanId,
-      mealDate: meal.mealDate
+      mealDate: moment(meal.mealDate).format('YYYY-MM-DD')
     });
   }
 

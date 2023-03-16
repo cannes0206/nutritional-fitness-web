@@ -46,7 +46,23 @@
       </app-form-select>
     </div>
     <div class="selected-dishes-container">
-        <app-custom-multiselect [selectedItems]="selectedDishes" [placeholder]="'No dishes selected'"></app-custom-multiselect>
+        <app-custom-multiselect
+          [selectedItems]="selectedDishes"
+          [placeholder]="'No dishes selected'"
+          (removeItem)="removeSelectedDish($event)"></app-custom-multiselect>
+    </div>
+    <div class="mt-1">
+      <app-food-category-icons
+        [mealType]="selectedMealType"
+        [protein]="protein"
+        [carbohydrate]="carbohydrate"
+        [vegetables]="vegetables"
+        [leafyGreens]="leafyGreens"
+        [zen]="zen">
+    </app-food-category-icons>
+    </div>
+    <div class="position-relative">
+      <mat-error *ngIf="dishFormGroup.hasError('noSelectedDish')">Please select a dish</mat-error>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">

@@ -14,34 +14,7 @@ export interface FoodCategoryData {
   styleUrls: ['./food-category-icons.component.scss']
 })
 export class FoodCategoryIconsComponent {
-  @Input() set mealType(value: MealType) {
-    if (value === MealType.Breakfast) this.foodCategories = this.foodCategories.filter((c) => c.foodCategory === FoodCategory.Breakfast);
-    else this.foodCategories = this.foodCategories.filter((c) => c.foodCategory !== FoodCategory.Breakfast);
-  }
-
-  @Input() set protein(value: number) {
-    this.setNumberOfServings(FoodCategory.Protein, value);
-  }
-
-  @Input() set carbohydrate(value: number) {
-    this.setNumberOfServings(FoodCategory.Carbohydrate, value);
-  }
-
-  @Input() set vegetables(value: number) {
-    this.setNumberOfServings(FoodCategory.Vegetables, value);
-  }
-
-  @Input() set leafyGreens(value: number) {
-    this.setNumberOfServings(FoodCategory.LeafyGreens, value);
-  }
-
-  @Input() set zen(value: number) {
-    this.setNumberOfServings(FoodCategory.Breakfast, value);
-  }
-
-  @Output() selectedFoodCategory: EventEmitter<FoodCategory> = new EventEmitter<FoodCategory>();
-
-  foodCategories: FoodCategoryData[] = [
+  private foodCategories: FoodCategoryData[] = [
     {
       label: 'Protein',
       imgSrc: 'assets/images/meal_protein.png',
@@ -73,6 +46,36 @@ export class FoodCategoryIconsComponent {
       foodCategory: FoodCategory.Breakfast
     }
   ];
+
+  filteredFoodCategories: FoodCategoryData[] = [];
+
+  @Input() set mealType(value: MealType) {
+    if (value === MealType.Breakfast)
+      this.filteredFoodCategories = this.foodCategories.filter((c) => c.foodCategory === FoodCategory.Breakfast);
+    else this.filteredFoodCategories = this.foodCategories.filter((c) => c.foodCategory !== FoodCategory.Breakfast);
+  }
+
+  @Input() set protein(value: number) {
+    this.setNumberOfServings(FoodCategory.Protein, value);
+  }
+
+  @Input() set carbohydrate(value: number) {
+    this.setNumberOfServings(FoodCategory.Carbohydrate, value);
+  }
+
+  @Input() set vegetables(value: number) {
+    this.setNumberOfServings(FoodCategory.Vegetables, value);
+  }
+
+  @Input() set leafyGreens(value: number) {
+    this.setNumberOfServings(FoodCategory.LeafyGreens, value);
+  }
+
+  @Input() set zen(value: number) {
+    this.setNumberOfServings(FoodCategory.Breakfast, value);
+  }
+
+  @Output() selectedFoodCategory: EventEmitter<FoodCategory> = new EventEmitter<FoodCategory>();
 
   constructor() {}
 

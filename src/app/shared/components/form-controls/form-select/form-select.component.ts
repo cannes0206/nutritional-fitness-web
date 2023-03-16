@@ -12,7 +12,7 @@ export class FormSelectComponent {
   @Input() formGroup: FormGroup = new FormGroup({});
   @Input() isMultipleSelection: boolean = false;
   @Input() defaultValue: string | null = null;
-  @Output() valueChanges: EventEmitter<FormOption[]> = new EventEmitter();
+  @Output() valueChanges: EventEmitter<any> = new EventEmitter();
 
   get formControl(): FormControl {
     return this.formGroup.get(this.formItem.controlName) as FormControl;
@@ -26,6 +26,7 @@ export class FormSelectComponent {
     if (this.isMultipleSelection && value) {
       const selectedOptions = value.filter((v: string) => v);
       this.formControl.setValue(selectedOptions, { emitEvent: false });
+      this.valueChanges.emit(this.formControl.value);
     }
   }
 
