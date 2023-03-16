@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FormItem, FormOption } from '../form-item';
+import { FormItem } from '../form-item';
 
 @Component({
   selector: 'app-form-select',

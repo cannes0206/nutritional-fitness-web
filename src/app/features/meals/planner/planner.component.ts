@@ -142,9 +142,8 @@ export class PlannerComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(MealSelectionModalComponent, {
       data: modalData,
       autoFocus: false,
-      minHeight: 547,
-      minWidth: 760,
-      maxWidth: 760
+      height: '75vh',
+      width: '50vw'
     });
 
     const mealDate = moment(mealPlan.mealDate).format('YYYY-MM-DD');

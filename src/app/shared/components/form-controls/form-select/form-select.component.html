@@ -2,6 +2,7 @@
   <mat-form-field class="form-field-input w-100" appearance="outline">
       <mat-label>{{formItem.label}}</mat-label>
       <mat-select
+          [panelClass]="'form-select-panel-class'"
           [disableOptionCentering]="true"
           [formControlName]="formItem.controlName"
           [multiple]="isMultipleSelection"
