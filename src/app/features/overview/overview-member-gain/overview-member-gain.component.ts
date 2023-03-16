@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { combineLatest, distinctUntilChanged, map, Observable, startWith, tap } from 'rxjs';
+import { AppRoutes } from '../../../core/enums';
 import { User } from '../../../core/models/user';
 import { FormItem } from '../../../shared/components/form-controls';
 import { InitColumn } from '../../../shared/components/table';
@@ -12,6 +14,8 @@ import { MemberGainColumnHeader, MembersGainListDataSourceModel } from './overvi
   styleUrls: ['./overview-member-gain.component.scss']
 })
 export class OverviewMemberGainComponent implements OnInit {
+
+  constructor(private router: Router) { }
 
   membersGainDisplayedColumnNames: string[] = ["name", "weightGained"];
   header: InitColumn[] = MemberGainColumnHeader;
@@ -38,6 +42,10 @@ export class OverviewMemberGainComponent implements OnInit {
     }
   }
 
+  selectRow(user: MembersGainListDataSourceModel) {
+    this.router.navigateByUrl(`${AppRoutes.Users}/${user.id}`);
+  }
+
   private setFormGroup() {
     this.searchFormGroup.addControl(this.searchNFMemberField.controlName, new FormControl(''));
     this.searchFormGroup.addControl(this.searchRMemberField.controlName, new FormControl(''));
@@ -51,7 +59,10 @@ export class OverviewMemberGainComponent implements OnInit {
           var members = this.userDataSource.filter(o => o.name.toLowerCase().includes(searchText.trimStart().toLowerCase()));
           members = members.filter(function (user) {
             const programPhaseIds = [3, 4];
-            return programPhaseIds.includes(user.programPhaseId);
+            const gain = user.startWeight ? user.currentWeight - user.startWeight : 0;
+            const userRestrictedGain = 2;
+
+            return programPhaseIds.includes(user.programPhaseId) && gain > userRestrictedGain;
             
           });
           return this.mapListDataSource(members);
@@ -67,7 +78,10 @@ export class OverviewMemberGainComponent implements OnInit {
           var members = this.userDataSource.filter(o => o.name.toLowerCase().includes(searchText.trimStart().toLowerCase()));
           members = members.filter(function (user) {
             const releasePhaseId = 2;
-            return releasePhaseId === user.programPhaseId;
+            const gain = user.startWeight ? user.currentWeight - user.startWeight : 0;
+            const userRestrictedGain = 2;
+
+            return releasePhaseId === user.programPhaseId && gain > userRestrictedGain;
           });
           return this.mapListDataSource(members);
         })

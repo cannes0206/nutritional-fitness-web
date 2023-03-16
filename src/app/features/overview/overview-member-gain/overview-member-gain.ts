@@ -7,12 +7,14 @@ export const MemberGainColumnHeader: InitiateColumn[] = [
   {
     name: 'name',
     displayName: 'Name',
-    columnType: ColumnTypeEnum.Text
+    columnType: ColumnTypeEnum.Text,
+    sortable: true
   },
   {
     name: 'weightGained',
     displayName: 'Weight Gained',
-    columnType: ColumnTypeEnum.Numbers
+    columnType: ColumnTypeEnum.Numbers,
+    sortable: true
   }
 ]
 

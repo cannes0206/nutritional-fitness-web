@@ -8,10 +8,10 @@ export interface MembersListDataSourceModel {
   name: string;
   cycle: string;
   phase: string;
-  startDate: string;
+  startDate: Date;
   startWeight: number;
   currentWeight: number;
-  progress: number;
+  progress?: number;
   action: string;
   iconName?: string;
 }
@@ -20,43 +20,51 @@ export const MemberColumnHeaders: InitiateColumn[] = [
   {
     name: 'name',
     displayName: 'Name',
-    columnType: ColumnTypeEnum.Text
+    columnType: ColumnTypeEnum.Text,
+    sortable: true
   },
   {
     name: 'cycle',
     displayName: 'Cycle',
-    columnType: ColumnTypeEnum.Text
+    columnType: ColumnTypeEnum.Text,
+    sortable: true
   },
   {
     name: 'phase',
     displayName: 'Phase',
-    columnType: ColumnTypeEnum.Text
+    columnType: ColumnTypeEnum.Text,
+    sortable: true
   },
   {
     name: 'startDate',
     displayName: 'Start Date',
-    columnType: ColumnTypeEnum.Text
+    columnType: ColumnTypeEnum.Date,
+    sortable: true
   },
   {
     name: 'startWeight',
     displayName: 'Start Weight',
-    columnType: ColumnTypeEnum.Numbers
+    columnType: ColumnTypeEnum.Numbers,
+    sortable: true
   },
   {
     name: 'currentWeight',
     displayName: 'Current Weight',
-    columnType: ColumnTypeEnum.Numbers
+    columnType: ColumnTypeEnum.Numbers,
+    sortable: true
   },
   {
     name: 'progress',
     displayName: 'Progress',
     columnType: ColumnTypeEnum.NumbersWithIcons,
-    iconName: 'iconName'
+    iconName: 'iconName',
+    sortable: true
   },
   {
     name: 'action',
     displayName: '',
     columnType: ColumnTypeEnum.Icons,
-    description: "Questionnaire"
+    description: "Questionnaire",
+    sortable: false
   }
 ]

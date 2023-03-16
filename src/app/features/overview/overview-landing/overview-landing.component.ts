@@ -44,7 +44,7 @@ export class OverviewLandingComponent implements OnInit {
         this.membersGainCount = users.filter(function (user) {
           const programPhaseIds = [2, 3, 4];
           const warningWeightGain = 2;
-          const memberGain = user.currentWeight - user.startWeight;
+          const memberGain = user.startWeight ? user.currentWeight - user.startWeight : 0;
 
           return programPhaseIds.includes(user.programPhaseId) && memberGain >= warningWeightGain;
         }).length;

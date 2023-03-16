@@ -6,7 +6,8 @@ export enum ColumnTypeEnum {
   Text = 'text',
   Numbers = 'numbers',
   Icons = 'icons',
-  NumbersWithIcons = 'numbersWithIcons'
+  NumbersWithIcons = 'numbersWithIcons',
+  Date = 'date'
 }
 
 export interface InitiateColumn {
@@ -15,4 +16,5 @@ export interface InitiateColumn {
   description?: string;
   columnType?: string;
   iconName?: string;
+  sortable?: boolean;
 }

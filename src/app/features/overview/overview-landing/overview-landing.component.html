@@ -1,46 +1,48 @@
 <ng-container *ngIf="(userDataSource$ | async) as userDataSource">
-  <div class="m-auto px-4">
-    <h1 class="fw-bolder my-4">Overview</h1>
-    <div class="tab-container d-flex flex-sm-row flex-column justify-content-between">
-      <ul class="list-unstyled m-0 p-0 overflow-hidden">
-        <ng-container *ngFor="let tab of overviewTabs">
-          <li class="float-start" routerLinkActive="active"
-              [ngClass]="{'border-bottom border-5 border-primary': currentTab === tab}"
-              (click)="currentTab = tab">
-            <a class="cursor-pointer text-decoration-none fs-6 px-3 user-select-none lh-lg"
-               [ngClass]="{'text-muted': currentTab !== tab}">
-              <span>{{tab}}</span>
-              <span class="badge ms-1"
-                    [ngClass]="currentTab === tab ? 'bg-primary': 'bg-secondary'">
-                {{ tab === overviewTabsEnum.Members ? membersCount : membersGainCount }}
-              </span>
-            </a>
-          </li>
-        </ng-container>
-      </ul>
+  <div class="py-4">
+    <div class="m-auto px-4 pt-0">
+      <h1 class="fw-bolder">Overview</h1>
+      <div class="tab-container d-flex flex-sm-row flex-column justify-content-between">
+        <ul class="list-unstyled m-0 p-0 overflow-hidden">
+          <ng-container *ngFor="let tab of overviewTabs">
+            <li class="float-start" routerLinkActive="active"
+                [ngClass]="{'border-bottom border-5 border-primary': currentTab === tab}"
+                (click)="currentTab = tab">
+              <a class="cursor-pointer text-decoration-none fs-6 px-3 user-select-none lh-lg"
+                 [ngClass]="{'text-muted': currentTab !== tab}">
+                <span>{{tab}}</span>
+                <span class="badge ms-1"
+                      [ngClass]="currentTab === tab ? 'bg-primary': 'bg-secondary'">
+                  {{ tab === overviewTabsEnum.Members ? membersCount : membersGainCount }}
+                </span>
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
     </div>
-  </div>
-  <hr class="mt-0">
-  <div class="m-auto px-4">
-    <div class="mt-4">
-      <ng-container *ngIf="displayNoMemberAssigned; else showTable">
-        <div class="d-flex flex-column align-items-center">
-          <mat-icon class="people-icon my-3">group</mat-icon>
-          <h1 class="fw-bold">No member(s) assigned </h1>
-        </div>
+    <hr class="mt-0">
+    <div class="m-auto px-4">
+      <div class="mt-4">
+        <ng-container *ngIf="displayNoMemberAssigned; else showTable">
+          <div class="d-flex flex-column align-items-center">
+            <mat-icon class="people-icon my-3">group</mat-icon>
+            <h1 class="fw-bold">No member(s) assigned </h1>
+          </div>
 
-      </ng-container>
-      <ng-template #showTable>
-        <ng-container *ngIf="currentTab === overviewTabsEnum.Members">
-          <app-overview-list [userDataSource]="userDataSource">
-          </app-overview-list>
         </ng-container>
-        <ng-container *ngIf="currentTab === overviewTabsEnum.MemberGains">
-          <app-overview-member-gain [userDataSource]="userDataSource">
-          </app-overview-member-gain>
-        </ng-container>
-      </ng-template>
-      
+        <ng-template #showTable>
+          <ng-container *ngIf="currentTab === overviewTabsEnum.Members">
+            <app-overview-list [userDataSource]="userDataSource">
+            </app-overview-list>
+          </ng-container>
+          <ng-container *ngIf="currentTab === overviewTabsEnum.MemberGains">
+            <app-overview-member-gain [userDataSource]="userDataSource">
+            </app-overview-member-gain>
+          </ng-container>
+        </ng-template>
+
+      </div>
     </div>
   </div>
 </ng-container>

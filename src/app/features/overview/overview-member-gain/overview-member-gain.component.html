@@ -1,7 +1,7 @@
 <div class="row member-gain-container">
   <div class="col-6">
     <div class="border rounded bg-white pt-3">
-      <span class="mx-4 fw-bold">Members who have gained more than 2lbs in their current Normalize or Live</span>
+      <span class="mx-4 fw-bold">Members who gained more than 2lbs in their current Normalize or Live</span>
       <div class="ms-4 mt-3 search-member-container">
         <app-form-input [formItem]="searchNFMemberField"
                         [formGroup]="searchFormGroup">
@@ -10,13 +10,14 @@
       <app-overview-member-table *ngIf="(normalizeMemberDataSource$ | async) as normalizeMember"
                                  [initColumn]="header" 
                                  [tableData]="normalizeMember"
-                                 [displayedColumnNames]="membersGainDisplayedColumnNames">
+                                 [displayedColumnNames]="membersGainDisplayedColumnNames"
+                                 (selectedRow)="selectRow($event)">
       </app-overview-member-table>
     </div>
   </div>
   <div class="col-6">
     <div class="border rounded bg-white pt-3">
-      <span class="mx-4 fw-bold">Members who have gained more than 2lbs in their current Release</span>
+      <span class="mx-4 fw-bold">Members who gained more than 2lbs in their current Release</span>
       <div class="ms-4 mt-3 search-member-container">
         <app-form-input [formItem]="searchRMemberField"
                         [formGroup]="searchFormGroup">
@@ -25,7 +26,8 @@
       <app-overview-member-table *ngIf="(releaseMemberDataSource$ | async) as releaseMember"
                                  [initColumn]="header"
                                  [tableData]="releaseMember"
-                                 [displayedColumnNames]="membersGainDisplayedColumnNames">
+                                 [displayedColumnNames]="membersGainDisplayedColumnNames"
+                                 (selectedRow)="selectRow($event)">
       </app-overview-member-table>
     </div>
   </div>

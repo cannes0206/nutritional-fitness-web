@@ -51,7 +51,7 @@ export class OverviewListComponent implements OnInit, OnChanges {
   private mapListDataSource(users: User[]): MembersListDataSourceModel[] {
     const memberListDataSource: MembersListDataSourceModel[] = [];
     users.forEach((user: User) => {
-      const weightDifference = user.startWeight - user.currentWeight;
+      const weightDifference = user.startWeight ? user.startWeight - user.currentWeight : 0;
       var icon = '';
       if (weightDifference > 0) {
         icon = 'arrow_downward';
@@ -64,10 +64,10 @@ export class OverviewListComponent implements OnInit, OnChanges {
         name: user.name,
         cycle: user.statusName,
         phase: user.programPhaseName,
-        startDate: user.startDate ? moment(user.startDate).format('MMM DD, YYYY') : "-",
+        startDate: user.startDate,
         startWeight: user.startWeight,
         currentWeight: user.currentWeight,
-        progress: user.startWeight - user.currentWeight,
+        progress: user.startWeight ? user.startWeight - user.currentWeight : undefined,
         action: 'assignment',
         iconName: icon
       })
