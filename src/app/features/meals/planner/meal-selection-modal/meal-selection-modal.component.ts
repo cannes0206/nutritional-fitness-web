@@ -82,7 +82,7 @@ export class MealSelectionModalComponent {
     const newSelections = currentSelections.filter((c) => !this.dishesFormItem.option?.flatMap((o) => o.value).includes(c));
     newSelections.push(...recipeIds);
 
-    this.mapGridItems(newSelections);
+    this.mapSelectedDishes(newSelections);
     this.setNewSelections(newSelections);
     this.computeServingsByMealType(this.selectedMealType);
   }
@@ -115,8 +115,8 @@ export class MealSelectionModalComponent {
   }
 
   private initializeSelectedRecipes(mealType: MealType, foodCategory: FoodCategory): void {
-    this.setDropdwonFormOptions(foodCategory);
-    this.mapGridItems(this.getSelectedRecipeIdsByMealType(mealType));
+    this.setDropdownFormOptions(foodCategory);
+    this.mapSelectedDishes(this.getSelectedRecipeIdsByMealType(mealType));
     this.setDropdownSelectedRecipeIds(mealType);
   }
 
@@ -126,7 +126,7 @@ export class MealSelectionModalComponent {
     else this.mealDateSelectedRecipesByMealType.dinner = newSelections;
   }
 
-  private mapGridItems(recipeIds: number[]): void {
+  private mapSelectedDishes(recipeIds: number[]): void {
     const selectedRecipes = (this.dishesFormItem.option || []).filter((r) => recipeIds.includes(r.value));
 
     const items: MultiSelectGridItem[] = selectedRecipes.map((r) => ({
@@ -137,7 +137,7 @@ export class MealSelectionModalComponent {
     this.selectedDishes = items;
   }
 
-  private setDropdwonFormOptions(foodCategory: FoodCategory): void {
+  private setDropdownFormOptions(foodCategory: FoodCategory): void {
     this.dishesFormItem.option = Helpers.setFormOptions(
       this.modalData.recipes.filter((r) => r.recipeCategories.some((r) => r.foodCategoryId === foodCategory)),
       'recipeId',
