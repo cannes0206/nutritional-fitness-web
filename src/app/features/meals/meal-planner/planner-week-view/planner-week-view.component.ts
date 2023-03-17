@@ -17,9 +17,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { default as _rollupMoment, Moment } from 'moment';
 import { FoodCategory, MealType } from 'src/app/core/enums';
 import {
-  DeleteConfirmationModalComponent,
+  DeleteMealPlanConfirmationComponent,
   DeleteMealPlanConfirmationModalData
-} from '../delete-confirmation-modal/delete-confirmation-modal.component';
+} from '../delete-meal-plan-confirmation/delete-meal-plan-confirmation.component';
 
 const moment = _rollupMoment || _moment;
 
@@ -198,7 +198,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
       endDate: this.daysOfWeek[this.daysOfWeek.length - 1]
     };
 
-    const dialogRef = this.dialog.open(DeleteConfirmationModalComponent, { data, autoFocus: false, position: { top: '20px' } });
+    const dialogRef = this.dialog.open(DeleteMealPlanConfirmationComponent, { data, autoFocus: false, position: { top: '20px' } });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed) {

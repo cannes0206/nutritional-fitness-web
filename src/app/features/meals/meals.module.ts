@@ -3,12 +3,22 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../../shared/shared.module';
 import { MealsRoutingModule } from './meals-routing.module';
-import { MealSelectionModalComponent, PlannerComponent, PlannerWeekViewComponent } from './planner';
-import { DeleteConfirmationModalComponent } from './planner/delete-confirmation-modal/delete-confirmation-modal.component';
-import { FoodCategoryIconsComponent } from './planner/food-category-icons/food-category-icons.component';
+import {
+  MealPlannerComponent,
+  PlannerWeekViewComponent,
+  MealSelectionModalComponent,
+  DeleteMealPlanConfirmationComponent,
+  FoodCategoryIconsComponent
+} from './meal-planner';
 
 @NgModule({
-  declarations: [PlannerComponent, PlannerWeekViewComponent, MealSelectionModalComponent, DeleteConfirmationModalComponent, FoodCategoryIconsComponent],
+  declarations: [
+    MealPlannerComponent,
+    PlannerWeekViewComponent,
+    MealSelectionModalComponent,
+    DeleteMealPlanConfirmationComponent,
+    FoodCategoryIconsComponent
+  ],
   imports: [CommonModule, MealsRoutingModule, SharedModule]
 })
 export class MealsModule {}

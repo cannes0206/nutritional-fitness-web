@@ -26,7 +26,6 @@ import { MatCarouselModule } from 'ng-mat-carousel';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FileUploadModule } from 'ng2-file-upload';
-import { AdvertisementCarouselComponent } from './components/advertisement-carousel/advertisement-carousel.component';
 import { CustomMultiselectComponent } from './components/custom-multiselect/custom-multiselect.component';
 import {
   FormDatePickerComponent,
@@ -56,8 +55,7 @@ import { AppendMetricsPipe } from './pipes/append-metrics.pipe';
     FilterPipe,
     CustomMultiselectComponent,
     AbsPipe,
-    AppendMetricsPipe,
-    AdvertisementCarouselComponent
+    AppendMetricsPipe
   ],
   imports: [
     CommonModule,
@@ -125,7 +123,6 @@ import { AppendMetricsPipe } from './pipes/append-metrics.pipe';
     AbsPipe,
     AppendMetricsPipe,
     MatProgressSpinnerModule,
-    AdvertisementCarouselComponent,
     CustomMultiselectComponent
   ]
 })

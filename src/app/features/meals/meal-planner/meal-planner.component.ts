@@ -22,11 +22,11 @@ import {
 } from './meal-selection-modal/meal-selection-modal.component';
 
 @Component({
-  selector: 'app-planner',
-  templateUrl: './planner.component.html',
-  styleUrls: ['./planner.component.scss']
+  selector: 'app-meal-planner',
+  templateUrl: './meal-planner.component.html',
+  styleUrls: ['./meal-planner.component.scss']
 })
-export class PlannerComponent implements OnInit, OnDestroy {
+export class MealPlannerComponent implements OnInit, OnDestroy {
   private _unsubscribe: Subject<void> = new Subject();
   private _mealPlan!: MealPlanDto;
 

@@ -7,13 +7,13 @@ export interface DeleteMealPlanConfirmationModalData {
 }
 
 @Component({
-  selector: 'app-delete-confirmation-modal',
-  templateUrl: './delete-confirmation-modal.component.html',
-  styleUrls: ['./delete-confirmation-modal.component.scss']
+  selector: 'app-delete-meal-plan-confirmation',
+  templateUrl: './delete-meal-plan-confirmation.component.html',
+  styleUrls: ['./delete-meal-plan-confirmation.component.scss']
 })
-export class DeleteConfirmationModalComponent {
+export class DeleteMealPlanConfirmationComponent {
   constructor(
-    public dialogRef: MatDialogRef<DeleteConfirmationModalComponent>,
+    public dialogRef: MatDialogRef<DeleteMealPlanConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DeleteMealPlanConfirmationModalData
   ) {}
 
