@@ -15,12 +15,12 @@ import {
 import { LookupService, MealPlanService, MealService, RecipeService, SpinnerService } from 'src/app/core/services';
 import { FormOption } from '../../../shared/components/form-controls/form-item';
 import { Helpers } from '../../../shared/utilities/helpers';
-import { RecipeIngredientDto } from '../../../core/models/dtos/meal/recipe-ingredient-dto';
 import {
   MealDateListOfRecipeIdByMealType,
   MealSelectionModalComponent,
   MealSelectionModalData
 } from './meal-selection-modal/meal-selection-modal.component';
+import { RecipeInstructionModalComponent, RecipeInstructionModalData } from './recipe-instruction-modal/recipe-instruction-modal.component';
 
 @Component({
   selector: 'app-meal-planner',
@@ -30,6 +30,7 @@ import {
 export class MealPlannerComponent implements OnInit, OnDestroy {
   private _unsubscribe: Subject<void> = new Subject();
   private _mealPlan!: MealPlanDto;
+  private mealPlanRecipes: RecipeDto[] = [];
 
   daysOfWeek: Date[] = [];
   totalWeekZenScore: number = 0;
@@ -46,7 +47,6 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
   recipes: RecipeDto[] = [];
   mealTypes: FormOption[] = [];
   foodCategories: FormOption[] = [];
-  mealPlanRecipeIngredients: RecipeIngredientDto[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -106,9 +106,7 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
             );
           }),
           tap((mealPlan) =>
-            this.mealPlanService
-              .getRecipeIngredientsByMealPlanId(mealPlan.mealPlanId)
-              .subscribe((res) => (this.mealPlanRecipeIngredients = res))
+            this.mealPlanService.getRecipesByMealPlanId(mealPlan.mealPlanId).subscribe((res) => (this.mealPlanRecipes = res))
           ),
           map((mealPlan) => {
             this._mealPlan = mealPlan;
@@ -197,6 +195,19 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
 
   deleteMealsByDate(request: DeleteMealsByDateRequest): void {
     this.mealService.deleteMealsByDate(request).subscribe(() => this.weekFilterOption$.next(this.weekFilterOption$.value));
+  }
+
+  viewRecipeInstructions(data: { mealPlan: DailyMealPlanView; mealType: MealType }): void {
+    const modalData: RecipeInstructionModalData = {
+      mealDate: data.mealPlan.mealDate,
+      mealType: data.mealType,
+      recipes: this.mealPlanRecipes // Filter by meal type
+    };
+
+    this.dialog.open(RecipeInstructionModalComponent, {
+      data: modalData,
+      width: '50vw'
+    });
   }
 
   private setWeeklyMealPlan(mealPlan: MealPlanDto): DailyMealPlanView[] {

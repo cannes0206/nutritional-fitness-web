@@ -8,7 +8,8 @@ import {
   PlannerWeekViewComponent,
   MealSelectionModalComponent,
   DeleteMealPlanConfirmationComponent,
-  FoodCategoryIconsComponent
+  FoodCategoryIconsComponent,
+  RecipeInstructionModalComponent
 } from './meal-planner';
 
 @NgModule({
@@ -17,7 +18,8 @@ import {
     PlannerWeekViewComponent,
     MealSelectionModalComponent,
     DeleteMealPlanConfirmationComponent,
-    FoodCategoryIconsComponent
+    FoodCategoryIconsComponent,
+    RecipeInstructionModalComponent
   ],
   imports: [CommonModule, MealsRoutingModule, SharedModule]
 })

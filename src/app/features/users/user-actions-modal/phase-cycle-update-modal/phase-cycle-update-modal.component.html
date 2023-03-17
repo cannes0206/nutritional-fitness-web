@@ -1,0 +1,25 @@
+
+<div class="phase-cycle-update-modal position-relative">
+  <button class="text-muted close-icon" mat-icon-button aria-label="close dialog" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+  <div class="header d-flex flex-row">
+    <div class="calendar-icon rounded-circle d-flex p-2 align-self-center me-3">
+      <mat-icon class="align-self-center calendar-icon">calendar_today</mat-icon>
+    </div>
+    <div class="header-content">
+      <h6 class="fw-bolder mb-0 fs-6">Phase Days</h6>
+      <span class="text-muted fs-6">Current Phase is Release for </span>
+      <span class="user-full-name">{{ userFullName }}</span>
+      <div class="d-block mt-2">
+        <app-form-input [formItem]="formItem"
+                        [formGroup]="formGroup">
+        </app-form-input>
+      </div>
+    </div>
+  </div>
+  <mat-dialog-actions align="end">
+    <button class="btn btn-outline-primary me-2 px-4" type="button" (click)="cancel()">CANCEL</button>
+    <button class="btn btn-primary text-white px-5" type="button" (click)="update()">SAVE</button>
+  </mat-dialog-actions>
+</div>

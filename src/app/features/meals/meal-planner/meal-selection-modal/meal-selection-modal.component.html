@@ -1,6 +1,6 @@
 <div class="meal-selection-modal position-relative">
   <button class="text-muted close-icon" mat-icon-button aria-label="close dialog" mat-dialog-close>
-    <mat-icon>close</mat-icon>
+    <mat-icon class="fs-6">close</mat-icon>
   </button>
   <div class="header-content d-flex flex-row">
     <div class="redo-icon-circle rounded-circle d-flex p-3 align-self-center me-3">
@@ -8,7 +8,7 @@
         <mat-icon class="align-self-center redo-icon fs-5">redo</mat-icon>
       </div>
     </div>
-    <div class="header">
+    <div class="header mt-auto">
       <h1 class="fw-bolder mb-0">Meal Planner</h1>
       <span class="text-muted fs-6">Plan the meals for {{ modalData.mealPlan.mealDate | date:'MMMM dd, y' }}</span>
     </div>
