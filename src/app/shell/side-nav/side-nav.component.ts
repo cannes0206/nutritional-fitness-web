@@ -6,10 +6,10 @@ import { LowerNavigations, Menu, UpperNavigations } from './menu-items';
   styleUrls: ['./side-nav.component.scss']
 })
 export class SideNavComponent {
-  @Input() isLoggedIn: boolean = false;
+  @Input() showSidebar$: any;
 
   upperNavigation: Menu = { navigation: UpperNavigations };
   lowerNavigation: Menu = { navigation: LowerNavigations };
 
-  constructor() {}
+  constructor() { }
 }

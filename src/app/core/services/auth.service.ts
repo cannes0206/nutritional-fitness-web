@@ -19,7 +19,7 @@ export class AuthService {
     private router: Router
   ) { }
 
-  login(request: LoginRequest): Observable<any> {
+  login(request: LoginRequest): Observable<LoginResponse> {
     const authUrl = this.appConfig.nutritionalFitnessApiBaseAddress + '/users/authenticate';
     return this.http.post<LoginResponse>(authUrl, request)
       .pipe(
@@ -27,7 +27,7 @@ export class AuthService {
       );
   }
 
-  public getUserEmail(): string | null {
+  getUserEmail(): string | null {
     return (sessionStorage.getItem(this.userEmail)!);
   }
 

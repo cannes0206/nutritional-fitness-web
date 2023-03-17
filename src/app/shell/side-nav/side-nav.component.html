@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-  <mat-sidenav mode="side" opened *ngIf="isLoggedIn">
+  <mat-sidenav mode="side" opened *ngIf="showSidebar$ | async">
     <div class="d-flex justify-content-between align-items-center py-3">
       <img class="side-nav-logo" src="../../../../assets/images/nf-header-logo.svg" width="210">
     </div>
