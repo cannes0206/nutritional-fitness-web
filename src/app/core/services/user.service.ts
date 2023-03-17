@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { LoginResponse } from '../models/auth.model';
 import { User } from '../models/user';
 import { ConfigService } from './config.service';
 
@@ -28,5 +29,13 @@ export class UserService {
     };
 
     return this.httpClient.post<User>(`${this.baseUrl}/ForgotPassword`, request);
+  }
+
+  resetPassword(newPassword: string): Observable<LoginResponse> {
+    const request = {
+      newPassword: newPassword
+    };
+
+    return this.httpClient.post<LoginResponse>(`${this.baseUrl}/ResetPassword`, request);
   }
 }

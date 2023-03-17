@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AppRoutes } from '../../core/enums';
-import { UserService } from '../../core/services';
+import { SpinnerService, UserService } from '../../core/services';
 import { FormItem, ValidationType } from '../../shared/components/form-controls';
 import { Regex } from '../../shared/constants';
 import { Helpers } from '../../shared/utilities/helpers';
@@ -20,7 +20,11 @@ export class ForgotPasswordComponent implements OnInit {
 
   signInRoute = `${AppRoutes.Auth}`;
 
-  constructor(private router: Router, private userService: UserService, private dialog: MatDialog) { }
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private dialog: MatDialog,
+    public spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
     this.seForgotPasswordFormGroup();
