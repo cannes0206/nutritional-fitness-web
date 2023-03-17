@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
       )
       .subscribe(() => {
         this.showSidebar$ = this.authService.getUserLoggedIn();
-        if (this.router.url.includes('/sign-in') || this.router.url.includes(AppRoutes.ForgotPassword)) this.showSidebar$ = of(false);
+        if (this.router.url.includes(AppRoutes.Auth)) this.showSidebar$ = of(false);
         else if (sessionStorage.getItem('isUserLogIn') === 'true') this.showSidebar$ = of(true);
       });
   }
