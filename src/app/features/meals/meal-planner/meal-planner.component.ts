@@ -142,7 +142,7 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(MealSelectionModalComponent, {
       data: modalData,
       autoFocus: false,
-      height: '75vh',
+      height: '80vh',
       width: '50vw'
     });
 

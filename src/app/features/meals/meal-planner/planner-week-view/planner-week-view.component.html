@@ -31,39 +31,39 @@
   </div>
 
   <div class="content" [@slideAnimation]="slideState">
-    <div class="d-flex flex-row justify-content-between align-items-center text-center border rounded mt-2 overflow-auto me-3">
-        <div class="w-100 py-3 px-3 cursor-pointer day-of-week {{ (selectedDate | date: 'd') === (day | date: 'd') ? selectedDateClass : '' }}"
-          *ngFor="let day of daysOfWeek; let first = first; let last = last"
-          [ngClass]="{
-            'd-flex flex-row align-items-center ': first || last,
-            'rounded text-white': (selectedDate | date: 'd') === (day | date: 'd')
-          }"
-          (click)="scrollToContainer(day, $event)">
-          <mat-icon *ngIf="first" class="fs-1 cursor-pointer"
-            [class.text-muted]="(selectedDate | date:'shortDate') !== (day | date: 'shortDate')"
-            [class.text-white]="(selectedDate | date:'shortDate') === (day | date: 'shortDate')"
-            (click)="updateWeekRange('prev', $event)">
-            keyboard_arrow_left
-          </mat-icon>
-          <div class="d-flex flex-column w-100">
-            <h3 class="mb-0" [class.text-muted]="(selectedDate | date:'shortDate') !== (day | date: 'shortDate')">{{ day | date:'EEE'}}</h3>
-            <h3 class="fw-bold mb-0 fs-3"
-              [ngClass]="{'text-decoration-underline': (currentDate | date:'shortDate') === (day | date: 'shortDate')}">
-              {{ day | date: 'dd' }}
-            </h3>
-          </div>
-          <mat-icon *ngIf="last" class="fs-1 cursor-pointer text-muted" (click)="updateWeekRange('next', $event)">keyboard_arrow_right</mat-icon>
+    <div class="d-flex flex-row justify-content-between align-items-center text-center border rounded overflow-auto me-3">
+      <div class="w-100 py-3 px-3 cursor-pointer week-range-carousel {{ (selectedDate | date: 'd') === (day | date: 'd') ? selectedDateClass : '' }}"
+        *ngFor="let day of daysOfWeek; let first = first; let last = last"
+        [ngClass]="{
+          'd-flex flex-row align-items-center ': first || last,
+          'rounded text-white': (selectedDate | date: 'd') === (day | date: 'd')
+        }"
+        (click)="scrollToContainer(day, $event)">
+        <mat-icon *ngIf="first" class="fs-1 cursor-pointer"
+          [class.text-muted]="(selectedDate | date:'shortDate') !== (day | date: 'shortDate')"
+          [class.text-white]="(selectedDate | date:'shortDate') === (day | date: 'shortDate')"
+          (click)="updateWeekRange('prev', $event)">
+          keyboard_arrow_left
+        </mat-icon>
+        <div class="d-flex flex-column w-100">
+          <h3 class="mb-0" [class.text-muted]="(selectedDate | date:'shortDate') !== (day | date: 'shortDate')">{{ day | date:'EEE'}}</h3>
+          <h3 class="fw-bold mb-0 fs-3"
+            [ngClass]="{'text-decoration-underline': (currentDate | date:'shortDate') === (day | date: 'shortDate')}">
+            {{ day | date: 'dd' }}
+          </h3>
         </div>
+        <mat-icon *ngIf="last" class="fs-1 cursor-pointer text-muted" (click)="updateWeekRange('next', $event)">keyboard_arrow_right</mat-icon>
+      </div>
     </div>
 
-    <div class="week-view pe-2 mt-2">
+    <div class="week-view pe-2 mt-3">
       <ng-container *ngFor="let meal of weeklyMealPlan; let first = first">
-        <div class="day-of-week-view rounded border-bottom" [class.mt-2]="!first" [id]="(meal.day | lowercase) + '-container'">
+        <div class="day-of-week rounded border-bottom" [class.mt-2]="!first" [id]="(meal.day | lowercase) + '-container'">
           <span class="progress" [ngClass]="'text-' + meal.totalMealScoreClass">
             <mat-progress-bar mode="determinate" [value]="meal.totalMealScore * 100 | number"></mat-progress-bar>
           </span>
-          <div class="d-flex flex-row">
-            <div class="day-card border w-50 d-flex flex-column p-3">
+          <div class="d-flex flex-column flex-sm-row">
+            <div class="day-card border p-3 meal-date-zen-score d-flex flex-column">
               <div class="text-end">
                 <mat-icon class="text-muted fs-6 cursor-pointer" (click)="deleteMealByDate(meal)">refresh</mat-icon>
               </div>
@@ -74,7 +74,7 @@
                 <span class="align-self-start fs-6">{{ meal.mealDate | date:'MMMM dd, y' }}</span>
               </div>
             </div>
-            <div class="day-card border p-3 w-100 d-flex flex-column flex-wrap cursor-pointer">
+            <div class="day-card border p-3 w-100 cursor-pointer">
               <div (click)="selecteMealPlan(meal, mealTypeEnum.Breakfast)">
                   <label class="text-muted fs-6">Breakfast</label>
                   <div class="recipe-list">
@@ -109,11 +109,11 @@
       </ng-container>
     </div>
   </div>
-  </div>
+</div>
 
 <ng-template #recipeList let-meals="meals" let-className="className">
-  <div class="mt-2 d-flex flex-row flex-wrap">
-    <span class="py-2 px-4 mb-2 me-2 border rounded-3 text-white {{ className }}"
+  <div class="d-flex flex-row flex-wrap">
+    <span class="py-1 px-3 mt-2 me-2 border text-white {{ className }}"
       *ngFor="let meal of meals; let first = first"
       [class.ms-0]="first">
       {{ meal.recipe.recipeName }}

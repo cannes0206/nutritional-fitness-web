@@ -179,14 +179,19 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
-    const ctrlValue = this.weekControl.value!;
+    const ctrlValue = this.weekControl.value;
+
     ctrlValue.month(normalizedMonthAndYear.month());
     ctrlValue.year(normalizedMonthAndYear.year());
     this.weekControl.setValue(ctrlValue, { emitEvent: false });
 
+    const startDate = moment(this.weekControl.value).startOf('month').startOf('week');
+    const endDate = moment(this.weekControl.value).startOf('month').endOf('week');
+    this.weekControl.setValue(startDate, { emitEvent: false });
+
     this.weeklyMealPlanFilter.emit({
-      startDate: moment(this.weekControl.value).startOf('month').startOf('week').format('YYYY-MM-DD').toString(),
-      endDate: moment(this.weekControl.value).startOf('month').endOf('week').format('YYYY-MM-DD').toString()
+      startDate: startDate.format('YYYY-MM-DD'),
+      endDate: endDate.format('YYYY-MM-DD')
     });
 
     datepicker.close();
@@ -202,6 +207,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed) {
+        this.selectedDate = undefined;
         this.deleteMealsByMealPlanId.emit(this.mealPlanId);
       }
     });

@@ -1,4 +1,26 @@
 .planner-week-view-container {
+  .meal-plan-controls {
+    .no-of-servings {
+      ::ng-deep {
+        .mat-form-field-appearance-outline {
+          .mat-form-field-infix {
+            padding: 0.5em 0 .75em 0 !important;
+          }
+        }
+      }
+    }
+
+    .btn-outline-warning {
+      border-color: var(--bs-orange);
+      color: var(--bs-orange);
+
+      &:hover {
+        background-color: var(--bs-orange);
+        color: var(--bs-white);
+      }
+    }
+  }
+
   .week-control-date-picker {
     ::ng-deep {
       .mat-form-field-infix {
@@ -22,17 +44,7 @@
     }
   }
 
-  .no-of-servings {
-    ::ng-deep {
-      .mat-form-field-appearance-outline {
-        .mat-form-field-infix {
-          padding: 0.5em 0 .75em 0 !important;
-        }
-      }
-    }
-  }
-
- .day-of-week {
+  .week-range-carousel {
     mat-icon {
       margin-top: -5px;
     }
@@ -43,83 +55,87 @@
 
       border-radius: 5px;
     }
- }
-
- .btn-outline-warning {
-  border-color: var(--bs-orange);
-  color: var(--bs-orange);
-
-  &:hover {
-    background-color: var(--bs-orange);
-    color: var(--bs-white);
   }
-}
 
  .week-view {
     max-height: 60vh;
     overflow-y: scroll;
+
+    .day-of-week {
+      .day-card {
+        min-height: 160px;
+
+        &.meal-date-zen-score {
+          width: 100%;
+
+          @media (min-width: 576px) {
+            width: 210px;
+            min-width: 210px;
+          }
+        }
+
+        .recipe-list {
+          height: 140px;
+          overflow-y: scroll;
+
+          span {
+            font-size: 12px;
+            border-radius: 10px;
+          }
+        }
+      }
+
+      .progress {
+        height: 5px;
+
+        &.text-success {
+          ::ng-deep {
+            .mat-progress-bar-fill::after {
+              background-color: var(--bs-success);
+            }
+
+            .mat-progress-bar-buffer {
+              background-color: rgba($color: var(--bs-success-rgb), $alpha: .25);
+            }
+          }
+        }
+
+        &.text-warning {
+          ::ng-deep {
+            .mat-progress-bar-fill::after {
+              background-color: var(--bs-warning);
+            }
+
+            .mat-progress-bar-buffer {
+              background-color: rgba($color: var(--bs-warning-rgb), $alpha: .25);
+            }
+          }
+        }
+
+        &.text-danger {
+          ::ng-deep {
+            .mat-progress-bar-fill::after {
+              background-color: var(--bs-danger);
+            }
+
+            .mat-progress-bar-buffer {
+              background-color: rgba($color: var(--bs-danger-rgb), $alpha: .25);
+            }
+          }
+        }
+
+        &.text-secondary {
+          ::ng-deep {
+            .mat-progress-bar-fill::after {
+              background-color: var(--bs-gray-400);
+            }
+
+            .mat-progress-bar-buffer {
+              background-color: var(--bs-gray-400);
+            }
+          }
+        }
+      }
+    }
   }
-
- .day-of-week-view {
-    .day-card {
-      min-height: 150px;
-    }
-
-    .recipe-list {
-      height: 140px;
-      overflow-y: scroll;
-    }
-
-    .progress {
-      height: 5px;
-
-      &.text-success {
-        ::ng-deep {
-          .mat-progress-bar-fill::after {
-            background-color: var(--bs-success);
-          }
-
-          .mat-progress-bar-buffer {
-            background-color: rgba($color: var(--bs-success-rgb), $alpha: .25);
-          }
-        }
-      }
-
-      &.text-warning {
-        ::ng-deep {
-          .mat-progress-bar-fill::after {
-            background-color: var(--bs-warning);
-          }
-
-          .mat-progress-bar-buffer {
-            background-color: rgba($color: var(--bs-warning-rgb), $alpha: .25);
-          }
-        }
-      }
-
-      &.text-danger {
-        ::ng-deep {
-          .mat-progress-bar-fill::after {
-            background-color: var(--bs-danger);
-          }
-
-          .mat-progress-bar-buffer {
-            background-color: rgba($color: var(--bs-danger-rgb), $alpha: .25);
-          }
-        }
-      }
-
-      &.text-secondary {
-        ::ng-deep {
-          .mat-progress-bar-fill::after {
-            background-color: var(--bs-gray-400);
-          }
-
-          .mat-progress-bar-buffer {
-            background-color: var(--bs-gray-400);
-          }
-        }
-      }
-    }
- }
 }

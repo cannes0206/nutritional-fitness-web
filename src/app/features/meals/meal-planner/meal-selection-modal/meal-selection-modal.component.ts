@@ -39,15 +39,17 @@ export class MealSelectionModalComponent {
   modalData!: MealSelectionModalData;
   foodCategories: FormOption[] = [];
 
-  selectedRecipes: RecipeDto[] = [];
   selectedDishes: MultiSelectGridItem[] = [];
-
   selectedMealType: MealType = MealType.Breakfast;
   selectedFoodCategory: FoodCategory = FoodCategory.Breakfast;
 
   dishesFormItem: FormItem = { controlName: 'dishes', label: 'Dishes' };
   dishFormGroup: FormGroup = new FormGroup({});
   initialized: boolean = false;
+
+  get dishFormControl(): FormControl {
+    return this.dishFormGroup.get(this.dishesFormItem.controlName) as FormControl;
+  }
 
   constructor(public dialogRef: MatDialogRef<MealSelectionModalComponent>, @Inject(MAT_DIALOG_DATA) data: MealSelectionModalData) {
     this.modalData = data;
@@ -106,7 +108,7 @@ export class MealSelectionModalComponent {
   }
 
   save(): void {
-    if (this.dishFormGroup.get(this.dishesFormItem.controlName)!.value.length === 0) {
+    if (this.dishFormControl.value.length === 0) {
       this.dishFormGroup.setErrors({ noSelectedDish: true });
       return;
     }
@@ -148,7 +150,7 @@ export class MealSelectionModalComponent {
 
   private setDropdownSelectedRecipeIds(mealType: MealType): void {
     const recipeIds = this.getSelectedRecipeIdsByMealType(mealType);
-    this.dishFormGroup.get(this.dishesFormItem.controlName)?.setValue(recipeIds, { emitEvent: false });
+    this.dishFormControl.setValue(recipeIds, { emitEvent: false });
   }
 
   private getSelectedRecipeIdsByMealType(mealType: MealType): number[] {
