@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable, startWith, tap } from 'rxjs';
+import { Observable, startWith, tap } from 'rxjs';
 import { User } from '../../../core/models/user';
+import { SpinnerService } from '../../../core/services';
 import { UserService } from '../../../core/services/user.service';
 import { OverviewTabEnum } from './overview-landing';
 
@@ -24,7 +25,10 @@ export class OverviewLandingComponent implements OnInit {
   userDataSource$: Observable<User[]> = new Observable();
   filteredUserDataSource$: Observable<User[]> = new Observable();
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    public spinnerService: SpinnerService
+  ) { }
 
   ngOnInit(): void {
     this.retrievedAuthenticatedUser();
