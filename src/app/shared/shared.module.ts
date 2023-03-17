@@ -40,6 +40,7 @@ import { AppValidationModule } from './forms/app-validation.modules';
 import { FilterPipe, NoValuePipe, SafeUrlPipe } from './pipes';
 import { AbsPipe } from './pipes/abs.pipe';
 import { AppendMetricsPipe } from './pipes/append-metrics.pipe';
+import { WarningDialogComponent } from './components/dialogs/warning-dialog/warning-dialog.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { AppendMetricsPipe } from './pipes/append-metrics.pipe';
     FilterPipe,
     CustomMultiselectComponent,
     AbsPipe,
-    AppendMetricsPipe
+    AppendMetricsPipe,
+    WarningDialogComponent
   ],
   imports: [
     CommonModule,

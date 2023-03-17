@@ -1,0 +1,39 @@
+.dialog-container {
+  text-align: center;
+
+  .dialog-content {
+    margin-bottom: 5px
+  }
+
+  .header-container {
+    .icon {
+      color: var(--bs-primary) !important;
+    }
+  }
+
+  .icon {
+    font-size: 70px;
+    height: 70px;
+    width: 70px
+  }
+
+  .header-text {
+    color: black;
+    font-weight: bold
+  }
+
+  .button-container {
+    .action-btn {
+      text-transform: uppercase;
+      color: white;
+    }
+
+    .cancel-btn {
+      font-weight: bold;
+    }
+
+    button {
+      margin-left: 10px
+    }
+  }
+}

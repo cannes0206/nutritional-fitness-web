@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { User } from '../models/user';
@@ -19,7 +19,15 @@ export class UserService {
     return this.httpClient.get<User[]>(`${this.baseUrl}/GetAllMembers`);
   }
 
-  getAuthenticatedUser(): Observable<User>{
+  getAuthenticatedUser(): Observable<User> {
     return this.httpClient.get<User>(`${this.baseUrl}/AuthenticatedUser`);
+  }
+
+  forgotPassoword(email: string): Observable<User> {
+    const request = {
+      email: email
+    };
+
+    return this.httpClient.post<User>(`${this.baseUrl}/ForgotPassword`, request);
   }
 }
