@@ -103,6 +103,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
   @Output() deleteMealsByDate: EventEmitter<DeleteMealsByDateRequest> = new EventEmitter();
   @Output() selectedMealPlan: EventEmitter<{ mealPlan: DailyMealPlanView; mealType: MealType; foodCategory?: FoodCategory }> =
     new EventEmitter();
+  @Output() viewRecipes: EventEmitter<{ mealPlan: DailyMealPlanView; mealType: MealType }> = new EventEmitter();
 
   constructor(private dialog: MatDialog) {}
 
@@ -147,6 +148,10 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy(): void {
     this._unsubscribe.next();
     this._unsubscribe.complete();
+  }
+
+  quickViewRecipe(mealPlan: DailyMealPlanView, mealType: MealType): void {
+    this.viewRecipes.emit({ mealPlan, mealType });
   }
 
   slideContent(direction: string) {
