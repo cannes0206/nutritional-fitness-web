@@ -1,0 +1,20 @@
+
+<div class="delete-user-modal position-relative">
+  <button class="text-muted close-icon" mat-icon-button aria-label="close dialog" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+  <div class="header d-flex flex-row">
+    <div class="delete-icon rounded-circle d-flex p-2 align-self-center me-3">
+      <mat-icon class="align-self-center delete-icon">delete</mat-icon>
+    </div>
+    <div class="header-content">
+      <h6 class="fw-bolder mb-0 fs-6">Delete User</h6>
+      <span class="text-muted fs-6">Are you sure you want to delete this user</span>
+      <span class="d-block date-range">{{ userFullName }}</span>
+    </div>
+  </div>
+  <mat-dialog-actions align="end">
+    <button class="btn btn-outline-danger me-2 px-4" type="button" (click)="cancel()">CANCEL</button>
+    <button class="btn btn-danger text-white px-5" type="button" (click)="delete()">DELETE</button>
+  </mat-dialog-actions>
+</div>

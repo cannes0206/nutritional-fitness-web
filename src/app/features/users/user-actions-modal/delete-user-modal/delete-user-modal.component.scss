@@ -1,0 +1,34 @@
+.delete-user-modal {
+  .delete-icon {
+    background-color: #FAD3D3;
+  }
+
+  .close-icon {
+    position: absolute;
+    top: -20px;
+    right: -15px;
+  }
+
+  .date-range, .delete-icon {
+    color: var(--bs-red);
+  }
+
+  .btn-outline-danger {
+    border-color: var(--bs-red);
+    color: var(--bs-red);
+
+    &:hover {
+      background-color: var(--bs-red);
+      color: var(--bs-white);
+    }
+  }
+
+  .btn-danger {
+    background-color: var(--bs-red);
+    border-color: var(--bs-red);
+
+    &:hover {
+      opacity: 90%;
+    }
+  }
+}
