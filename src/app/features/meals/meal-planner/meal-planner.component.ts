@@ -2,9 +2,9 @@ import { WeekDay } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
-import { BehaviorSubject, map, mergeMap, Observable, of, Subject, switchMap, takeUntil, zip } from 'rxjs';
+import { BehaviorSubject, map, mergeMap, Observable, of, Subject, switchMap, takeUntil, tap, zip } from 'rxjs';
 import { FoodCategory, MealType } from 'src/app/core/enums';
-import { DailyMealPlanView, MealDto, MealPlanDto, MealPlanNutritionInfo, RecipeDto } from 'src/app/core/models/dtos';
+import { DailyMealPlanView, MealDto, MealPlanDto, MealPlanNutritionInfo, RecipeDto } from 'src/app/core/models/dtos/meal';
 import {
   CreateMealPlanRequest,
   CreateMealRequest,
@@ -12,9 +12,10 @@ import {
   GetWeeklyMealPlanRequest,
   UpdateMealPlanRequest
 } from 'src/app/core/models/requests';
-import { LookupService, MealService, RecipeService, SpinnerService } from 'src/app/core/services';
+import { LookupService, MealPlanService, MealService, RecipeService, SpinnerService } from 'src/app/core/services';
 import { FormOption } from '../../../shared/components/form-controls/form-item';
 import { Helpers } from '../../../shared/utilities/helpers';
+import { RecipeIngredientDto } from '../../../core/models/dtos/meal/recipe-ingredient-dto';
 import {
   MealDateListOfRecipeIdByMealType,
   MealSelectionModalComponent,
@@ -35,7 +36,6 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
   mealPlanId: number = 0;
   mealPlanServingSize: number = 0;
 
-  mealTypes: FormOption[] = [];
   weeklyMealPlan$: Observable<DailyMealPlanView[]> = new Observable();
 
   weekFilterOption$: BehaviorSubject<GetWeeklyMealPlanRequest> = new BehaviorSubject<GetWeeklyMealPlanRequest>({
@@ -43,21 +43,19 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
     endDate: moment().endOf('week').format('YYYY-MM-DD').toString()
   });
 
-  foodCategories: FormOption[] = [];
   recipes: RecipeDto[] = [];
-  recipesByMeal: RecipeDto[] = [];
+  mealTypes: FormOption[] = [];
+  foodCategories: FormOption[] = [];
+  mealPlanRecipeIngredients: RecipeIngredientDto[] = [];
 
   constructor(
+    private dialog: MatDialog,
     private lookupService: LookupService,
     private mealService: MealService,
+    private mealPlanService: MealPlanService,
     private recipeService: RecipeService,
-    private dialog: MatDialog,
     public spinnerService: SpinnerService
   ) {}
-  ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
-  }
 
   ngOnInit(): void {
     this.lookupService
@@ -107,6 +105,11 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
               })
             );
           }),
+          tap((mealPlan) =>
+            this.mealPlanService
+              .getRecipeIngredientsByMealPlanId(mealPlan.mealPlanId)
+              .subscribe((res) => (this.mealPlanRecipeIngredients = res))
+          ),
           map((mealPlan) => {
             this._mealPlan = mealPlan;
             this.mealPlanId = mealPlan.mealPlanId;
@@ -120,11 +123,20 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
                 isTemplate: false
               });
 
-            return this.setDaysOfWeek(mealPlan);
+            return this.setWeeklyMealPlan(mealPlan);
           })
         )
       )
     );
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
+  }
+
+  setWeekFilterOptions(request: GetWeeklyMealPlanRequest): void {
+    this.weekFilterOption$.next(request);
   }
 
   getRecipesByMeal(data: { mealPlan: DailyMealPlanView; mealType: MealType; foodCategory?: FoodCategory }): void {
@@ -167,10 +179,6 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
     });
   }
 
-  setWeekFilterOptions(request: GetWeeklyMealPlanRequest): void {
-    this.weekFilterOption$.next(request);
-  }
-
   updateMealPlanServingSize(servingSize: number): void {
     const request: UpdateMealPlanRequest = {
       mealPlanId: this._mealPlan.mealPlanId!,
@@ -191,7 +199,7 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
     this.mealService.deleteMealsByDate(request).subscribe(() => this.weekFilterOption$.next(this.weekFilterOption$.value));
   }
 
-  private setDaysOfWeek(mealPlan?: MealPlanDto): DailyMealPlanView[] {
+  private setWeeklyMealPlan(mealPlan: MealPlanDto): DailyMealPlanView[] {
     this.daysOfWeek = [];
     const mealsForTheWeek: DailyMealPlanView[] = [];
 

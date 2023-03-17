@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
-import { DailyMealPlanView } from 'src/app/core/models/dtos';
 import { DeleteMealsByDateRequest, GetWeeklyMealPlanRequest } from 'src/app/core/models/requests';
 import { FormOption } from '../../../../shared/components/form-controls/form-item';
 
@@ -16,6 +15,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { default as _rollupMoment, Moment } from 'moment';
 import { FoodCategory, MealType } from 'src/app/core/enums';
+import { DailyMealPlanView } from 'src/app/core/models/dtos/meal';
 import {
   DeleteMealPlanConfirmationComponent,
   DeleteMealPlanConfirmationModalData
@@ -103,6 +103,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
   @Output() deleteMealsByDate: EventEmitter<DeleteMealsByDateRequest> = new EventEmitter();
   @Output() selectedMealPlan: EventEmitter<{ mealPlan: DailyMealPlanView; mealType: MealType; foodCategory?: FoodCategory }> =
     new EventEmitter();
+  @Output() viewRecipes: EventEmitter<{ mealPlan: DailyMealPlanView; mealType: MealType }> = new EventEmitter();
 
   constructor(private dialog: MatDialog) {}
 
@@ -147,6 +148,10 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy(): void {
     this._unsubscribe.next();
     this._unsubscribe.complete();
+  }
+
+  quickViewRecipe(mealPlan: DailyMealPlanView, mealType: MealType): void {
+    this.viewRecipes.emit({ mealPlan, mealType });
   }
 
   slideContent(direction: string) {

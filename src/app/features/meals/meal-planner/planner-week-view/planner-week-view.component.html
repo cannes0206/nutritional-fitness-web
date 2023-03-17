@@ -76,7 +76,10 @@
             </div>
             <div class="day-card border p-3 w-100 cursor-pointer">
               <div (click)="selecteMealPlan(meal, mealTypeEnum.Breakfast)">
+                <div class="d-flex justify-content-between">
                   <label class="text-muted fs-6">Breakfast</label>
+                  <mat-icon class="text-muted text-end cursor-pointer" (click)="quickViewRecipe(meal, mealTypeEnum.Breakfast)">list_alt</mat-icon>
+                </div>
                   <div class="recipe-list">
                     <ng-container *ngTemplateOutlet="recipeList; context: { meals: meal.breakfast.meals, className: 'bg-' + meal.totalMealScoreClass }">
                     </ng-container>
