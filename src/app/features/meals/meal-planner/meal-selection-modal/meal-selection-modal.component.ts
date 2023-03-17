@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FoodCategory, MealType } from 'src/app/core/enums';
-import { DailyMealPlanView, RecipeDto } from 'src/app/core/models/dtos';
+import { DailyMealPlanView, RecipeDto } from 'src/app/core/models/dtos/meal';
 import { MultiSelectGridItem } from 'src/app/shared/components/custom-multiselect/custom-multiselect.component';
 import { FormItem, FormOption } from '../../../../shared/components/form-controls/form-item';
 import { Helpers } from '../../../../shared/utilities/helpers';

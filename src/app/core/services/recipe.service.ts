@@ -11,7 +11,7 @@ export class RecipeService {
   private readonly baseUrl: string;
 
   constructor(private http: HttpClient, configService: ConfigService) {
-    this.baseUrl = `${configService.nutritionalFitnessApiBaseAddress}/recipes`;
+    this.baseUrl = `${configService.nutritionalFitnessApiBaseAddress}/Recipes`;
   }
 
   getRecipes(): Observable<RecipeDto[]> {

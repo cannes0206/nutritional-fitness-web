@@ -10,9 +10,8 @@ import { ConfigService } from './config.service';
 export class UserService {
   private readonly baseUrl: string;
 
-  constructor(private httpClient: HttpClient,
-    configService: ConfigService) {
-    this.baseUrl = configService.nutritionalFitnessApiBaseAddress + '/Users';
+  constructor(private httpClient: HttpClient, configService: ConfigService) {
+    this.baseUrl = `${configService.nutritionalFitnessApiBaseAddress}/Users`;
   }
 
   getAllMemberUser(): Observable<User[]> {
