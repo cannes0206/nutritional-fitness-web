@@ -78,7 +78,7 @@
               <div (click)="selecteMealPlan(meal, mealTypeEnum.Breakfast)">
                 <div class="d-flex justify-content-between">
                   <label class="text-muted fs-6">Breakfast</label>
-                  <mat-icon class="text-muted text-end cursor-pointer" (click)="quickViewRecipe(meal, mealTypeEnum.Breakfast)">list_alt</mat-icon>
+                  <mat-icon class="text-muted text-end cursor-pointer" (click)="quickViewRecipe(meal, mealTypeEnum.Breakfast, $event)">list_alt</mat-icon>
                 </div>
                   <div class="recipe-list">
                     <ng-container *ngTemplateOutlet="recipeList; context: { meals: meal.breakfast.meals, className: 'bg-' + meal.totalMealScoreClass }">
@@ -89,7 +89,10 @@
             </div>
             <div class="day-card border p-3 w-100">
               <div class="cursor-pointer" (click)="selecteMealPlan(meal, mealTypeEnum.Lunch)">
-                <span class="text-muted fs-6">Lunch</span>
+                <div class="d-flex justify-content-between">
+                  <span class="text-muted fs-6">Lunch</span>
+                  <mat-icon class="text-muted text-end cursor-pointer" (click)="quickViewRecipe(meal, mealTypeEnum.Lunch, $event)">list_alt</mat-icon>
+                </div>
                 <div class="recipe-list">
                   <ng-container *ngTemplateOutlet="recipeList; context: { meals: meal.lunch.meals, className: 'bg-' + meal.totalMealScoreClass }">
                   </ng-container>
@@ -99,7 +102,10 @@
             </div>
             <div class="day-card border p-3 w-100">
               <div class="cursor-pointer" (click)="selecteMealPlan(meal, mealTypeEnum.Dinner)">
-                <span class="text-muted fs-6">Dinner</span>
+                <div class="d-flex justify-content-between">
+                  <span class="text-muted fs-6">Dinner</span>
+                  <mat-icon class="text-muted text-end cursor-pointer" (click)="quickViewRecipe(meal, mealTypeEnum.Dinner, $event)">list_alt</mat-icon>
+                </div>
                 <div class="recipe-list">
                   <ng-container *ngTemplateOutlet="recipeList; context: { meals: meal.dinner.meals, className: 'bg-' + meal.totalMealScoreClass }">
                   </ng-container>

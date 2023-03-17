@@ -150,7 +150,8 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
     this._unsubscribe.complete();
   }
 
-  quickViewRecipe(mealPlan: DailyMealPlanView, mealType: MealType): void {
+  quickViewRecipe(mealPlan: DailyMealPlanView, mealType: MealType, event: MouseEvent): void {
+    event.stopPropagation();
     this.viewRecipes.emit({ mealPlan, mealType });
   }
 

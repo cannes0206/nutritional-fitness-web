@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ConfigService } from './config.service';
 import { Observable } from 'rxjs';
-import { RecipeIngredientDto } from '../models/dtos/meal/recipe-ingredient-dto';
+import { RecipeDto } from '../models/dtos/meal';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class MealPlanService {
     this.baseUrl = `${configService.nutritionalFitnessApiBaseAddress}/MealPlans`;
   }
 
-  getRecipeIngredientsByMealPlanId(mealPlanId: number): Observable<RecipeIngredientDto[]> {
-    return this.http.get<RecipeIngredientDto[]>(`${this.baseUrl}/GetRecipeIngredients/${mealPlanId}`);
+  getRecipesByMealPlanId(mealPlanId: number): Observable<RecipeDto[]> {
+    return this.http.get<RecipeDto[]>(`${this.baseUrl}/GetRecipesByMealPlanId/${mealPlanId}`);
   }
 }
