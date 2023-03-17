@@ -21,6 +21,7 @@ export class ResetPasswordComponent implements OnInit {
   newPassword: FormItem = { controlName: 'newPassword', label: 'New Password', required: true, icon: 'visibility_off' };
   confirmPassword: FormItem = { controlName: 'confirmPassword', label: 'Confirm Password', required: true, icon: 'visibility_off' };
   isNewPasswordShow: boolean = false;
+  showPasswordNotMacthedMessage: boolean = false;
   isConfirmPasswordShow: boolean = false;
   userJwtoken!: string;
   userInformation!: UserInformation;
@@ -30,7 +31,7 @@ export class ResetPasswordComponent implements OnInit {
     public router: Router,
     private dialog: MatDialog,
     private authService: AuthService,
-    public spinnerService: SpinnerService ) { }
+    public spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
     this.userJwtoken = this.router.url.substring(this.router.url.lastIndexOf('/') + 1);
@@ -50,22 +51,28 @@ export class ResetPasswordComponent implements OnInit {
     let newPassword = this.resetPasswordForm.get(this.newPassword.controlName)?.value;
     let confirmPassword = this.resetPasswordForm.get(this.confirmPassword.controlName)?.value;
 
-
     if (this.resetPasswordForm.valid) {
-      let CryptoJS = require("crypto-js");
-      newPassword = CryptoJS.MD5(newPassword).toString();
+      if (newPassword == confirmPassword) {
+        let CryptoJS = require("crypto-js");
+        newPassword = CryptoJS.MD5(newPassword).toString();
 
-      this.userService.resetPassword(newPassword).subscribe(data => {
-        if (data) {
-          Helpers.openConfirmationDialog(this.dialog, ResetPassowrdDialogs.sent)
-            .afterClosed()
-            .subscribe(() => {
-              this.authService.logout();
-            });
-        }
-      });
+        this.userService.resetPassword(newPassword).subscribe(data => {
+          if (data) {
+            Helpers.openConfirmationDialog(this.dialog, ResetPassowrdDialogs.sent)
+              .afterClosed()
+              .subscribe(() => {
+                this.authService.logout();
+              });
+          }
+        });
+      } else
+        this.showPasswordNotMacthedMessage = true;
     } else
       this.resetPasswordForm.markAllAsTouched();
+  }
+
+  onFocusInput(): void {
+    this.showPasswordNotMacthedMessage = false;
   }
 
   showNewPassword(): void {
