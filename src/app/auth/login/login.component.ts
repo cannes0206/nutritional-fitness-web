@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { AppRoutes } from '../../core/enums';
 import { LoginRequest, LoginResponse } from '../../core/models/auth.model';
+import { SpinnerService } from '../../core/services';
 import { AuthService } from '../../core/services/auth.service';
 import { FormItem } from '../../shared/components/form-controls';
 import { LoginFormItems } from './login-models';
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get(this.password.controlName) as FormControl;
   }
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, public spinnerService: SpinnerService) {
   }
 
   ngOnInit(): void {
