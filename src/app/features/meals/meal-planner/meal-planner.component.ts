@@ -106,7 +106,9 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
             );
           }),
           tap((mealPlan) =>
-            this.mealPlanService.getRecipeIngredientsByMealPlanId(mealPlan.mealPlanId).subscribe((res) => console.log(res))
+            this.mealPlanService
+              .getRecipeIngredientsByMealPlanId(mealPlan.mealPlanId)
+              .subscribe((res) => (this.mealPlanRecipeIngredients = res))
           ),
           map((mealPlan) => {
             this._mealPlan = mealPlan;
