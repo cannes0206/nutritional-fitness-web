@@ -46,7 +46,7 @@
           <button class="login-btn primary-btn" mat-stroked-button type="submit" (click)="onSubmit()">SIGN IN</button>
         </div>
         <div class="justify-content-center text-center mt-3 pt-3 sign-up-section">
-          <span>Not yet a member? <a href="#">Sign up here</a></span>
+          <span>Not yet a member? <a [routerLink]="['/auth/sign-up']">Sign up here</a></span>
         </div>
       </div>
     </div>

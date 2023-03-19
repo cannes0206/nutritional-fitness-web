@@ -1,0 +1,31 @@
+.custom-col {
+  padding: 0.3em 0.5rem;
+  margin-bottom: -0.70em;
+}
+
+.measurement {
+  padding-left: 0;
+}
+
+.auth-buttons {
+  text-align: right;
+  margin-right: -5px;
+
+  .sign-up-btn {
+    background-color: var(--bs-primary) !important;
+    color: var(--bs-white);
+  }
+
+  .cancel-btn {
+    color: var(--bs-primary) !important;
+    border: 1px solid var(--bs-primary) !important;
+    margin-right: 13px;
+  }
+
+  button {
+    padding: 8px 0px;
+    width: 7.9rem;
+    line-height: 24px;
+    font-weight: 100;
+  }
+}
