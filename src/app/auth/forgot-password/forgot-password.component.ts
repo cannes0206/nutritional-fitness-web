@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -18,20 +18,15 @@ export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm = new FormGroup({});
   email: FormItem = { controlName: 'email', label: 'Email', required: true, validationType: ValidationType.email };
 
-  signInRoute = `${AppRoutes.Auth}`;
-
   constructor(
     private router: Router,
     private userService: UserService,
     private dialog: MatDialog,
-    public spinnerService: SpinnerService) { }
+    public spinnerService: SpinnerService,
+    private cdref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.seForgotPasswordFormGroup();
-  }
-
-  navigateToSignInPage(): void {
-    this.router.navigateByUrl(this.signInRoute);
   }
 
   sendEmailConfirmation(): void {
@@ -55,5 +50,6 @@ export class ForgotPasswordComponent implements OnInit {
 
   private seForgotPasswordFormGroup(): void {
     this.forgotPasswordForm.addControl(this.email.controlName, new FormControl('', [Validators.required, Validators.pattern(Regex.EMAIL), Validators.maxLength(128)]));
+    this.cdref.detectChanges();
   }
 }

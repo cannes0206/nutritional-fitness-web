@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
@@ -27,8 +27,6 @@ export class LoginComponent implements OnInit {
   isShowPassword: boolean = false;
   showIncorrectCredentialMessage: boolean = false;
 
-  forgotPasswordRoute = `auth/${AppRoutes.ForgotPassword}`;
-
   get userNameControl(): FormControl {
     return this.loginForm.get(this.username.controlName) as FormControl;
   }
@@ -37,15 +35,15 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get(this.password.controlName) as FormControl;
   }
 
-  constructor(private authService: AuthService, private router: Router, public spinnerService: SpinnerService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    public spinnerService: SpinnerService,
+    private cdref: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
     this.setLoginFormGroup();
-  }
-
-  navigateToForgotPasswordPage(): void {
-    this.router.navigateByUrl(this.forgotPasswordRoute);
   }
 
   onFocusInput(): void {
@@ -100,5 +98,6 @@ export class LoginComponent implements OnInit {
   private setLoginFormGroup(): void {
     this.loginForm.addControl(this.username.controlName, new FormControl('', Validators.required));
     this.loginForm.addControl(this.password.controlName, new FormControl('', Validators.required));
+    this.cdref.detectChanges();
   }
 }

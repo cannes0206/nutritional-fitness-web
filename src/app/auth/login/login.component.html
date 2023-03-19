@@ -39,7 +39,7 @@
               </app-form-input>
             </div>
             <span class="incorrect-credential d-block" *ngIf="showIncorrectCredentialMessage">Please enter correct username or password</span>
-            <span (click)="navigateToForgotPasswordPage()" class="forgot-password">Forgot Password?</span>
+            <span [routerLink]="['/auth/forgot-password']" class="forgot-password">Forgot Password?</span>
           </form>
         </div>
         <div class="auth-buttons">

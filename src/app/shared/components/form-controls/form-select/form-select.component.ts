@@ -13,7 +13,7 @@ export class FormSelectComponent {
   @Input() isMultipleSelection: boolean = false;
   @Input() defaultValue: string | null = null;
   @Output() valueChanges: EventEmitter<any> = new EventEmitter();
-
+  @Input() selectedValue : string | null = null;
   get formControl(): FormControl {
     return this.formGroup.get(this.formItem.controlName) as FormControl;
   }
