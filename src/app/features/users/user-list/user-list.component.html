@@ -1,1 +1,27 @@
-<p>user-list works!</p>
+<div class="m-auto p-4">
+  <h1 class="fw-bolder">Users</h1>
+
+  <div class="border rounded user-list-container bg-white">
+    <div class="ms-3 mt-3 d-flex h-50">
+      <div class="filter">
+        <app-form-input [formItem]="searchMemberField"
+                        [formGroup]="searchFormGroup">
+        </app-form-input>
+      </div>
+      <div class="filter-select">
+        <app-form-select [formItem]="filterCycleField"
+                         [formGroup]="searchFormGroup">
+        </app-form-select>
+      </div>
+      <div class="filter-select">
+        <app-form-select [formItem]="filterSubscriptionField"
+                         [formGroup]="searchFormGroup">
+        </app-form-select>
+      </div>
+    </div>
+    <app-table [initColumn]="initColumn"
+               [displayedColumnNames]="displayedColumnNames">
+    </app-table>
+  </div>
+
+</div>
