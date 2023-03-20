@@ -11,6 +11,7 @@ import {
   FoodCategoryIconsComponent,
   RecipeInstructionModalComponent
 } from './meal-planner';
+import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {
     MealSelectionModalComponent,
     DeleteMealPlanConfirmationComponent,
     FoodCategoryIconsComponent,
-    RecipeInstructionModalComponent
+    RecipeInstructionModalComponent,
+    ShoppingListComponent
   ],
   imports: [CommonModule, MealsRoutingModule, SharedModule]
 })

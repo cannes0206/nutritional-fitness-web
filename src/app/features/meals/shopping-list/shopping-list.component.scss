@@ -1,0 +1,17 @@
+.shopping-list-container {
+  .recipe-ingredients {
+    width: 100%;
+
+    @media (min-width: 576px) {
+      width: 35%;
+    }
+  }
+
+  .recipe-instructions {
+    width: 100%;
+
+    @media (min-width: 576px) {
+      width: 65%;
+    }
+  }
+}

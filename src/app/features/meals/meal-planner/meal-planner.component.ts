@@ -30,7 +30,6 @@ import { RecipeInstructionModalComponent, RecipeInstructionModalData } from './r
 export class MealPlannerComponent implements OnInit, OnDestroy {
   private _unsubscribe: Subject<void> = new Subject();
   private _mealPlan!: MealPlanDto;
-  private mealPlanRecipes: RecipeDto[] = [];
 
   daysOfWeek: Date[] = [];
   totalWeekZenScore: number = 0;
@@ -47,6 +46,7 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
   recipes: RecipeDto[] = [];
   mealTypes: FormOption[] = [];
   foodCategories: FormOption[] = [];
+  mealPlanRecipes: RecipeDto[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -197,11 +197,13 @@ export class MealPlannerComponent implements OnInit, OnDestroy {
     this.mealService.deleteMealsByDate(request).subscribe(() => this.weekFilterOption$.next(this.weekFilterOption$.value));
   }
 
-  viewRecipeInstructions(data: { mealPlan: DailyMealPlanView; mealType: MealType }): void {
+  viewRecipeInstructions(data: { mealDate: Date; mealType: MealType; recipeIds: number[] }): void {
+    const recipes = this.mealPlanRecipes.filter((m) => data.recipeIds.includes(m.recipeId));
+
     const modalData: RecipeInstructionModalData = {
-      mealDate: data.mealPlan.mealDate,
+      mealDate: data.mealDate,
       mealType: data.mealType,
-      recipes: this.mealPlanRecipes // Filter by meal type
+      recipes: recipes
     };
 
     this.dialog.open(RecipeInstructionModalComponent, {
