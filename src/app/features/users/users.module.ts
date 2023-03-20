@@ -8,6 +8,7 @@ import { UserQuestionnairesComponent } from './user-questionnaires/user-question
 import { DeleteUserModalComponent } from './user-actions-modal/delete-user-modal/delete-user-modal.component';
 import { SharedModule } from '../../shared/shared.module';
 import { PhaseCycleUpdateModalComponent } from './user-actions-modal/phase-cycle-update-modal/phase-cycle-update-modal.component';
+import { ResetCycleModalComponent } from './user-actions-modal/reset-cycle-modal/reset-cycle-modal.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { PhaseCycleUpdateModalComponent } from './user-actions-modal/phase-cycle
     UserDetailsComponent,
     UserQuestionnairesComponent,
     DeleteUserModalComponent,
-    PhaseCycleUpdateModalComponent
+    PhaseCycleUpdateModalComponent,
+    ResetCycleModalComponent
   ],
   imports: [
     CommonModule,

@@ -9,13 +9,15 @@
     </div>
     <div class="header-content">
       <h6 class="fw-bolder mb-0 fs-6">Phase Days</h6>
-      <span class="text-muted fs-6">Current Phase is Release for </span>
-      <span class="user-full-name">{{ userFullName }}</span>
-      <div class="d-block mt-2">
-        <app-form-input [formItem]="formItem"
-                        [formGroup]="formGroup">
-        </app-form-input>
-      </div>
+      <span class="text-muted">Current Phase is {{ data.currentPhase }} for </span>
+      <span class="user-full-name">{{ data.userFullName }}</span>
+    </div>
+  </div>
+  <div>
+    <div class="d-block mt-2">
+      <app-form-input [formItem]="formItem"
+                      [formGroup]="formGroup">
+      </app-form-input>
     </div>
   </div>
   <mat-dialog-actions align="end">

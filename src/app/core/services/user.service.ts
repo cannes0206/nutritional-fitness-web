@@ -44,4 +44,12 @@ export class UserService {
     const authUrl = `${this.baseUrl}/RegisterBasicUser`;
     return this.httpClient.post<LoginResponse>(authUrl, request).pipe(catchError((err) => throwError(() => err)));
   }
+
+  deleteUser(userId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseUrl}/Delete/${userId}`);
+  }
+
+  getAllUser(): Observable<User[]> {
+    return this.httpClient.get<User[]>(`${this.baseUrl}/GetAllUsers`);
+  }
 }
