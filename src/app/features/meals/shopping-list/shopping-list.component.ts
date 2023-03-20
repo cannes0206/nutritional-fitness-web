@@ -1,5 +1,5 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Regex } from 'src/app/shared/constants';
@@ -40,8 +40,10 @@ interface ShoppingListRecipe {
     ])
   ]
 })
-export class ShoppingListComponent implements OnInit, OnChanges {
-  @Input() recipes: RecipeDto[] = [];
+export class ShoppingListComponent implements OnInit {
+  @Input() set recipes(value: RecipeDto[]) {
+    if (value.length > 0) this.mapFormGroup(value);
+  }
 
   private shoppingListRecipes: ShoppingListRecipe[] = [];
   filteredRecipes: ShoppingListRecipe[] = [];
@@ -53,16 +55,14 @@ export class ShoppingListComponent implements OnInit, OnChanges {
 
   constructor(private fb: FormBuilder) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const { recipes } = changes;
-
-    if (recipes.currentValue) {
-      this.mapFormGroup(recipes.currentValue);
-    }
-  }
-
   ngOnInit(): void {
+    // TODO: Add validation for alpha-numeric in form validation
     this.formGroup.addControl(this.recipeFilter.controlName, new FormControl('', [Validators.pattern(Regex.ALPHA_NUMERIC)]));
+
+    this.formGroup.get(this.recipeFilter.controlName)?.valueChanges.subscribe((value: string) => {
+      this.filteredRecipes = this.shoppingListRecipes;
+      if (value) this.filteredRecipes = this.filteredRecipes.filter((r) => r.recipeName.toLowerCase().includes(value.toLowerCase()));
+    });
   }
 
   checkedAllIngredients(event: MatCheckboxChange): void {
@@ -75,10 +75,19 @@ export class ShoppingListComponent implements OnInit, OnChanges {
 
   changedRecipe(recipe: ShoppingListRecipe, event: MatCheckboxChange): void {
     recipe.recipeChecked = event.checked;
+    this.recipeFormGroups.forEach((r) => console.log(r.controls));
   }
 
   changedIngredients(recipe: ShoppingListRecipe, event: MatCheckboxChange): void {
     recipe.ingredientsChecked = event.checked;
+  }
+
+  changedIngredient(recipeIngredientId: number, event: MatCheckboxChange): void {
+    // TODO: Unchecked ingredients checkboxes if event.checked is false
+  }
+
+  changedDirection(recipeInstructionId: number, event: MatCheckboxChange): void {
+    // TODO: Unchecked directions filter checkbox if event.checked is false
   }
 
   changedDirections(recipe: ShoppingListRecipe, event: MatCheckboxChange): void {
@@ -89,8 +98,8 @@ export class ShoppingListComponent implements OnInit, OnChanges {
     this.recipeFormGroups = recipes.map((recipe) =>
       this.fb.group({
         recipeId: recipe.recipeId,
-        ingredients: this.fb.group(this.mapIngredientControls(recipe.recipeIngredients)),
-        directions: this.fb.group(this.mapDirectionControls(recipe.recipeInstructions)),
+        ingredients: this.mapIngredientControls(recipe.recipeIngredients),
+        directions: this.mapDirectionControls(recipe.recipeInstructions),
         recipeChecked: new FormControl(true),
         directionsChecked: new FormControl(true),
         ingredientsChecked: new FormControl(true)
