@@ -1,10 +1,16 @@
 import { FormOption } from './../../../shared/components/form-controls/form-item';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignUpRequest } from '../../../core/models/requests/sign-up-request';
 import { FormItem } from '../../../shared/components/form-controls';
 import { Regex } from '../../../shared/constants';
 import { SignUpFormItems } from '../sign-up';
+import { CountryService } from '../../../core/services/country.service';
+import { UserService } from '../../../core/services';
+import { catchError, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { LoginResponse } from '../../../core/models/auth.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-form',
@@ -26,33 +32,62 @@ export class SignUpFormComponent implements OnInit {
   email: FormItem = SignUpFormItems.email;
   confirmPassword: FormItem = SignUpFormItems.confirmPassword;
   password: FormItem = SignUpFormItems.password;
+  countryOptions!: FormOption[];
 
   isPasswordShow: boolean = false;
   isConfirmPasswordShow: boolean = false;
   showPasswordNotMacthedMessage: boolean = false;
 
-  constructor() { }
+  constructor(
+    private countryService: CountryService,
+    private cdref: ChangeDetectorRef,
+    private userService: UserService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.setSignUpFormGroup();
     this.renderOptions();
-
   }
 
   renderOptions(): void {
+    this.renderMeasurementOptions();
+    this.renderCountryOptions();
+    this.renderGenderOptions();
+    this.cdref.detectChanges();
+  }
+
+  renderMeasurementOptions(): void {
     var heightMeasurementOptions: FormOption[] = [
       { value: 'ft', displayName: 'ft' },
       { value: 'cm', displayName: 'cm' }
     ]
-    var weightMeasurementOptions : FormOption[]= [
+    var weightMeasurementOptions: FormOption[] = [
       { value: 'lbs', displayName: 'lbs' },
       { value: 'kg', displayName: 'kg' }
     ]
-
     this.heightMeasurement.option = heightMeasurementOptions;
     this.weightMeasurement.option = weightMeasurementOptions;
   }
 
+  renderCountryOptions(): void {
+    this.countryService.getListOfCountry().subscribe(data => {
+      const options: FormOption[] = data.map((z, index) => ({
+        value: index,
+        displayName: `${z.countryName}`
+      }));
+      this.country.option = options;
+    });
+  }
+
+  renderGenderOptions(): void {
+    var genderOptions: FormOption[] = [
+      { value: 1, displayName: 'Male' },
+      { value: 2, displayName: 'Female' },
+      { value: 3, displayName: 'Preder not to say' }
+    ]
+
+    this.gender.option = genderOptions;
+  }
 
   showPassword(): void {
     this.isPasswordShow = !this.isPasswordShow;
@@ -71,13 +106,26 @@ export class SignUpFormComponent implements OnInit {
   signUp(): void {
     let password = this.signUpForm.get(this.password.controlName)?.value;
     let confirmPassword = this.signUpForm.get(this.confirmPassword.controlName)?.value;
-    var request = this.buildSignUpRequest();
-    console.log(request);
 
     if (this.signUpForm.valid) {
       if (password == confirmPassword) {
+        let CryptoJS = require("crypto-js");
         var request = this.buildSignUpRequest();
-        console.log(request);
+        request.password = CryptoJS.MD5(request.password).toString();
+
+        this.userService.registerBasicUser(request)
+          .pipe(
+            catchError((error: HttpErrorResponse) => {
+              if (error.status == 401) {
+                console.log(error.status)
+              }
+              return throwError(() => error);
+            })
+          )
+          .subscribe((result: LoginResponse) => {
+            if (result)
+              this.router.navigateByUrl('/')
+          });
       } else
         this.showPasswordNotMacthedMessage = true;
     } else
@@ -90,11 +138,11 @@ export class SignUpFormComponent implements OnInit {
       password: this.signUpForm.get(this.password.controlName)?.value,
       name: this.signUpForm.get(this.name.controlName)?.value,
       email: this.signUpForm.get(this.email.controlName)?.value,
-      birthDate: this.signUpForm.get(this.birthDate.controlName)?.value,
+      birthDate: new Date(this.signUpForm.get(this.birthDate.controlName)?.value),
       genderId: this.signUpForm.get(this.gender.controlName)?.value,
       countryId: this.signUpForm.get(this.country.controlName)?.value,
-      startWeight: this.signUpForm.get(this.startWeight.controlName)?.value,
-      startHeight: this.signUpForm.get(this.startHeight.controlName)?.value,
+      startWeight: Number(this.signUpForm.get(this.startWeight.controlName)?.value),
+      startHeight: Number(this.signUpForm.get(this.startHeight.controlName)?.value),
       heightMeasurement: this.signUpForm.get(this.heightMeasurement.controlName)?.value,
       weightMeasurement: this.signUpForm.get(this.weightMeasurement.controlName)?.value,
     };
@@ -115,6 +163,7 @@ export class SignUpFormComponent implements OnInit {
     this.signUpForm.addControl(this.startHeight.controlName, new FormControl('', Validators.required));
     this.signUpForm.addControl(this.heightMeasurement.controlName, new FormControl(''));
     this.signUpForm.addControl(this.weightMeasurement.controlName, new FormControl(''));
+    this.cdref.detectChanges();
   }
 
 }

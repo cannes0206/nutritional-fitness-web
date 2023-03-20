@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 import { LoginResponse } from '../models/auth.model';
+import { SignUpRequest } from '../models/requests/sign-up-request';
 import { User } from '../models/user';
 import { ConfigService } from './config.service';
 
@@ -37,5 +38,10 @@ export class UserService {
     };
 
     return this.httpClient.post<LoginResponse>(`${this.baseUrl}/ResetPassword`, request);
+  }
+
+  registerBasicUser(request: SignUpRequest): Observable<LoginResponse> {
+    const authUrl = `${this.baseUrl}/RegisterBasicUser`;
+    return this.httpClient.post<LoginResponse>(authUrl, request).pipe(catchError((err) => throwError(() => err)));
   }
 }

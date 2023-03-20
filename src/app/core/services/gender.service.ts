@@ -1,7 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RecipeDto } from '../models/dtos';
+import { GenderDto } from '../models/dtos';
 import { ConfigService } from './config.service';
 
 @Injectable({
@@ -14,7 +14,9 @@ export class GenderService {
     this.baseUrl = `${configService.nutritionalFitnessApiBaseAddress}/Gender`;
   }
 
-  getListOfGender(): Observable<RecipeDto[]> {
-    return this.http.get<RecipeDto[]>(this.baseUrl);
+  getListOfGender(): Observable<GenderDto[]> {
+    var getAllGendersUrl = this.baseUrl + '/GetAll';
+
+    return this.http.get<GenderDto[]>(getAllGendersUrl);
   }
 }
