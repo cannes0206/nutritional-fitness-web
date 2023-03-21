@@ -1,5 +1,17 @@
 .meals-tab {
-  ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
-    color: var(--bs-primary) !important;
+  ::ng-deep {
+    .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+      color: var(--bs-primary) !important;
+    }
+
+    .btn-outline-warning {
+      border-color: var(--bs-orange);
+      color: var(--bs-orange);
+
+      &:hover {
+        background-color: var(--bs-orange);
+        color: var(--bs-white);
+      }
+    }
   }
 }

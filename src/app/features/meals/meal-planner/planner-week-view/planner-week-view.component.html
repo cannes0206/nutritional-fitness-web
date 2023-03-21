@@ -56,7 +56,7 @@
       </div>
     </div>
 
-    <div class="week-view pe-2 mt-3">
+    <div class="week-view pe-2 mt-3 overflow-auto">
       <ng-container *ngFor="let meal of weeklyMealPlan; let first = first">
         <div class="day-of-week rounded border-bottom" [class.mt-2]="!first" [id]="(meal.day | lowercase) + '-container'">
           <span class="progress" [ngClass]="'text-' + meal.totalMealScoreClass">
@@ -122,7 +122,7 @@
 
 <ng-template #recipeList let-meals="meals" let-className="className">
   <div class="d-flex flex-row flex-wrap">
-    <span class="py-1 px-3 mt-2 me-2 border text-white {{ className }}"
+    <span class="py-1 px-3 mt-2 me-2 border text-white fs-6 rounded-pill {{ className }}"
       *ngFor="let meal of meals; let first = first"
       [class.ms-0]="first">
       {{ meal.recipe.recipeName }}
