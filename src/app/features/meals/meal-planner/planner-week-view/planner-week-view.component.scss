@@ -1,24 +1,12 @@
 .planner-week-view-container {
   .meal-plan-controls {
     .no-of-servings {
-      ::ng-deep {
-        .mat-form-field-appearance-outline {
+      ::ng-deep .mat-form-field-appearance-outline {
           .mat-form-field-infix {
             padding: 0.5em 0 .75em 0 !important;
           }
         }
       }
-    }
-
-    .btn-outline-warning {
-      border-color: var(--bs-orange);
-      color: var(--bs-orange);
-
-      &:hover {
-        background-color: var(--bs-orange);
-        color: var(--bs-white);
-      }
-    }
   }
 
   .week-control-date-picker {
@@ -33,33 +21,14 @@
         }
       }
 
-      .mat-datepicker-toggle {
-        button: {
-          margin-top: -5px;
-        }
-      }
       .mat-form-field-appearance-standard .mat-form-field-underline {
         display: none;
       }
     }
   }
 
-  .week-range-carousel {
-    mat-icon {
-      margin-top: -5px;
-    }
-    &.selected {
-      h5, h1 {
-        color: var(--bs-white) !important;
-      }
-
-      border-radius: 5px;
-    }
-  }
-
  .week-view {
     max-height: 60vh;
-    overflow-y: scroll;
 
     .day-of-week {
       .day-card {
@@ -77,28 +46,11 @@
         .recipe-list {
           height: 140px;
           overflow-y: scroll;
-
-          span {
-            font-size: 12px;
-            border-radius: 10px;
-          }
         }
       }
 
       .progress {
         height: 5px;
-
-        &.text-success {
-          ::ng-deep {
-            .mat-progress-bar-fill::after {
-              background-color: var(--bs-success);
-            }
-
-            .mat-progress-bar-buffer {
-              background-color: rgba($color: var(--bs-success-rgb), $alpha: .25);
-            }
-          }
-        }
 
         &.text-warning {
           ::ng-deep {
@@ -126,11 +78,7 @@
 
         &.text-secondary {
           ::ng-deep {
-            .mat-progress-bar-fill::after {
-              background-color: var(--bs-gray-400);
-            }
-
-            .mat-progress-bar-buffer {
+            .mat-progress-bar-fill::after, .mat-progress-bar-buffer {
               background-color: var(--bs-gray-400);
             }
           }
