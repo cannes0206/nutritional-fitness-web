@@ -13,6 +13,7 @@
       <ng-container *ngSwitchCase="validationTypes.date">{{errorMessages.dateInvalid}}</ng-container>
       <ng-container *ngSwitchCase="validationTypes.email">{{errorMessages.emailInvalid}}</ng-container>
       <ng-container *ngSwitchCase="validationTypes.passwordsMismatch">{{errorMessages.passwordsMismatch}}</ng-container>
+      <ng-container *ngSwitchCase="validationTypes.alphaNumeric">{{errorMessages.alphaNumeric}}</ng-container>
     </ng-container>
   </ng-template>
 </ng-container>

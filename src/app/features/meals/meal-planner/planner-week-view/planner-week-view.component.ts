@@ -103,7 +103,7 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
   @Output() deleteMealsByDate: EventEmitter<DeleteMealsByDateRequest> = new EventEmitter();
   @Output() selectedMealPlan: EventEmitter<{ mealPlan: DailyMealPlanView; mealType: MealType; foodCategory?: FoodCategory }> =
     new EventEmitter();
-  @Output() viewRecipes: EventEmitter<{ mealPlan: DailyMealPlanView; mealType: MealType }> = new EventEmitter();
+  @Output() viewRecipes: EventEmitter<{ mealDate: Date; mealType: MealType; recipeIds: number[] }> = new EventEmitter();
 
   constructor(private dialog: MatDialog) {}
 
@@ -152,7 +152,14 @@ export class PlannerWeekViewComponent implements OnInit, OnDestroy, OnChanges {
 
   quickViewRecipe(mealPlan: DailyMealPlanView, mealType: MealType, event: MouseEvent): void {
     event.stopPropagation();
-    this.viewRecipes.emit({ mealPlan, mealType });
+
+    const { breakfast, lunch, dinner } = mealPlan;
+    const recipeIds =
+      (mealType === MealType.Breakfast ? breakfast : mealType === MealType.Lunch ? lunch : dinner).meals.flatMap(
+        (m) => m.recipe.recipeId
+      ) || [];
+
+    this.viewRecipes.emit({ mealDate: mealPlan.mealDate, mealType, recipeIds });
   }
 
   slideContent(direction: string) {

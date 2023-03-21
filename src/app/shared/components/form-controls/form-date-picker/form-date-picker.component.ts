@@ -15,6 +15,8 @@ export class FormDatePickerComponent {
 
   @Input() formItem!: FormItem;
   @Input() formGroup: FormGroup = new FormGroup({});
+  @Input() minDate?: Date;
+  @Input() maxDate?: Date;
   @Output() valueChanges: EventEmitter<any> = new EventEmitter();
 
   defaultTextMask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];

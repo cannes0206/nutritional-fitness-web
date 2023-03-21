@@ -1,0 +1,44 @@
+.reset-cycle-modal {
+  .cycle-icon {
+    background-color: #C4E49E;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline {
+    .mat-form-field-infix {
+      padding: 0.5em 0 .75em 0 !important;
+
+      .mat-form-field-label-wrapper {
+        top: -17px;
+      }
+    }
+  }
+
+  .close-icon {
+    position: absolute;
+    top: -20px;
+    right: -15px;
+  }
+
+  .user-full-name, .cycle-icon {
+    color: #8ACA3E;
+  }
+
+  .btn-outline-primary {
+    border-color: #8ACA3E;
+    color: #8ACA3E;
+
+    &:hover {
+      background-color: #8ACA3E;
+      color: var(--bs-white);
+    }
+  }
+
+  .btn-primary {
+    background-color: #8ACA3E;
+    border-color: #8ACA3E;
+
+    &:hover {
+      opacity: 90%;
+    }
+  }
+}

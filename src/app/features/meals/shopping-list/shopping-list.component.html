@@ -1,0 +1,63 @@
+<div class="shopping-list-container">
+  <div class="shopping-list-filters d-flex justify-content-between align-items-center">
+    <div class="w-25">
+      <app-form-input [formItem]="recipeFilter" [formGroup]="formGroup"></app-form-input>
+    </div>
+
+    <div class="checkbox-filter">
+      <mat-checkbox class="me-2" [color]="'primary'" [checked]="true" (change)="checkedAllIngredients($event)">
+        <span class="fw-bolder">INGREDIENTS</span>
+      </mat-checkbox>
+      <mat-checkbox class="me-4" [color]="'primary'" [checked]="true" (change)="checkedAllDirections($event)">
+        <span class="fw-bolder">DIRECTIONS</span>
+      </mat-checkbox>
+      <button class="btn btn-primary">EXPORT TO PDF</button>
+    </div>
+  </div>
+
+  <div class="mt-2" *ngFor="let group of recipeFormGroups" [formGroup]="group">
+    <ng-container *ngIf="(filteredRecipes | filter: group.value.recipeId: 'recipeId')[0] as recipe">
+      <div class="border rounded-top p-3">
+        <mat-checkbox
+          [color]="'primary'"
+          [checked]="recipe.recipeChecked"
+          formControlName="recipeChecked"
+          (change)="changedRecipe(recipe, $event)">
+          <span class="fw-bolder" [class.text-muted]="!recipe.recipeChecked">{{recipe.recipeName}}</span>
+        </mat-checkbox>
+        <mat-icon class="float-end" (click)="recipe.expanded = !recipe.expanded">
+          {{recipe.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}
+        </mat-icon>
+      </div>
+
+      <div [@detailExpand]="recipe.expanded ? 'expanded' : 'collapsed'">
+        <div class="d-flex border rounded-bottom p-3">
+          <div class="recipe-ingredients">
+            <mat-checkbox class="d-block"
+              [color]="'primary'"
+              [checked]="recipe.ingredientsChecked"
+              formControlName="ingredientsChecked"
+              (change)="changedIngredients(recipe, $event)">
+              <span class="fw-bolder" [class.text-muted]="!recipe.ingredientsChecked">INGREDIENTS</span>
+            </mat-checkbox>
+            <div formGroupName="ingredients" *ngFor="let item of recipe.ingredients">
+              <mat-checkbox class="d-block" [color]="'primary'" [checked]="true" [formControlName]="item.recipeIngredientId">
+                <span>{{item.ingredient}}</span>
+              </mat-checkbox>
+            </div>
+          </div>
+          <div class="recipe-instructions">
+            <mat-checkbox class="d-block"
+              [color]="'primary'"
+              [checked]="recipe.directionsChecked"
+              formControlName="directionsChecked"
+              (change)="changedDirections(recipe, $event)">
+              <span class="fw-bolder" [class.text-muted]="!recipe.directionsChecked">DIRECTIONS</span>
+            </mat-checkbox>
+            <ol [class.text-muted]="!recipe.directionsChecked"><li *ngFor="let item of recipe.directions">{{ item.instruction }}</li></ol>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

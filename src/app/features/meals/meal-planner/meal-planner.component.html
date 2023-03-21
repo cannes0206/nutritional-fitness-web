@@ -34,7 +34,9 @@
           <mat-icon class="me-2">shopping_cart</mat-icon>
           <span>Shopping List</span>
         </ng-template>
-        <div class="py-2">Shopping List</div>
+        <div class="py-2">
+          <app-shopping-list [recipes]="mealPlanRecipes"></app-shopping-list>
+        </div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>

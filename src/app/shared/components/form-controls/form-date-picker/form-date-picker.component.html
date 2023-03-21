@@ -13,6 +13,8 @@
               [id]="formItem.controlName"
               [matDatepicker]="picker"
               [formControl]="selectedDate"
+              [min]="minDate" 
+              [max]="maxDate"
               (dateChange)="onValueDatePickerChanges($event)">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker [disabled]="formGroup.controls[formItem.controlName].disabled"></mat-datepicker>

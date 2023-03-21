@@ -4,5 +4,6 @@ export enum ErrorMessage {
   emailInvalid = 'Please enter a valid email address',
   dateInvalid = 'Please enter a valid date',
   passwordsMismatch = "Passwords don't match.",
-  invalidInput = 'Please provide a valid input'
+  invalidInput = 'Please provide a valid input',
+  alphaNumeric = 'Please enter letters and numbers only'
 }

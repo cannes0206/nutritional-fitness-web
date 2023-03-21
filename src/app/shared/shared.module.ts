@@ -22,6 +22,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TextMaskModule } from 'angular2-text-mask';
 import { MatCarouselModule } from 'ng-mat-carousel';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -87,7 +88,8 @@ import { WarningDialogComponent } from './components/dialogs/warning-dialog/warn
     MatSidenavModule,
     MatDividerModule,
     NgMultiSelectDropDownModule.forRoot(),
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCheckboxModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -125,7 +127,8 @@ import { WarningDialogComponent } from './components/dialogs/warning-dialog/warn
     AbsPipe,
     AppendMetricsPipe,
     MatProgressSpinnerModule,
-    CustomMultiselectComponent
+    CustomMultiselectComponent,
+    MatCheckboxModule
   ]
 })
 export class SharedModule {}

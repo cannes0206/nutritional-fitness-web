@@ -67,7 +67,17 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                    "minify": true,
+                    "inlineCritical": false
+                }
+              },
+              "allowedCommonJsDependencies": [
+                "angular2-text-mask"
+              ]
             },
             "development": {
               "buildOptimizer": false,

@@ -2,30 +2,37 @@
   <button class="text-muted close-icon" mat-icon-button aria-label="close dialog" mat-dialog-close>
     <mat-icon class="fs-6">close</mat-icon>
   </button>
-  <div class="header d-flex flex-row">
-    <div class="zen-icon rounded-circle d-flex p-3 align-self-center me-3">
+  <div class="header d-flex flex-sm-row flex-column">
+    <div class="zen-icon rounded-circle d-flex p-3 align-self-center me-sm-3 me-0">
       <img class="cursor-pointer" src="assets/images/meal_zen.png" width="20" height="20">
     </div>
-    <div class="header-content mt-auto">
+    <div class="header-content mt-auto text-sm-start text-center">
       <h6 class="fw-bolder mb-0 fs-6">{{ mealType }}</h6>
       <span class="text-muted fs-6">{{ mealDate | date:'MMMM dd, y' }}</span>
     </div>
   </div>
   <mat-dialog-content class="mat-typography">
-    <div class="mt-2" *ngFor="let recipe of recipes">
-      <span class="fw-bolder">{{ recipe.recipeName }}</span>
-      <div class="d-flex flex-row">
-        <div class="w-50 mt-1">
-          <span class="fw-bolder">INGREDIENTS</span>
-          <ul>
-            <li *ngFor="let item of recipe.recipeIngredients">{{ item.quantity }} {{ item.measureInitial }} {{ item.ingredient}}</li>
-          </ul>
-        </div>
-        <div class="w-50 mt-1">
-          <span class="fw-bolder">DIRECTIONS</span>
-          <ol><li *ngFor="let item of recipe.recipeInstructions">{{ item.instruction }}</li></ol>
+    <ng-container *ngIf="recipes.length > 0; else noRecord">
+      <div class="mt-2" *ngFor="let recipe of recipes">
+        <span class="fw-bolder">{{ recipe.recipeName }}</span>
+        <div class="d-flex flex-row">
+          <div class="w-50 mt-1">
+            <span class="fw-bolder">INGREDIENTS</span>
+            <ul>
+              <li *ngFor="let item of recipe.recipeIngredients">{{ item.quantity }} {{ item.measureInitial }} {{ item.ingredient}}</li>
+            </ul>
+          </div>
+          <div class="w-50 mt-1">
+            <span class="fw-bolder">DIRECTIONS</span>
+            <ol class="mb-0"><li *ngFor="let item of recipe.recipeInstructions">{{ item.instruction }}</li></ol>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
+    <ng-template #noRecord>
+      <div class="mt-2 p-3 text-center">
+        <span>No dishes selected</span>
+      </div>
+    </ng-template>
   </mat-dialog-content>
 </div>
