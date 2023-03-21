@@ -9,7 +9,7 @@
   }
 
   h3 {
-    color: #ffffff;
+    color: var(--bs-white);
     text-align: left;
     margin: 0 43px;
     line-height: 35px;
@@ -43,8 +43,8 @@
       left: 35%;
 
       button.mat-button-disabled {
-        background-color: #8ACA3E !important;
-        border: 2px solid #8ACA3E;
+        background-color: var(--bs-primary) !important;
+        border: 2px solid var(--bs-primary) !important;
       }
 
       button.mat-button-base {
@@ -62,12 +62,12 @@
 
       span {
         font-size: 20px;
-        color: #ffffff;
+        color: var(--bs-white);
       }
 
       .mat-icon {
         font-size: 47px;
-        color: #ffffff;
+        color: var(--bs-white);
       }
     }
   }
