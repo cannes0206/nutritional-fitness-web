@@ -12,7 +12,6 @@ $box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     transform: translate(-50%, -50%);
     width: 1000px;
     height: 750px;
-    display: flex;
 
     .left-panel {
       background-color: #171614;
@@ -27,7 +26,6 @@ $box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
   .left-panel-content {
     width: 100%;
-    text-align: center;
 
     .header-content {
       position: absolute;
@@ -48,7 +46,6 @@ $box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
     .footer-content {
-
       mat-icon {
         font-size: 34px;
         color: #BDBDBD;
@@ -81,8 +78,6 @@ $box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
       }
 
       .auth-form {
-        margin-bottom: 20px;
-
         .forgot-password {
           color: var(--bs-primary) !important;
           float: right;
@@ -100,7 +95,6 @@ $box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
       .auth-buttons {
         button {
-          margin-bottom: 10px;
           padding: 8px 0px;
           width: 100%;
           background-color: var(--bs-primary) !important;
