@@ -14,7 +14,7 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumnNames;" [class.selectable-row]="hasSelectableRows" (click)="selectedRow.emit(row)"></tr>
 </table>
 <mat-paginator *ngIf="hasPagination && dataSource.data.length > 0"
-               [pageSizeOptions]="[5, 10, 25]"
+               [pageSizeOptions]="[20, 40, 60, 80, 100]"
                [pageSize]="pageSize"
                [showFirstLastButtons]="false">
 </mat-paginator>

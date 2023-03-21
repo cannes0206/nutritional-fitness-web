@@ -18,7 +18,7 @@ export interface UserDto {
   statusId: number;
   status: StatusDto;
   programId: number;
-  pragram: ProgramDto;
+  program: ProgramDto;
   startDate: string;
   birthDate: string;
   active: boolean;

@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import moment from 'moment';
-import { combineLatest, distinctUntilChanged, map, Observable, startWith } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, map, Observable, pairwise, startWith } from 'rxjs';
 import { UserDto } from '../../../core/models/dtos';
 import { UserService } from '../../../core/services';
-import { FormItem } from '../../../shared/components/form-controls';
+import { ProgramService } from '../../../core/services/program.service';
+import { FormItem, FormOption } from '../../../shared/components/form-controls';
 import { InitColumn } from '../../../shared/components/table';
 import { UserListDataSourceModel, UserListTableColumns } from './user-list';
 
@@ -28,11 +29,33 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private cdref: ChangeDetectorRef,
-    private userService: UserService) { }
+    private userService: UserService,
+    private programService: ProgramService) { }
 
   ngOnInit(): void {
     this.setUserListTableProperties();
     this.setSearchFormGroup();
+    this.renderDropdownFilters();
+  }
+
+  renderDropdownFilters(): void {
+    this.renderSubcscriptionFilter();
+  }
+
+  renderSubcscriptionFilter(): void {
+    this.programService.getPrograms().subscribe((data) => {
+      const options: FormOption[] = data.map((z, index) => ({
+        value: index,
+        displayName: `${z.programName}`
+      }));
+
+      options.unshift({
+        value: null,
+        displayName: 'Select a Subscription'
+      });
+
+      this.filterSubscriptionField.option = options;
+    });
   }
 
   setUserListTableProperties(): void {
@@ -46,18 +69,26 @@ export class UserListComponent implements OnInit {
     this.searchFormGroup.addControl(this.filterCycleField.controlName, new FormControl(''));
     this.searchFormGroup.addControl(this.filterSubscriptionField.controlName, new FormControl(''));
 
-
     this.userList$ = this.userService.getAllUsers().pipe(startWith([]));
-    this.dataSource$ = combineLatest([this.userList$, this.searchFormGroup.get(this.searchMemberField.controlName)!.valueChanges.pipe(startWith(''))])
+    this.dataSource$ = combineLatest([this.userList$,
+    this.searchFormGroup.get(this.searchMemberField.controlName)!.valueChanges.pipe(startWith('')),
+    this.searchFormGroup.get(this.filterSubscriptionField.controlName)!.valueChanges.pipe(debounceTime(100), startWith(null))])
       .pipe(
         distinctUntilChanged(),
-        map(([userLists, searchText]) => {
-          console.log(userLists);
-          userLists = userLists.filter(o => o.name.toLowerCase().includes(searchText.trimStart().toLowerCase()));
+        map(([userLists, searchText, subscription]) => {
+
+          if (searchText)
+            userLists = userLists.filter(o => o.name.toLowerCase().includes(searchText.trimStart().toLowerCase()));
+
+          if (subscription != null) {
+            subscription += 1;
+            userLists = userLists.filter(u => u.programId == subscription);
+          }
+
           return this.mapListDataSource(userLists);
         })
       );
- 
+
     this.cdref.detectChanges();
   }
 
@@ -73,7 +104,7 @@ export class UserListComponent implements OnInit {
         country: user.country.countryName,
         startDate: moment(user.startDate).format('MMMM DD, YYYY'),
         cycle: user.status ? user.status.statusName : '-',
-        subscription: user.pragram ? user.pragram.programName : '-',
+        subscription: user.program ? user.program.programName : '-',
         status: user.active ? 'Active' : 'Inactive'
       })
     });

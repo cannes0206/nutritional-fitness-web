@@ -24,8 +24,8 @@ export class TableComponent {
   @Input() initColumn: InitColumn[] = [];
   @Input() hasPagination: boolean = true;
   @Input() hasSelectableRows: boolean = false;
-  @Input() pageSize: number = 5;
-  @Input() pageSizeOptions: number[] = [5, 10, 25]
+  @Input() pageSize: number = 20;
+  @Input() pageSizeOptions: number[] = [20, 40, 60, 80, 100]
   @Output() selectedRow: EventEmitter<any> = new EventEmitter();
 
 
