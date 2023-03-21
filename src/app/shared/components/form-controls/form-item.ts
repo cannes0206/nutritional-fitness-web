@@ -4,7 +4,8 @@ export enum ValidationType {
   required = 1,
   date = 2,
   email = 3,
-  passwordsMismatch = 4
+  passwordsMismatch = 4,
+  alphaNumeric = 5
 }
 
 export class FormItem {
