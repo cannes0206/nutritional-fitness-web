@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { LoginResponse } from '../models/auth.model';
+import { UserDto } from '../models/dtos';
 import { SignUpRequest } from '../models/requests/sign-up-request';
 import { User } from '../models/user';
 import { ConfigService } from './config.service';
@@ -22,6 +23,9 @@ export class UserService {
 
   getAuthenticatedUser(): Observable<User> {
     return this.httpClient.get<User>(`${this.baseUrl}/AuthenticatedUser`);
+  }
+  getAllUsers(): Observable<UserDto[]> {
+    return this.httpClient.get<UserDto[]>(`${this.baseUrl}/GetAllUsers`);
   }
 
   forgotPassoword(email: string): Observable<User> {

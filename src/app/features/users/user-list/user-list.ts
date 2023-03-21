@@ -11,3 +11,16 @@ export const UserListTableColumns: InitColumn[] = [
   { name: 'status', displayName: 'Status' },
   { name: 'action', displayName: '' }
 ];
+
+
+export interface UserListDataSourceModel {
+  userId: number;
+  name: string;
+  age: number;
+  gender: string;
+  country: string;
+  startDate: string;
+  cycle: string;
+  subscription: string;
+  status: string;
+}

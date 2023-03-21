@@ -19,9 +19,12 @@
         </app-form-select>
       </div>
     </div>
-    <app-table [initColumn]="initColumn"
-               [displayedColumnNames]="displayedColumnNames">
-    </app-table>
+    <ng-container *ngIf="(dataSource$ | async) as listData">
+      <app-table [initColumn]="initColumn"
+                 [displayedColumnNames]="displayedColumnNames"
+                 [tableData]="listData">
+      </app-table>
+    </ng-container>
   </div>
 
 </div>
