@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
 env:
-  AZURE_WEBAPP_NAME: 'AzureAngualrWebApp'    
+  AZURE_WEBAPP_NAME: 'nf-web'    
   AZURE_WEBAPP_PACKAGE_PATH: '.'     
   NODE_VERSION: '14.x'
 permissions:
