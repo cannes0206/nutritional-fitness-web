@@ -41,4 +41,4 @@ jobs:
           app-name: 'nf-web'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1DA0AB201FF44E19BA3FEA11DA929E59 }}
-          package: .dist/nutritional-fitness-web
+          package: .dist/nf-web
